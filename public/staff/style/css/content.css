@@ -1,0 +1,49 @@
+.wrap,.warp_2,.warp,.warp_1{
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    margin-top: 1.28rem;
+}
+.Start_Time input {
+    width: 43.3%;
+}
+body{
+    background-color: #ccc;
+}
+.my_textarea {
+    width: 94%;
+    height: auto;
+    margin: 0rem 3% 0 3%;
+    padding-top: 1rem;
+}
+.wangji {
+    bottom: 1rem;
+}
+.CurrentState_title_font {
+    top: 0.49rem;
+}
+.my_set {
+    width: 3rem;
+    height: 1.36rem;
+}
+.personnel_info_img {
+    width: 17%;
+    height: 3.8rem;
+}
+.personnel_info_font {
+    width: 83%;
+}
+.main{
+    margin-top: 1.28rem;
+}
+.title_g{
+    max-width: 750px;
+}
+
+
+
+    .pie_li_mycomment, .pie_li_status, .pie_li_comments {
+        height: 280px;
+        width: 50%;
+        margin-left: 20%;
+    }

@@ -1,0 +1,102 @@
+.warp_1{
+    font-family: "微软雅黑";
+}
+.bulletin {
+    width: 94%;
+    height: auto;
+    margin: 0 3%;
+}
+.bulletin_time{
+    width: 23.5%;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.xlIcon1{
+    width: 10px;
+    position: relative;
+    left: 5px;
+    top: -4px;
+}
+.xlIcon{
+    width: 10px;
+    position: relative;
+    left: 10px;
+    top: -4px;
+}
+
+.bulletin_font {
+    width: 25%;
+    font-size: 0.35rem;
+    color: #2d2d2d;
+    float: left;
+    text-align: center;
+}
+
+.bulletin ul li {
+    width: 100%;
+    height: auto;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed #c2c2c2;
+    float: left;
+}
+
+.more {
+    margin-left: 20px;
+}
+.more img{
+    width: 20px;
+}
+.departmentDiv{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,.6);
+}
+.departmentDiv_con{
+    position: fixed;
+    width: 80%;
+    height: 60%;
+    top: 20%;
+    left: 10%;
+    background: #fff;
+}
+.bright_view_hide{
+    display: none;
+}
+.bright_view_show{
+    display: block;
+}
+.departmentDiv_con ul{
+    width: 100%;
+    display: inline-block;
+}
+.departmentDiv_con ul li{
+    width:100%;
+    display: inline-block;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 15px;
+}
+.departmentDiv_con ul li:nth-of-type(2n+2){
+    background: #f3f3f3;
+}
+.comment_content{
+    width:1.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    course:hand !important;
+    color: #428bca !important;
+}
+
+
+
+
+

@@ -1,0 +1,160 @@
+*{padding: 0;margin: 0}
+input{outline: none;}
+/*登录页面*/
+.admin_login{
+    width: 100%;
+    max-width: 1920px;
+    min-width: 1200px;
+    height: auto;
+    background: url(../img/login_bg.jpg) no-repeat;
+     /*background-position: center center;*/
+    background-size: cover;
+    position: relative;
+}
+.admin_login_img{
+    width: 733px;
+    height: 363px;
+    background: url(../img/login_bg_con.png) no-repeat;
+    position: absolute;
+    left: 50%;
+    margin-left: -366.5px;
+    top: 50%;
+    margin-top: -181.5px;
+
+}
+.admin_login_con{
+    width: 260px;
+    height: 170px;
+    /*position: absolute;*/
+    margin-left: 455px;
+    margin-top: 130px;
+}
+.username_div,.password_div{
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+#login_form div span{
+    color: #ffffff;
+    font-size: 22.5px;
+    margin-right: 10px;
+}
+.admin_password,.admin_name{
+    width: 182px;
+    height: 29px;
+    background-color: #87adbf;
+    border: 2px solid #153a67;
+    padding-left: 6px;
+    margin-top: 2px;
+    position: absolute;
+    left: 60px;
+    color: #fff;
+    font-size: 15px;
+}
+.password_div{
+    margin: 27px 0 38px 0;
+}
+.login_btn{
+    width: 104px;
+    height: 34px;
+    border: 2px solid #336a8e;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 3px;
+    background: url(../img/login_btn_bg_13.png) no-repeat;
+    background-size: cover;
+    margin-left: 100px;
+    cursor: pointer;
+}
+/*校验样式*/
+input.error { border: 1px solid red; }
+select.error { border: 1px solid red; }
+textarea.error { border: 1px solid red; }
+span.error {
+    padding-left: 16px;
+    /*padding-bottom: 1px;*/
+    font-size: 0.1rem;
+    /*color: #EA5200;*/
+}
+label.error {
+    padding-left: 16px;
+    /*padding-bottom: 1px;*/
+    font-size: 0.1rem;
+    /*color: #EA5200;*/
+}
+p.error{
+    display: inline-block;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    position: absolute;
+    right: -255px;
+    top:0;
+    font-size: 14px;
+    color: #fff;
+    /*background-color: #ccc;*/
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.close_img{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #fff8f8;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 100%;
+    line-height: 20px;
+    font-size: 15px;
+    color: red!important;
+    cursor: pointer;
+}
+@media screen and (max-width: 1600px) {
+    .admin_login_con{
+        left: 49.6%;
+        top: 38%;
+    }
+}
+@media screen and (max-width: 1400px) {
+    .admin_login_con{
+        left: 48.6%;
+        top: 38%;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .admin_login_con{
+        left: 46.6%;
+        top: 38%;
+    }
+}
+
+.multiselect-container > li > a > label {
+    margin: 0;
+    height: 100%;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 3px 20px 2px 20px;
+}
+.multiselect-container .input-group {
+    margin: 5px;
+}
+.multiselect-container input[type=radio] {
+    margin-top: 5px; !important;
+}
+.multiselect-container .dropdown-menu {
+    background-color: #f9f9f9 !important;
+}
+.multiselect.btn {
+    padding: 3px 12px !important;
+    background-color: #ffffff;
+}
+input[type="number"]{
+    line-height: 30px !important;
+    min-width: 100px;
+    padding: 0px 5px
+}
