@@ -1,67 +1,30 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: sunday
- * Date: 2017/8/25
- * Time: 15:32
+ * User: 何杨涛
+ * Date: 2018/4/25
+ * Time: 17:20
  */
 
-/**
- * 获取当前控制器与方法
- *
- * @return array
- */
-if (!function_exists('getCurrentAction')) {
-    function getCurrentAction()
-    {
-        $action = \Route::current()->getActionName();
-        list($class, $method) = explode('@', $action);
-        $class = substr(strrchr($class, '\\'), 1);
+namespace app\Library;
 
-        return ['controller' => $class, 'method' => $method];
-    }
-}
+use MongoDB\BSON\Type;
 
-
-/**
- * 获取当前控制器名
- *
- * @return string
- */
-if (!function_exists('getCurrentControllerName')) {
-    function getCurrentControllerName()
-    {
-        return getCurrentAction()['controller'];
-    }
-}
-
-
-/**
- * 获取当前方法名
- *
- * @return string
- */
-if (!function_exists('getCurrentMethodName')) {
-    function getCurrentMethodName()
-    {
-        return getCurrentAction()['method'];
-    }
-}
-
-/**
- * 取汉字的第一个字的首字母
- * @param type $str
- * @return string|null
- */
-if (!function_exists('getFirstCharter')) {
-    function getFirstCharter($str)
+trait Helper
+{
+    /**
+     * 取汉字的第一个字的首字母
+     * @param type $str
+     * @return string|null
+     */
+    protected function getFirstCharter($str)
     {
         if (empty($str)) {
             return '';
         }
         $fchar = ord($str{0});
         if ($fchar >= ord('A') && $fchar <= ord('z')) return strtoupper($str{0});
-        $s1 = iconv('UTF-8', 'gb2312', $str);
+        $s1 = iconv('UTF-8', 'gb2312//IGNORE', $str);
         $s2 = iconv('gb2312', 'UTF-8', $s1);
         $s = $s2 == $str ? $s1 : $str;
         $asc = ord($s{0}) * 256 + ord($s{1}) - 65536;
@@ -90,4 +53,5 @@ if (!function_exists('getFirstCharter')) {
         if ($asc >= -11055 && $asc <= -10247) return 'Z';
         return null;
     }
+
 }

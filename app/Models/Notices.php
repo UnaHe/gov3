@@ -248,8 +248,6 @@ class Notices extends ModelBase
                 }
             }
 
-
-
             // 保存.
             $transaction->commit();
             return true;

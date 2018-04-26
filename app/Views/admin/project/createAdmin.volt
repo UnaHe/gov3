@@ -310,6 +310,7 @@
                 }
             });
         }
+
         function getImageWidthAndHeight(file, callback) {
             var _URL = window.URL || window.webkitURL;
             var img = new Image();

@@ -1,4 +1,6 @@
-{% extends "layout/main.volt" %} {% block content %}
+{% extends "layout/main.volt" %}
+
+{% block content %}
     <style>
         table.add_tab tr td span{margin-left:8px;}
         input[type='checkbox']{margin-top:0px;margin-right: 0px;}
@@ -20,12 +22,8 @@
     <div class="result_wrap">
         {#<h3>添加归属</h3>#}
         <div class="result_title">
-            {% if count(errors)>0 %}
-              {{ content() }}
-                <p>
-                    <?php $this->flashSession->output() ?>
-                </p>
-            {% endif %}
+            {{ content() }}
+            <p><?php $this->flashSession->output() ?></p>
         </div>
     </div>
     <!--结果集标题与导航组件 结束-->
@@ -89,14 +87,7 @@
                                     <div style="display:inline-block ;">
                                         {% for i,vv in v['list'] %}
                                         <div style="display: inline;margin:10px 20px;">
-
-                                             <label for="li_{{vv['user_id']}}"><input id="li_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}"
-                                    {% if array_key_exists(vv['user_id'],old_list) !== false %}
-                                            'checked'
-                                     
-                                     {% endif %}
-                                         ><span>{{vv['user_name']}}</span></label>
-                                     
+                                             <label for="li_{{vv['user_id']}}"><input id="li_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : '' }}><span>{{vv['user_name']}}</span></label>
                                         </div>
                                         {% endfor %}
                                     </div>
@@ -131,12 +122,7 @@
                                     <div style="display:inline-block ;" class="td_user_list">
                                         {% for vv in  v['list'] %}
                                             <div style="display: inline;margin:10px 20px;">
-
-                                                <label for="cli_{{vv['user_id']}}"><input id="cli_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}"
-                                                             {% if (array_key_exists(vv['user_id'],old_list) !== false %}
-                                                              'checked'
-                                                            {% endif %}
-                                                    ><span>{{vv['user_name']}}</span></label>
+                                                <label for="cli_{{vv['user_id']}}"><input id="cli_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : '' }}><span>{{vv['user_name']}}</span></label>
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -166,7 +152,8 @@
                         select_user($(this).val(),$(this).next().html(),value)
                     }
                 })
-            })
+            });
+
             //类别全选
             $(".checkAll_li").click(function(){
 
@@ -176,9 +163,10 @@
                     $(this).prop('checked',value);
                     $(".userli_"+$(this).val()).prop("checked",value);
                     select_user($(this).val(),$(this).next().html(),value)
-                })
+                });
                 check_selectAll(value);
-            })
+            });
+
             //单个选择
             $(".userli").click(function(){
                 var value = $(this).prop("checked");
@@ -186,7 +174,8 @@
                 select_user($(this).val(),$(this).next().html(),value);
                 check_checkAll_li($(this).parents("tr"),value);
 
-            })
+            });
+
             //选择一个人
             function select_user(user_id,user_name, checked){
                 if(checked){
@@ -215,7 +204,7 @@
                             flag = true;
                         }
                     }
-                })
+                });
                 if(flag){
                     $(obj).find(".checkAll_li").prop("checked",value);
                 }
@@ -253,7 +242,7 @@
                     $('#department tbody').find("tr#dep_"+value).removeClass('hide');
                 }
             })
-        })
+        });
 
         ///按首写字母
         function see_list(key_word){

@@ -8,10 +8,14 @@
 
 namespace app\Controllers\Admin;
 
+use app\Library\AjaxResponse;
+use app\Library\helper;
 use Phalcon\Mvc\Controller;
 
 class ControllerBase extends Controller
 {
+    use AjaxResponse, helper;
+
     public function beforeExecuteRoute()
     {
         // 是否登录.
@@ -35,44 +39,6 @@ class ControllerBase extends Controller
         $this->view->_session = $this->session->get('user');
         $this->view->_config = $this->config->img;
         $this->view->_Controller = $this->getCname();
-    }
-
-
-    /**
-     * AjaxSuccess
-     * @param int $status
-     * @param string $msg
-     * @param bool $flag
-     * @return string
-     */
-    protected function ajaxSuccess($msg = '', $status = 200, $flag = true)
-    {
-        return $this->ajaxResponse($status, $msg, $flag);
-    }
-
-    /**
-     * AjaxError.
-     * @param string $msg
-     * @param int $status
-     * @param bool $flag
-     * @return string
-     */
-    protected function ajaxError($msg = '', $status = 400, $flag = false)
-    {
-        return $this->ajaxResponse($status, $msg, $flag);
-    }
-
-    /**
-     * AjaxResponse.
-     * @param int $status
-     * @param string $msg
-     * @param bool $flag
-     * @return string
-     */
-    private function ajaxResponse($status, $msg, $flag)
-    {
-        $data = ['status' => $status, 'msg' => $msg, 'flag' => $flag];
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     /**

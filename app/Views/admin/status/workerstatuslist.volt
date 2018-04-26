@@ -56,13 +56,13 @@
                                 <td class="">{{ v.a.user_phone }}
                                 </td>
                                 <td>
-                                    {{ v.a.project_name }}
+                                    <a href="#">{{ v.a.project_name }}</a>
                                 </td>
                                 <td>
-                                    {{ v.a.section_name }}
+                                    <a href="#">{{ v.a.section_name }}</a>
                                 </td>
                                 <td>
-                                    {{ v.a.department_name }}
+                                    <a href="#">{{ v.a.department_name }}</a>
                                 </td>
                                 <td>
                                     <span class="status_color" id="status_color" style="display: inline-block;width: 10px;height: 10px;border-radius: 100%;margin-top: 14px;background: {{ params[v.a.user_id]['status_color'] }}"></span>
@@ -289,8 +289,8 @@
             }, function () {
                 $.ajax({
                     url: '{{ url('admin/category/removeUserByCate') }}',
-                    type: 'post',
-                    dataType: 'json',
+                    type: 'POST',
+                    dataType: 'JSON',
                     data: {
                         "{{ _csrfKey }}": "{{ _csrf }}",
                         'user_id': user_id

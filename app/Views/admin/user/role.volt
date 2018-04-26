@@ -1,10 +1,12 @@
-{% extends "layout/main.volt" %} {% block content %}
-<style>
-    input[type=radio]{
-        margin-top: 4px !important;
-    }
-</style>
- {% block content %}
+{% extends "layout/main.volt" %}
+
+{% block content %}
+
+    <style>
+     input[type=radio]{
+         margin-top: 4px !important;
+     }
+    </style>
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -17,31 +19,29 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/admin/users/{{user.user_id}}/role" method="POST">
+                        <form action="{{ url('admin/users/role') }}" method="POST">
+                            <input type="hidden" name="user_id" value="{{userRole.user_id}}"/>
                             <input type="hidden" name="{{ _csrfKey }}" value="{{ _csrf }}"/>
                             <div class="form-group">
                                 {% for role in roles %}
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="roles[]"
-                                                   {% if myRoles.contains(role) %} 
-                                                   'checked'
-                                                   {% endif %}
-                                                   value="{{role.id}}">
-                                            {{role.name}}
-                                        </label>
-                                    </div>
+                                    {% if role.code !== 'administrator' %}
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="roles[]" {{ userRole.role_id == role.id ? 'checked' : '' }} value="{{ role.id }}" >
+                                                {{role.name}}
+                                            </label>
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">提交</button>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 {% endblock %}

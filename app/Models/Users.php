@@ -259,6 +259,9 @@ class Users extends ModelBase
             foreach ($Users as $v) {
                 $v->setTransaction($transaction);
 
+                // 删除上传图片.
+                @unlink(BASE_PATH . '/public/upload/' . $v->user_image);
+
                 // 出错回滚.
                 if ($v->delete() === false) {
                     $messages = $v->getMessages();
@@ -343,6 +346,64 @@ class Users extends ModelBase
         } else {
             $data = $builder->orderBy('a.department_id DESC')->getQuery()->execute();
         }
+
+        return $data;
+    }
+
+    /**
+     * 用户与分类关联.
+     * @param array $input
+     * @param int $page
+     * @param int $limit
+     * @return mixed|stdClass
+     */
+    public function getRelationWithCategory($input, $page = 1, $limit = 10)
+    {
+        $builder = Users::getModelsManager()->createBuilder()->addFrom('app\Models\Users', 'users');
+        $builder->columns('users.*, departments.department_name as cate_name, project.project_name, sections.section_name');
+        $builder->leftjoin('app\Models\Departments', 'users.department_id = departments.department_id', 'departments');
+        $builder->leftjoin('app\Models\Project', 'users.project_id = project.project_id', 'project');
+        $builder->leftjoin('app\Models\Sections', 'users.section_id = sections.section_id', 'sections');
+
+        if (isset($input['project_id']) && !empty($input['project_id'])) {
+            $builder->andWhere('users.project_id = :project_id:', [
+                'project_id' => $input['project_id']
+            ]);
+        }
+
+        if (isset($input['department_id']) && !empty($input['department_id'])) {
+            $builder->andWhere('users.department_id = :department_id:', [
+                'department_id' => $input['department_id']
+            ]);
+        }
+
+        if (isset($input['section_id']) && !empty($input['section_id'])) {
+            $builder->andWhere('users.section_id = :section_id:', [
+                'section_id' => $input['section_id']
+            ]);
+        }
+
+        if (isset($input['keywords']) && !empty($input['keywords'])) {
+            $builder-> andWhere('users.user_name LIKE :user_name: OR users.user_phone LIKE :user_phone: OR departments.department_name LIKE :department_name:', [
+                'user_name' => '%' . $input['keywords'] . '%',
+                'user_phone' => '%' . $input['keywords'] . '%',
+                'department_name' => '%' . $input['keywords'] . '%',
+            ]);
+        }
+
+        $builder->orderBy('users.project_id DESC, users.user_is_admin ASC, users.department_id DESC, users.user_id ASC');
+
+        // 分页.
+        $paginator = new PaginatorQueryBuilder(
+            array(
+                "builder" => $builder,
+                "limit"   => $limit,
+                "page"    => $page
+            )
+        );
+
+        // 获取分页数据.
+        $data = $paginator->getPaginate();
 
         return $data;
     }

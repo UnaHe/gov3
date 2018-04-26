@@ -14,6 +14,7 @@ use app\Models\Sections;
 use app\Models\Status;
 use app\Models\Users;
 use app\Models\UserStatus;
+use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 /**
  * 人员状态控制器
@@ -297,7 +298,140 @@ class StatusController extends ControllerBase
      */
     public function settingWorkTimeListAction()
     {
+        // 分页参数.
+        $page = $this->request->get('page', 'int', 1);
+        $limit = $this->request->get('limit', 'int', 10);
 
+        $user = $this->session->get('user');
+
+        $Project = [];
+        if ($user['user_is_super'] && empty($user['project_id'])) {
+            $Project = Project::find([
+                'order' => 'project_id ASC'
+            ]);
+        } else if (!empty($user['project_id'])) {
+            $Project = Project::find([
+                'project_id = :project_id:',
+                'bind' => [
+                    'project_id' => $user['project_id']
+                ],
+                'order' => 'project_id ASC'
+            ]);
+        }
+
+        $paginator = new PaginatorModel(
+            [
+                "data"  => $Project,
+                "limit" => $limit,
+                "page"  => $page,
+            ]
+        );
+
+        $project_list = $paginator->getPaginate();
+
+        // 页面参数.
+        $this->view->setVars([
+            'project_list' => $project_list,
+        ]);
+    }
+
+    /**
+     * 设置工作时间.
+     */
+    public function settingWorkTimeAction()
+    {
+        // 获取数据.
+        $input = $this->request->getPost();
+
+        $user = $this->session->get('user');
+        $project_id = !empty($user['project_id']) ? $user['project_id'] : $input['project_id'];
+
+        $result = Project::findFirst([
+            'project_id = :project_id:',
+            'bind' => [
+                'project_id' => $project_id
+            ]
+        ])->update($input);
+
+        if ($result === true) {
+            return $this->ajaxSuccess('工作时间修改成功', 201);
+        } else {
+            return $this->ajaxError('工作时间修改失败, 请稍后在试');
+        }
+    }
+
+    /**
+     * 已设事件.
+     */
+    public function userStatusAction()
+    {
+        // 参数.
+        $page = $this->request->get('page', 'int', 1);
+        $limit = $this->request->get('limit', 'int', 10);
+        $input = $this->request->getQuery();
+        $input['start_time'] = $input['start_time'] ? : date("Y-m-d H:i:s");
+
+        // 规范参数, 避免查询出错.
+        foreach ($input as $k => $v){
+            if ($v === '') {
+                $input[$k] = NULL;
+            }
+        }
+
+        $user = $this->session->get('user');
+
+        if ($user['user_is_super'] && empty($user['project_id'])) {
+            $data['project_list'] = Project::getProjectList();
+            if(!empty($input['project_id'])){
+                $data['department_list'] = (new Departments())->getTree(0, 0, $input['project_id']);
+                $data['status_list'] = Status::getListByProjectId($input['project_id']);
+                $data['section_list'] = (new Sections())->getTree(0, 0, $input['project_id']);
+            }
+        } else {
+            $input['project_id'] = $user['project_id'];
+            $data['department_list'] = (new Departments())->getTree(0, 0, $user['project_id']);
+            $data['status_list'] = Status::getListByProjectId($user['project_id']);
+            $data['section_list'] = (new Sections())->getTree(0, 0, $input['project_id']);
+        }
+
+        if (!$user['user_is_super'] && !empty($user['project_id'])) {
+            $input['project_id'] = $user['project_id'];
+        }
+
+        $data['list'] = (new UserStatus())->getUserStatusList($input, false, $page, $limit);
+
+        // 页面参数.
+        $this->view->setVars([
+            'data' => $data,
+            'input' => $input,
+        ]);
+    }
+
+    /**
+     * 修改状态.
+     */
+    public function changeStatusAction()
+    {
+        // 获取参数
+        $input = $this->request->getPost();
+        $input['start_time'] = strtotime($input['start_time']);
+        $input['end_time'] = strtotime($input['end_time']);
+
+        // 是否同时间段存在事务.
+        $userConflict = UserStatus::getConflict($input['user_id'],$input['start_time'],$input['end_time'], $input['user_status_id']);
+
+        if ($userConflict === true) {
+            $UserStatus = UserStatus::findFirst($input['user_status_id']);
+
+            // 更新.
+            if ($UserStatus->update($input) === true) {
+                return $this->ajaxSuccess('事件添加成功', 201);
+            } else {
+                return $this->ajaxError('事件添加失败, 请稍后重试');
+            }
+        } else {
+            return $this->ajaxError('时间段内存在其它事件, 请合理安排');
+        }
     }
 
     /**
@@ -401,6 +535,7 @@ class StatusController extends ControllerBase
      */
     public function saveUserStatusAction()
     {
+        // 获取参数.
         $input = $this->request->getPost();
         $input['start_time'] = strtotime($input['start_time']);
         $input['end_time'] = strtotime($input['end_time']);

@@ -82,6 +82,39 @@ $router->addGet('/admin/project/adminuserlist', [
  * 用户管理.
  */
 
+// 人员列表.
+$router->addGet('/admin/users', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'index',
+]);
+
+// 新增用户.
+$router->addGet('/admin/users/create', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'create',
+]);
+
+// 保存用户.
+$router->addPost('/admin/users', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'save',
+]);
+
+// 修改用户信息.
+$router->addGet('/admin/users/{id:[0-9]+}/edit', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'edit',
+]);
+$router->addPost('/admin/users/update', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'update',
+]);
+
 // 删除用户.
 $router->addPost('/admin/users/delete', [
     'namespace'  => 'app\Controllers\Admin',
@@ -94,6 +127,25 @@ $router->addPost('/admin/users/resetpwd', [
     'namespace'  => 'app\Controllers\Admin',
     'controller' => 'user',
     'action'     => 'resetPwd',
+]);
+
+// 新增归属.
+$router->add('/admin/users/addbelong', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'addBelong',
+]);
+
+// 角色管理.
+$router->addGet('/admin/users/{id:[0-9]+}/role', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'role',
+]);
+$router->addPost('/admin/users/role', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'roleSave',
 ]);
 
 /**
@@ -387,6 +439,27 @@ $router->addGet('/admin/status/settingworktimelist', [
     'namespace'  => 'app\Controllers\Admin',
     'controller' => 'status',
     'action'     => 'settingWorkTimeList',
+]);
+
+// 设置工作时间.
+$router->addPost('/admin/status/settingWorkTime', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'status',
+    'action'     => 'settingWorkTime',
+]);
+
+// 已设事件.
+$router->addGet('/admin/status/userStatus', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'status',
+    'action'     => 'userStatus',
+]);
+
+// 修改状态.
+$router->addPost('/admin/status/changeStatus', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'status',
+    'action'     => 'changeStatus',
 ]);
 
 // 人员(员工)状态列表.

@@ -101,8 +101,7 @@ $di->set('db', function () use ($config) {
 /**
  * Manager.
  */
-$di->set(
-    "modelsManager", function() use ($config) {
+$di->set("modelsManager", function() use ($config) {
         $modelsManager = new ModelsManager();
         $modelsManager->setModelPrefix($config->database->prefix);
         $modelsManager->registerNamespaceAlias('m', 'app\Models');

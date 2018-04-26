@@ -169,7 +169,7 @@
             })
         });
         //删除员工
-        function delArt(id) {
+        function delArt(user_id) {
             layer.confirm('您确定要删除此员工吗？', {
                 btn: ['确定','取消']
             }, function(){
@@ -178,7 +178,7 @@
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
-                        "user_id": id,
+                        "user_id": user_id,
                         "{{ _csrfKey }}": "{{ _csrf }}",
                     },
                     success:function(data){

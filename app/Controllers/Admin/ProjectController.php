@@ -395,7 +395,16 @@ class ProjectController extends ControllerBase
                 ]
             );
         }
-
+        if(!preg_match('/^1[3456789]{1}\d{9}$/', $user_phone)){
+            $this->flash->warning('手机号格式不正确');
+            return $this->dispatcher->forward(
+                [
+                    'namespace' => 'app\Controllers\Admin',
+                    'controller' => 'project',
+                    'action' => 'createAdmin',
+                ]
+            );
+        }
         if ($user_id == '0') {
             $issetUser = Users::findFirst([
                 'user_phone = :user_phone:',
