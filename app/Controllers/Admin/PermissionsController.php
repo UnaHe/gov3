@@ -122,6 +122,12 @@ class PermissionsController extends ControllerBase
     {
         $input = $this->request->getPost();
 
+        // 验证.
+        if (!$input['name'] || !$input['description']) {
+            $this->flashSession->warning('参数必填');
+            return $this->response->redirect('admin/permissions/' . $input['id'] . '/edit');
+        }
+
         // 查询.
         $permission = AdminPermissions::findFirst($input['id']);
 

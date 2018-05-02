@@ -209,7 +209,6 @@ $di->set('modelsMetadata', function () {
  */
 $di->set('dispatcher', function () {
     $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('app\Controllers');
 
     return $dispatcher;
 });
