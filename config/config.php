@@ -31,7 +31,7 @@ return new Config([
         'format'   => '%date% [%type%] %message%',
         'date'     => 'Y-m-d H:i:s',
         'logLevel' => Logger::DEBUG,
-        'filename' => 'application.log',
+        'filename' => date('Y-m-d') . '.log',
     ],
     'img' => [
         'upload'                => BASE_PATH . '/public/upload/',

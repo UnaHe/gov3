@@ -185,7 +185,7 @@ class UserController extends ControllerBase
      */
     public function editAction($userId)
     {
-        $field = (new  Users())->getDetailById($userId);
+        $field = (new Users())->getDetailById($userId);
 
         if ($field === false) {
             $this->flashSession->error('用户不存在');
@@ -471,7 +471,7 @@ class UserController extends ControllerBase
     public function belongsDeleteAction()
     {
         $belongId = $this->request->getPost('belong_id');
-        
+
         $res = (new UserBelongs())->belongsDelete($belongId);
 
         if ($res !== true) {

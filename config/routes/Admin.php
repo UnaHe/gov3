@@ -554,3 +554,105 @@ $router->addPost('/admin/section/delete', [
     'controller' => 'section',
     'action'     => 'delete',
 ]);
+
+/**
+ * 权限管理.
+ */
+
+// 权限列表.
+$router->addGet('/admin/permissions', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'index',
+]);
+
+// 添加权限.
+$router->addGet('/admin/permissions/create', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'create',
+]);
+
+// 保存.
+$router->addPost('/admin/permissions/save', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'save',
+]);
+
+// 编辑权限信息.
+$router->addGet('/admin/permissions/{id:[0-9]+}/edit', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'edit',
+]);
+$router->addPost('/admin/permissions/update', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'update',
+]);
+
+// 删除权限.
+$router->addPost('/admin/permissions/delete', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'permissions',
+    'action'     => 'delete',
+]);
+
+/*
+ * 角色管理.
+ */
+
+// 角色列表.
+$router->addGet('/admin/roles', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'index',
+]);
+
+// 编辑角色信息.
+$router->addGet('/admin/roles/{id:[0-9]+}/edit', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'edit',
+]);
+$router->addPost('/admin/roles/update', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'update',
+]);
+
+// 添加角色.
+$router->addGet('/admin/roles/create', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'create',
+]);
+
+// 保存.
+$router->addPost('/admin/roles/save', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'save',
+]);
+
+// 删除角色.
+$router->addPost('/admin/roles/delete', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'delete',
+]);
+
+// 角色权限列表.
+$router->addGet('/admin/roles/{id:[0-9]+}/permission', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'permission',
+]);
+
+// 保存角色权限.
+$router->addPost('/admin/roles/permission', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'roles',
+    'action'     => 'savePermission',
+]);

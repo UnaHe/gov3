@@ -34,11 +34,13 @@ class ControllerBase extends Controller
     public function afterExecuteRoute()
     {
         $this->view->setViewsDir($this->view->getViewsDir() . 'admin/');
-        $this->view->_csrfKey = $this->security->getTokenKey();
-        $this->view->_csrf = $this->security->getToken();
-        $this->view->_session = $this->session->get('user');
-        $this->view->_config = $this->config->img;
-        $this->view->_Controller = $this->getCname();
+        $this->view->setVars([
+            '_csrfKey' => $this->security->getTokenKey(),
+            '_csrf' => $this->security->getToken(),
+            '_session' => $this->session->get('user'),
+            '_config' => $this->config->img,
+            '_Controller' => $this->getCname(),
+        ]);
     }
 
     /**

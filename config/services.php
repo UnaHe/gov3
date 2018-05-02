@@ -9,10 +9,12 @@
 use Phalcon\Cache\Backend\Redis as CacheRedis;
 use Phalcon\Cache\Frontend\Data as FrontData;
 use Phalcon\Db\Adapter\Pdo\Factory;
+use Phalcon\Db\Profiler as DbProfiler;
 use Phalcon\Flash\Direct as FlashDirect;
 use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
+use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Mvc\Model\MetaData\Redis as MetaDataRedis;
 use Phalcon\Mvc\Url as UrlResolver;
@@ -75,8 +77,6 @@ $di->setShared('view', function () use ($config) {
 
                 return $volt;
             },
-            // Generate Template files uses PHP itself as the template engine
-            '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
         ]
     );
 
@@ -86,8 +86,34 @@ $di->setShared('view', function () use ($config) {
 /**
  * DB.
  */
-$di->set('db', function () use ($config) {
-    return Factory::load(
+$di->set('db', function () use ($config, $di) {
+    $eventsManager = new EventsManager();
+
+    // 分析底层sql性能，并记录日志.
+    $profiler = new DbProfiler();
+    $eventsManager->attach('db', function ($event, $connection) use ($profiler, $di) {
+        if($event->getType() == 'beforeQuery'){
+            // 在sql发送到数据库前启动分析.
+            $profiler -> startProfile($connection -> getSQLStatement());
+        }
+        if($event->getType() == 'afterQuery'){
+            // 在sql执行完毕后停止分析.
+            $profiler->stopProfile();
+            // 获取分析结果.
+            $profile = $profiler->getLastProfile();
+            $sql = $profile->getSQLStatement();
+            $params = $connection->getSqlVariables();
+            (is_array($params) && count($params)) && $params = json_encode($params);
+            $executeTime = $profile->getTotalElapsedSeconds();
+
+            // 日志记录.
+            $logger = $di->get('logger');
+            $log = "{$sql} {$params} {$executeTime}";
+            $logger->log($log);
+        }
+    });
+
+    $connection = Factory::load(
         [
             'adapter'  => $config->database->adapter,
             'host'     => $config->database->host,
@@ -96,6 +122,10 @@ $di->set('db', function () use ($config) {
             'dbname'   => $config->database->dbname
         ]
     );
+
+    // 注册监听事件.
+    $connection->setEventsManager($eventsManager);
+    return $connection;
 });
 
 /**
@@ -211,10 +241,9 @@ $di->set("flashSession", function () {
 /**
  * Logger.
  */
-$di->set('logger', function ($filename = null, $format = null) use($config) {
-
-    $format   = $format ?: $config->get('logger')->format;
-    $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
+$di->set('logger', function () use($config) {
+    $format   = $config->get('logger')->format;
+    $filename = trim($config->get('logger')->filename, '\\/');
     $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
 
     $formatter = new FormatterLine($format, $config->get('logger')->date);

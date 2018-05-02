@@ -104,7 +104,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or (_session['user_is_admin'] and _session['project_id'] == '') %}
-            <li class="treeview {{ _Controller == 'PermissionController' or _Controller == 'RoleController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'PermissionsController' or _Controller == 'RolesController' ? 'active' : '' }}">
                 <a href="#">
                     <i class="fa fa-cog"></i> <span>系统管理</span>
                     <span class="pull-right-container"></span>

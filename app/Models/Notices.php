@@ -132,9 +132,9 @@ class Notices extends ModelBase
             }
 
             if (!empty($departments)) {
-                $DepartmentNotices = new DepartmentNotices();
-
-                $DepartmentNotices->setTransaction($transaction);
+//                $DepartmentNotices = new DepartmentNotices();
+//
+//                $DepartmentNotices->setTransaction($transaction);
 
                 // 插入SQL.
                 $sql = '';
