@@ -264,6 +264,8 @@
                             layer.msg(data.msg, {
                                 icon: 6,
                                 time: 2000, //2s后自动关闭
+                            },function (){
+                                location.reload();
                             });
                         }else{
                             layer.msg(data.msg, {icon: 5});

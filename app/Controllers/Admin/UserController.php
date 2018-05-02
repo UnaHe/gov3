@@ -36,7 +36,7 @@ class UserController extends ControllerBase
         $input = $this->request->getQuery();
 
         // 规范参数, 避免查询出错.
-        foreach ($input as $k => $v){
+        foreach ($input as $k => $v) {
             if ($v === '') {
                 $input[$k] = NULL;
             }
@@ -103,7 +103,7 @@ class UserController extends ControllerBase
         $input['project_id'] = !empty($user['project_id']) ? $user['project_id'] : $input['project_id'];
 
         // 规范参数, 避免查询出错.
-        foreach ($input as $k => $v){
+        foreach ($input as $k => $v) {
             if ($v === '') {
                 $input[$k] = NULL;
             }
@@ -114,9 +114,9 @@ class UserController extends ControllerBase
             $this->flash->warning('名称长度 2 - 18 个字符');
             return $this->dispatcher->forward(
                 [
-                    'namespace'  => 'app\Controllers\Admin',
+                    'namespace' => 'app\Controllers\Admin',
                     'controller' => 'user',
-                    'action'     => 'create',
+                    'action' => 'create',
                 ]
             );
         }
@@ -124,9 +124,9 @@ class UserController extends ControllerBase
             $this->flash->warning('请输入正确的年龄');
             return $this->dispatcher->forward(
                 [
-                    'namespace'  => 'app\Controllers\Admin',
+                    'namespace' => 'app\Controllers\Admin',
                     'controller' => 'user',
-                    'action'     => 'create',
+                    'action' => 'create',
                 ]
             );
         }
@@ -134,19 +134,19 @@ class UserController extends ControllerBase
             $this->flash->warning('请选择性别');
             return $this->dispatcher->forward(
                 [
-                    'namespace'  => 'app\Controllers\Admin',
+                    'namespace' => 'app\Controllers\Admin',
                     'controller' => 'user',
-                    'action'     => 'create',
+                    'action' => 'create',
                 ]
             );
         }
-        if(!preg_match('/^1[3456789]{1}\d{9}$/', $input['user_phone'])){
+        if (!preg_match('/^1[3456789]{1}\d{9}$/', $input['user_phone'])) {
             $this->flash->warning('手机号格式不正确');
             return $this->dispatcher->forward(
                 [
                     'namespace' => 'app\Controllers\Admin',
                     'controller' => 'user',
-                    'action'     => 'create',
+                    'action' => 'create',
                 ]
             );
         }
@@ -162,7 +162,7 @@ class UserController extends ControllerBase
                 [
                     'namespace' => 'app\Controllers\Admin',
                     'controller' => 'user',
-                    'action'     => 'create',
+                    'action' => 'create',
                 ]
             );
         }
@@ -213,7 +213,7 @@ class UserController extends ControllerBase
         $input = $this->request->getPost();
 
         // 规范参数, 避免查询出错.
-        foreach ($input as $k => $v){
+        foreach ($input as $k => $v) {
             if ($v === '') {
                 $input[$k] = NULL;
             }
@@ -241,7 +241,7 @@ class UserController extends ControllerBase
             $this->flashSession->warning('请选择性别');
             return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
         }
-        if(!preg_match('/^1[3456789]{1}\d{9}$/', $input['user_phone'])){
+        if (!preg_match('/^1[3456789]{1}\d{9}$/', $input['user_phone'])) {
             $this->flashSession->warning('手机号格式不正确');
             return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
         }
@@ -274,7 +274,6 @@ class UserController extends ControllerBase
         } else {
             return $this->flash->error('用户更新失败，请稍后重试');
         }
-
     }
 
     /**
@@ -337,7 +336,7 @@ class UserController extends ControllerBase
             $input = $this->request->get();
 
             // 规范参数, 避免查询出错.
-            foreach ($input as $k => $v){
+            foreach ($input as $k => $v) {
                 if ($v === '') {
                     $input[$k] = NULL;
                 }
@@ -348,7 +347,6 @@ class UserController extends ControllerBase
             $res = (new UserBelongs())->addBelong($input['user_id'], $param);
 
             if ($res) {
-
                 $this->flashSession->success('操作成功');
                 return $this->response->redirect('admin/users/belongs');
             } else {
@@ -374,7 +372,7 @@ class UserController extends ControllerBase
                 ]);
                 $old_s = $builder->getQuery()->execute();
                 $old_list = [];
-                foreach ($old_s as $v){
+                foreach ($old_s as $v) {
                     $old_list[$v->user_id] = [
                         'user_id' => $v->user_id,
                         'user_name' => $v->user_name,
@@ -391,7 +389,7 @@ class UserController extends ControllerBase
                 $user_list_by_name = [];
                 $first_chars = [];
                 foreach ($list as $v) {
-                    if($v->user_id == $userId){
+                    if ($v->user_id == $userId) {
                         continue;
                     }
 
@@ -433,7 +431,55 @@ class UserController extends ControllerBase
 
         $this->flashSession->success('系统错误, 请稍后重试');
         return $this->response->redirect('admin/users/belongs');
+    }
 
+    /**
+     * 人员归属关系列表.
+     */
+    public function belongsAction()
+    {
+        // 获取参数.
+        $page = $this->request->get('page', 'int', 1);
+        $limit = $this->request->get('limit', 'int', 10);
+        $input = $this->request->getQuery();
+
+        $user = $this->session->get('user');
+
+        if ($user['user_is_super'] && empty($user['project_id'])) {
+            $data['project_list'] = Project::getProjectList();
+            if (!empty($input['project_id'])) {
+                $data['department_list'] = (new Departments())->getTree(0, 0, $input['project_id']);
+            }
+        } else {
+            $input['project_id'] = $user->project_id;
+            $data['department_list'] = (new Departments())->getTree(0, 0, $user->project_id);
+        }
+
+        $data['list'] = (new UserBelongs())->getList($input, $page, $limit);
+
+        // 页面参数.
+        $this->view->setVars([
+            'data' => $data,
+            'input' => $input,
+        ]);
+    }
+
+    /**
+     * 删除归属.
+     * @throws \Exception
+     */
+    public function belongsDeleteAction()
+    {
+        $belongId = $this->request->getPost('belong_id');
+        
+        $res = (new UserBelongs())->belongsDelete($belongId);
+
+        if ($res !== true) {
+            $this->logger->error($this->getCname() . '---' . $res);
+            return $this->ajaxError('删除失败，请稍后重试');
+        } else {
+            return $this->ajaxSuccess('删除成功', 201);
+        }
     }
 
     /**
@@ -443,7 +489,7 @@ class UserController extends ControllerBase
      */
     public function roleAction($userId)
     {
-        $roles = AdminRoles::find();
+        $roles = AdminRoles::find(['code != "administrator"']);
 
         $userRole = AdminRoleUser::findFirst([
             'user_id = :user_id:',
@@ -451,6 +497,11 @@ class UserController extends ControllerBase
                 'user_id' => $userId
             ]
         ]);
+
+        if ($userRole === false) {
+            $this->flashSession->error('用户不存在');
+            return $this->response->redirect('admin/users');
+        }
 
         // 页面参数.
         return $this->view->setVars([
@@ -464,7 +515,29 @@ class UserController extends ControllerBase
      */
     public function roleSaveAction()
     {
-        var_dump($this->request->getPost());
+        $userId = $this->request->getPost('user_id');
+        $role = $this->request->getPost('role');
+
+        $userRole = AdminRoleUser::findFirst([
+            'user_id = :user_id:',
+            'bind' => [
+                'user_id' => $userId
+            ]
+        ]);
+
+        $roles = AdminRoles::findFirst($role);
+
+        if ($roles === false) {
+            $this->flashSession->error('未知角色');
+            return $this->response->redirect('admin/users/' . $userId . '/role');
+        }
+
+        if ($userRole->update(['role_id' => $role]) === true) {
+            $this->flashSession->success('修改成功');
+            return $this->response->redirect('admin/users');
+        } else {
+            return $this->flash->error('角色修改失败，请稍后重试');
+        }
     }
 
 }

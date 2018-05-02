@@ -4,9 +4,8 @@ namespace app\Library;
 
 class CryptModel
 {
-    const CIPHER = 'AES-256-CBC';
-	const KEY = 'XQXzF/tWHah6glemo1FMTLDl9zUw0KMnALPhqQLqAfU=';
-	const IV = '9BtQ9sF4VZfet+NAwrX4EA==';
+    const CIPHER = 'AES-256-ECB';
+	const KEY = '43ad4680da98dec7c5b179ff63d11488';
 
 	/**
 	 * 加密
@@ -17,7 +16,7 @@ class CryptModel
 	 */
 	public static function encrypt($plainText,$key)
 	{
-        $encryptedText = openssl_encrypt($plainText, self::CIPHER, base64_decode($key), OPENSSL_RAW_DATA, base64_decode(self::IV));
+        $encryptedText = openssl_encrypt($plainText, self::CIPHER, $key);
 
         return trim(base64_encode($encryptedText));
 	}
@@ -33,7 +32,7 @@ class CryptModel
     {
         $encryptedText = base64_decode($encryptedText);
 
-        $decryptedText = openssl_decrypt($encryptedText, self::CIPHER, base64_decode($key), OPENSSL_RAW_DATA, base64_decode(self::IV));
+        $decryptedText = openssl_decrypt($encryptedText, self::CIPHER, $key);
 
         return trim($decryptedText);
     }

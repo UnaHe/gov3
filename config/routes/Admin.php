@@ -148,6 +148,20 @@ $router->addPost('/admin/users/role', [
     'action'     => 'roleSave',
 ]);
 
+// 人员归属关系列表.
+$router->addGet('/admin/users/belongs', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'belongs',
+]);
+
+// 删除归属.
+$router->addPost('/admin/users/belongs/delete', [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'user',
+    'action'     => 'belongsDelete',
+]);
+
 /**
  * 科室管理.
  */
