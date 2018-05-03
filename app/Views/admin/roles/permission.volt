@@ -16,19 +16,19 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="{{ url('/admin/roles/resources') }}" method="POST">
+                        <form action="{{ url('/admin/roles/permission') }}" method="POST">
                             <input type="hidden" name="role_id" value="{{ roleId }}"/>
                             <input type="hidden" name="{{ _csrfKey }}" value="{{ _csrf }}"/>
                             <div class="form-group">
-                                {% for resource in resources %}
+                                {% for permission in permissions %}
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="resources[]" value="{{resource.id}}"
-                                                <?php if (array_key_exists($resource->id, $myResourcesArray)) { ?>
+                                            <input type="checkbox" name="permissions[]" value="{{permission.id}}"
+                                                <?php if (array_key_exists($permission->id, $myPermissionsArray)) { ?>
                                                     checked
                                                 <?php } ?>
                                             />
-                                            {{resource.resource_name}}
+                                            {{permission.name}}
                                         </label>
                                     </div>
                                 {% endfor %}
