@@ -235,40 +235,40 @@ $router->addPost('/admin/department/updateUsersDepartment', [
 // 二维码列表.
 $router->addGet('/admin/qrcode', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'index',
 ]);
 
 // 编辑二维码信息.
 $router->addGet('/admin/qrcode/{id:[0-9]+}/edit', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'edit',
 ]);
 $router->addPost('/admin/qrcode/update', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'update',
 ]);
 
 // 验证二维码ID.
 $router->addPost('/admin/qrcode/valid', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'valid',
 ]);
 
 // 删除绑定.
 $router->addPost('/admin/qrcode/delete', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'delete',
 ]);
 
 // 获取二维码.
 $router->addPost('/admin/qrcode/ajaxGetForwardQrCode', [
     'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'QrCode',
+    'controller' => 'qrcode',
     'action'     => 'ajaxGetForwardQrCode',
 ]);
 

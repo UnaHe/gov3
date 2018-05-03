@@ -51,7 +51,7 @@
                     <tr>
                         <th width="150"><i class="require">*</i>归属单位：</th>
                         <td>
-                            <input type="hidden" name="project_id" class="project_id" value="{{session('user').project_id}}">
+                            <input type="hidden" name="project_id" class="project_id" value="{{ _session['project_id'] }}">
                             <span><i class=""></i>{{project}}</span>
                         </td>
                     </tr>

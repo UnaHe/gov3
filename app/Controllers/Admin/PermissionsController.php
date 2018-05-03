@@ -161,7 +161,7 @@ class PermissionsController extends ControllerBase
             $this->flash->error('数据不存在');
             return $this->dispatcher->forward(
                 [
-                    'namespace'  => 'app\permissions',
+                    'namespace'  => 'app\Controllers\Admin',
                     'controller' => 'permissions',
                     'action'     => 'index',
                 ]

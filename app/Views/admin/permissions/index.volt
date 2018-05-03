@@ -84,6 +84,25 @@
 
     </div>
 
+    <style>
+        .result_content ul li span {
+            font-size: 15px;
+            padding: 6px 12px;
+        }
+        .active {
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+        .disabled {
+            color: #777;
+            cursor: not-allowed;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+    </style>
+
     <script>
         //删除权限
         function delArt(permissionId) {

@@ -104,7 +104,12 @@
             if (data.status == 200) {
                 location.href = '{{url('admin/home')}}';
             } else {
-                layer.msg(data.msg);
+                layer.msg(data.msg, {
+                    icon: 5,
+                    time: 2000, //2s后自动关闭
+                },function (){
+                    location.reload();
+                });
             }
         },
         error: function () {

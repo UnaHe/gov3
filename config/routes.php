@@ -78,6 +78,35 @@ $router->addPost('/admin/ajaxGetOptionsByProject', [
     'action'     => 'ajaxGetOptionsByProject',
 ]);
 
+/**
+ * Errors
+ */
+
+// 401.
+$router->addGet("/admin/errors/show401", [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'errors',
+    'action'     => 'show401',
+]);
+
+// 404.
+$router->addGet("/admin/errors/show404", [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'errors',
+    'action'     => 'show404',
+]);
+
+/**
+ * 页面未找到.
+ */
+$router->notFound(
+    [
+        'namespace'  => 'app\Controllers\Admin',
+        'controller' => 'errors',
+        'action'     => 'show404',
+    ]
+);
+
 include 'routes/admin.php';
 //include 'routes/User.php';
 

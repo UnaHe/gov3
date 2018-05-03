@@ -192,11 +192,13 @@ class RolesController  extends ControllerBase
             'bind' => [
                 'role_id' => $roleId
             ]
-        ]);
+        ])->toArray();
 
         $myPermissionsArray = [];
-        foreach ($myPermissions as $k => $v) {
-            $myPermissionsArray[$v->permission_id] = $v->permission_id;
+        if (count($myPermissions) >= 1) {
+            foreach ($myPermissions as $k => $v) {
+                $myPermissionsArray[$v['permission_id']] = $v['permission_id'];
+            }
         }
 
         // 页面参数.

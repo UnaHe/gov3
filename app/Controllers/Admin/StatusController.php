@@ -74,7 +74,7 @@ class StatusController extends ControllerBase
             $data = $user['project_name'];
         }
 
-        return $this->view->project = $data;
+        $this->view->project = $data;
     }
 
     /**

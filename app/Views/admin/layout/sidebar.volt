@@ -103,19 +103,19 @@
             </li>
             {% endif %}
 
-            {% if _session['user_is_super'] or (_session['user_is_admin'] and _session['project_id'] == '') %}
-            <li class="treeview {{ _Controller == 'PermissionsController' or _Controller == 'RolesController' ? 'active' : '' }}">
-                <a href="#">
-                    <i class="fa fa-cog"></i> <span>系统管理</span>
-                    <span class="pull-right-container"></span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="/admin/permissions"><i class="fa fa-circle-o"></i> 权限管理</a></li>
+            {#{% if _session['user_is_super'] or (_session['user_is_admin'] and _session['project_id'] == '') %}#}
+            {#<li class="treeview {{ _Controller == 'PermissionsController' or _Controller == 'RolesController' ? 'active' : '' }}">#}
+                {#<a href="#">#}
+                    {#<i class="fa fa-cog"></i> <span>系统管理</span>#}
+                    {#<span class="pull-right-container"></span>#}
+                {#</a>#}
+                {#<ul class="treeview-menu">#}
+                    {#<li><a href="/admin/permissions"><i class="fa fa-circle-o"></i> 权限管理</a></li>#}
                     {#<li><a href="/admin/users"><i class="fa fa-circle-o"></i> 人员管理</a></li>#}
-                    <li><a href="/admin/roles"><i class="fa fa-circle-o"></i> 角色管理</a></li>
-                </ul>
-            </li>
-            {% endif %}
+                    {#<li><a href="/admin/roles"><i class="fa fa-circle-o"></i> 角色管理</a></li>#}
+                {#</ul>#}
+            {#</li>#}
+            {#{% endif %}#}
         </ul>
     </section>
 </aside>

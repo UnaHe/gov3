@@ -45,11 +45,12 @@ class Users extends ModelBase
     {
         $user_info = [];
         if (!empty($tel)) {
-            $sql = "SELECT users.*, project.project_id, project.project_name, departments.department_id, departments.department_name, project.work_start_time, project.work_end_time, roleuser.role_id
+            $sql = "SELECT users.*, project.project_id, project.project_name, departments.department_id, departments.department_name, project.work_start_time, project.work_end_time, roleuser.role_id, role.code as role_code
             FROM n_z_users AS users
             LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
             LEFT JOIN n_z_departments AS departments ON departments.department_id = users.department_id
             LEFT JOIN n_z_admin_role_user AS roleuser ON roleuser.user_id = users.user_id
+            LEFT JOIN n_z_admin_roles AS role ON role.id = roleuser.role_id
             WHERE users.user_phone = ? AND users.user_status <> 0";
 
             $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$tel]));

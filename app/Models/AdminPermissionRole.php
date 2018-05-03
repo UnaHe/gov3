@@ -10,7 +10,6 @@ namespace app\Models;
 
 use Phalcon\Mvc\Model\Transaction\Failed as TxFailed;
 use Phalcon\Mvc\Model\Transaction\Manager as TxManager;
-use Phalcon\Mvc\Model\Resultset\Simple;
 
 /**
  * 角色权限关联表

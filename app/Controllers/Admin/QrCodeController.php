@@ -45,9 +45,9 @@ class QrCodeController extends ControllerBase
                 $data['department_list'] = (new Departments())->getTree(0, 0, $input['project_id']);
             }
         } else {
-            $input['project_id'] = $user->project_id;
+            $input['project_id'] = $user['project_id'];
             if($user['user_is_admin']){
-                $data['department_list'] = (new Departments())->getTree(0, 0, $user->project_id);
+                $data['department_list'] = (new Departments())->getTree(0, 0, $user['project_id']);
             }else{
                 $input['department_id'] = $user['department_id'];
             }

@@ -52,7 +52,7 @@ class UserController extends ControllerBase
             }
         } else {
             $input['project_id'] = !empty($user['project_id']) ? $user['project_id'] : $input['project_id'];
-            $data['department_list'] = (new Departments())->getTree(0, 0, $user->project_id);
+            $data['department_list'] = (new Departments())->getTree(0, 0, $user['project_id']);
             $data['section_list'] = (new Sections())->getTree(0, 0, $input['project_id']);
         }
 
@@ -284,6 +284,19 @@ class UserController extends ControllerBase
     {
         $userId = $this->request->getPost('user_id');
 
+        $user = $this->session->get('user');
+
+        $count = Users::count([
+            'project_id = :project_id: AND user_is_admin = "1"',
+            'bind' => [
+                'project_id' => $user['project_id'],
+            ]
+        ]);
+
+        if ($userId == $user['user_id'] || $count <= 1) {
+            return $this->ajaxError('唯一管理员无法删除');
+        }
+
         $res = Users::deleteAdmin($userId);
 
         if ($res !== true) {
@@ -451,8 +464,8 @@ class UserController extends ControllerBase
                 $data['department_list'] = (new Departments())->getTree(0, 0, $input['project_id']);
             }
         } else {
-            $input['project_id'] = $user->project_id;
-            $data['department_list'] = (new Departments())->getTree(0, 0, $user->project_id);
+            $input['project_id'] = $user['project_id'];
+            $data['department_list'] = (new Departments())->getTree(0, 0, $user['project_id']);
         }
 
         $data['list'] = (new UserBelongs())->getList($input, $page, $limit);

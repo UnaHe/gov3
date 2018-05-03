@@ -59,8 +59,8 @@ class LoginController extends ControllerBase
         $userInfo = (new Users)->getDetailsByTel($input['user_phone']);
 
         // 验证用户密码.
-        if(!$userInfo || !($this->security->checkHash($input['user_pass'], $userInfo['user_pass'])) || ($userInfo['project_id'] > 0 && $userInfo['user_is_admin'] != '1')) {
-            return $this->ajaxError('电话或密码错误', 401);
+        if(!$userInfo || !($this->security->checkHash($input['user_pass'], $userInfo['user_pass'])) || ($userInfo['role_code'] === NULL)) {
+            return $this->ajaxError('电话密码错误或非管理员', 401);
         }
 
         // 成功保存session信息.

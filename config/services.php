@@ -22,6 +22,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Session\Adapter\Redis as SessionRedis;
+use app\Library\SecurityDeep;
 
 /**
  * Config.
@@ -35,6 +36,13 @@ $di->setShared('config', function () {
     }
 
     return $config;
+});
+
+/**
+ * ACL.
+ */
+$di->setShared('aclResource', function () {
+    return include BASE_PATH . '/config/frontBackAcl.php';
 });
 
 /**
@@ -87,6 +95,7 @@ $di->setShared('view', function () use ($config) {
  * DB.
  */
 $di->set('db', function () use ($config, $di) {
+    // 事件管理器.
     $eventsManager = new EventsManager();
 
     // 分析底层sql性能，并记录日志.
@@ -108,7 +117,7 @@ $di->set('db', function () use ($config, $di) {
 
             // 日志记录.
             $logger = $di->get('logger');
-            $log = "{$sql} {$params} {$executeTime}";
+            @$log = "{$sql} {$params} {$executeTime}";
             $logger->log($log);
         }
     });
@@ -208,7 +217,16 @@ $di->set('modelsMetadata', function () {
  * Dispatcher.
  */
 $di->set('dispatcher', function () {
+    // 事件管理器.
+    $eventsManager = new EventsManager();
+
+    $securityDeep = new SecurityDeep();
+
+    $eventsManager->attach("dispatch", $securityDeep);
+
     $dispatcher = new Dispatcher();
+
+    $dispatcher->setEventsManager($eventsManager);
 
     return $dispatcher;
 });
