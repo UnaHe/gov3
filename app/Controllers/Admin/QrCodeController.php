@@ -12,6 +12,7 @@ use app\Library\CryptModel;
 use app\Models\Departments;
 use app\Models\Forwards;
 use app\Models\Project;
+use QRcode;
 
 /**
  * 二维码控制器
@@ -274,8 +275,7 @@ class QrCodeController extends ControllerBase
         $APP_URL = $this->config->APP_URL;
         ob_start();
         ob_implicit_flush(1);
-        require BASE_PATH . '/app/library/phpqrcode.php';
-        \QRcode::png($APP_URL . '/forward/' . $Forward->forward_id);
+        QRcode::png($APP_URL . '/forward/' . $Forward->forward_id);
         $image = ob_get_contents();
         ob_end_clean();
         $image = base64_encode($image);

@@ -40,23 +40,24 @@
     </div>
 </div>
 </body>
+
 {{ javascript_include('js/lib/jQuery/jquery-2.2.3.min.js') }}
 {{ javascript_include('js/lib/validate/jquery.validate.js') }}
 {{ javascript_include('js/lib/jquery.md5.js') }}
 {{ javascript_include('org/layer/layer.js') }}
+
 <script>
     $(function () {
         myresize();
         window.onresize = function(){
             myresize();
-        }
+        };
         function myresize(){
             var hei = document.documentElement.clientHeight;
             document.getElementsByClassName("admin_login")[0].style.height = hei+'px';
         }
     });
-</script>
-<script>
+
     $(function () {
         var hei = document.documentElement.clientHeight;
         document.getElementsByClassName("admin_login")[0].style.height = hei + 'px';
@@ -89,32 +90,32 @@
     function submitHandler() {
         $("input[name='user_pass']").val($.md5($("input[name='password']").val()));
         $.ajax({
-            type: 'post',
             url: '{{ url('admin/login') }}',
+            type: 'POST',
             dataType: 'JSON',
             beforeSubmit: function () {
-            layer('提交中...');
-        },
-        data: {
-            "{{ _csrfKey }}": "{{ _csrf }}",
-            'user_phone': $("input[name='user_phone']").val(),
-            'user_pass': $("input[name='user_pass']").val()
-        },
-        success: function (data) {
-            if (data.status == 200) {
-                location.href = '{{url('admin/home')}}';
-            } else {
-                layer.msg(data.msg, {
-                    icon: 5,
-                    time: 2000, //2s后自动关闭
-                },function (){
-                    location.reload();
-                });
+                layer('提交中...');
+            },
+            data: {
+                "{{ _csrfKey }}": "{{ _csrf }}",
+                'user_phone': $("input[name='user_phone']").val(),
+                'user_pass': $("input[name='user_pass']").val()
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    location.href = '{{url('admin/home')}}';
+                } else {
+                    layer.msg(data.msg, {
+                        icon: 5,
+                        time: 2000, //2s后自动关闭
+                    },function (){
+                        location.reload();
+                    });
+                }
+            },
+            error: function () {
+                layer.msg('系统错误，请刷新后重试！', {icon: 2});
             }
-        },
-        error: function () {
-            layer.msg('系统错误，请刷新后重试！');
-        }
         })
     }
 </script>

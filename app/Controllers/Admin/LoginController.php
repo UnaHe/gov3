@@ -23,7 +23,16 @@ class LoginController extends ControllerBase
      */
     public function indexAction()
     {
-
+        if ($this->session->has('user') === true) {
+            // 跳转首页.
+            $this->dispatcher->forward(
+                [
+                    'namespace'  => 'app\Controllers\Admin',
+                    'controller' => 'home',
+                    'action'     => 'index',
+                ]
+            );
+        }
     }
 
     /**
@@ -77,14 +86,16 @@ class LoginController extends ControllerBase
         // 销毁Session.
         $this->session->remove('user');
 
-        // 跳转首页.
-        $this->dispatcher->forward(
-            [
-                'namespace'  => 'app\Controllers\Admin',
-                'controller' => 'login',
-                'action'     => 'index',
-            ]
-        );
+        if ($this->session->has('user') === false) {
+            // 跳转登录页.
+            $this->dispatcher->forward(
+                [
+                    'namespace'  => 'app\Controllers\Admin',
+                    'controller' => 'login',
+                    'action'     => 'index',
+                ]
+            );
+        };
     }
 
 }

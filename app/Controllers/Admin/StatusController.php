@@ -369,7 +369,7 @@ class StatusController extends ControllerBase
         $page = $this->request->get('page', 'int', 1);
         $limit = $this->request->get('limit', 'int', 10);
         $input = $this->request->getQuery();
-        $input['start_time'] = $input['start_time'] ? : date("Y-m-d H:i:s");
+        $input['start_time'] = isset($input['start_time']) ? $input['start_time'] : date("Y-m-d H:i:s");
 
         // 规范参数, 避免查询出错.
         foreach ($input as $k => $v){
@@ -392,10 +392,6 @@ class StatusController extends ControllerBase
             $data['department_list'] = (new Departments())->getTree(0, 0, $user['project_id']);
             $data['status_list'] = Status::getListByProjectId($user['project_id']);
             $data['section_list'] = (new Sections())->getTree(0, 0, $input['project_id']);
-        }
-
-        if (!$user['user_is_super'] && !empty($user['project_id'])) {
-            $input['project_id'] = $user['project_id'];
         }
 
         $data['list'] = (new UserStatus())->getUserStatusList($input, false, $page, $limit);

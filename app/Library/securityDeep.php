@@ -33,14 +33,14 @@ class SecurityDeep extends Plugin {
         // 创建.
         $allResource = $this->_callAcl();
 
-        foreach($allResource as $key=>$value)
+        foreach ($allResource as $key=>$value)
         {
             // 创建角色,并将角色添加到ACL.
             $acl->addRole($value['rote']);
 
-            foreach($value['resource'] as $k=>$v)
+            foreach ($value['resource'] as $k=>$v)
             {
-                foreach($v as $ky=>$vy)
+                foreach ($v as $ky=>$vy)
                 {
                     // 添加资源.
                     $acl->addResource(new Resource(strtolower($k)), $vy);
@@ -60,7 +60,7 @@ class SecurityDeep extends Plugin {
      */
     public function _callAcl()
     {
-        if($this->persistent->acl == null) {
+        if ($this->persistent->acl == null) {
             $this->persistent->acl = $this->aclResource;
         }
 
@@ -80,18 +80,18 @@ class SecurityDeep extends Plugin {
 
         $role = '';
 
-        if( $this->session->has('user')) {
+        if ($this->session->has('user')) {
             $managerInfo = $this->session->get('user');
             $role = $managerInfo['role_code'];
         }
 
-        if(empty($role)) $role = 'User';
+        if (empty($role)) $role = 'User';
         $acl = $this->_getAcl();
 
         // 是否有访问权限.
         $isAllowed = $acl->isAllowed($role, $controller, $action);
 
-        if(!$isAllowed) {
+        if (!$isAllowed) {
             $dispatcher->forward(
                 [
                     'namespace'  => 'app\Controllers\Admin',

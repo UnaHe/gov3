@@ -63,9 +63,6 @@ class UserStatus extends ModelBase
      */
     public function getUserStatusList($input, $need_relation = false, $page = 1, $limit = 10)
     {
-//        echo '<pre>';
-//        var_dump($input);
-//        die;
         $builder = UserStatus::getModelsManager()->createBuilder()->addFrom('app\Models\UserStatus', 'user_status');
         $builder->columns('user_status.*, status.status_id, status.status_name, status.status_color, users.user_name, users.user_phone, users.project_id, project.project_name, departments.department_name');
         $builder->leftjoin('app\Models\Status', 'status.status_id = user_status.status_id', 'status');
@@ -103,12 +100,14 @@ class UserStatus extends ModelBase
         }
 
         if (isset($input['start_time']) && !empty($input['start_time'])) {
-            $builder->andWhere('user_status.start_time >= :start_time:', [
-                'start_time' => strtotime($input['start_time']),
-            ]);
             if (!isset($input['end_time'])) {
-                $builder->orwhere('user_status.end_time >= :end_time:', [
+                $builder->andWhere('user_status.start_time >= :start_time: OR user_status.end_time >= :end_time:', [
+                    'start_time' => strtotime($input['start_time']),
                     'end_time' => strtotime($input['start_time']),
+                ]);
+            } else {
+                $builder->andWhere('user_status.start_time >= :start_time:', [
+                    'start_time' => strtotime($input['start_time']),
                 ]);
             }
         }

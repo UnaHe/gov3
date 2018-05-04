@@ -45,7 +45,7 @@
             $(".sidebar-menu").append(menu);
         }
 
-    })
+    });
     // 得到单位列表通过项目id
     function get_options_by_project(obj, type){
         if(type < 0){

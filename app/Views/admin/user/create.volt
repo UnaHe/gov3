@@ -189,7 +189,7 @@
             var formData = new FormData();
             var files = document.getElementById('thumbnail').files;
             if (files[0] == undefined) {
-                alert("No file chosen")
+                alert("No file chosen");
                 return;
             }
 
@@ -237,7 +237,7 @@
                         }
                         $("#thumbnailProgress").width("0%");
                         $('#thumbnail').removeAttr("disabled");
-                    }
+                    };
                     xhr.open("post", "{{url('admin/upload')}}", true);
                     xhr.send(formData);
                 }

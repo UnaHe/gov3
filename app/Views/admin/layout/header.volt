@@ -6,9 +6,9 @@
 </style>
 <header class="main-header">
     <!-- Logo -->
-    <a href="" class="logo">
+    <a href="{{ url('admin/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">CLproject/create</span>
+        <span class="logo-mini">CL</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
             {{ _session['project_id'] is empty ? '后台管理中心' : _session['project_name'] }}

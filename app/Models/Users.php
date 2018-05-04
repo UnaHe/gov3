@@ -82,7 +82,7 @@ class Users extends ModelBase
     }
 
     /**
-     * 查看所有管理员信息.
+     * 管理员列表.
      * @param $input
      * @param int $page
      * @param int $limit

@@ -116,7 +116,7 @@ $di->set('db', function () use ($config, $di) {
             $executeTime = $profile->getTotalElapsedSeconds();
 
             // 日志记录.
-            $logger = $di->get('logger');
+            $logger = $di->get('logger', ['filename' => date('Y-m-d') . '_SQL.log']);
             @$log = "{$sql} {$params} {$executeTime}";
             $logger->log($log);
         }
@@ -143,7 +143,7 @@ $di->set('db', function () use ($config, $di) {
 $di->set("modelsManager", function() use ($config) {
         $modelsManager = new ModelsManager();
         $modelsManager->setModelPrefix($config->database->prefix);
-        $modelsManager->registerNamespaceAlias('m', 'app\Models');
+//        $modelsManager->registerNamespaceAlias('M', 'app\Models');
         return $modelsManager;
     }
 );
@@ -165,7 +165,7 @@ $di->set('cache', function () {
             'port'       => 6379,
             'auth'       => '',
             'persistent' => false,
-            'prefix'     => 'ca',
+            'prefix'     => '_ca_',
             'index'      => 1,
         ]
     );
@@ -184,8 +184,8 @@ $di->set('session', function () {
             'port'       => 6379,
             'auth'       => '',
             'persistent' => false,
-            'lifetime'   => 7200,
-            'prefix'     => 'se',
+            'lifetime'   => 3600,
+            'prefix'     => '_se_',
             'index'      => 2,
         ]
     );
@@ -205,9 +205,9 @@ $di->set('modelsMetadata', function () {
             'port'       => 6379,
             'auth'       => '',
             'persistent' => false,
-            'statsKey'   => '_PHCM_MM',
+            'statsKey'   => '_govV3',
             'lifetime'   => 3600,
-            'prefix'     => 'mt',
+            'prefix'     => '_mt_',
             'index'      => 3,
         ]
     );
@@ -258,9 +258,9 @@ $di->set("flashSession", function () {
 /**
  * Logger.
  */
-$di->set('logger', function () use($config) {
-    $format   = $config->get('logger')->format;
-    $filename = trim($config->get('logger')->filename, '\\/');
+$di->set('logger', function ($filename = null, $format = null) use($config) {
+    $format   =  $format ? : $config->get('logger')->format;
+    $filename = trim($filename ? : $config->get('logger')->filename, '\\/');
     $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
 
     $formatter = new FormatterLine($format, $config->get('logger')->date);

@@ -48,6 +48,7 @@ class CommonController extends ControllerBase
                 @mkdir($path,0777,true);
             }
 
+            $newName = '';
             foreach ($files as $file) {
                 //上传文件的后缀.
                 $extension = $file->getExtension();
@@ -62,6 +63,8 @@ class CommonController extends ControllerBase
             // 返回路径.
             return $folder . '/' .$newName;
         }
+
+        return false;
     }
 
     /**

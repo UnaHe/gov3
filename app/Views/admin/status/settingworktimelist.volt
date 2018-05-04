@@ -132,6 +132,10 @@
                 layer.msg('上班时间不应大于下班时间');
                 return false;
             }
+            if(work_end_time<=work_start_time){
+                layer.msg('下班时间应该大于大于时间');
+                return false;
+            }
             var data = {
                 "{{ _csrfKey }}": "{{ _csrf }}",
                 'work_start_time': work_start_time,

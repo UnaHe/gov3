@@ -3,7 +3,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">留言管理</a> &raquo; 留言列表
+        <i class="fa fa-home"></i> <a href="{{url('admin/home')}}">首页</a> &raquo; <a href="#">留言管理</a> &raquo; 留言列表
     </div>
     <!--面包屑导航 结束-->
 
@@ -75,7 +75,7 @@
                         <td class="tc"><input type="checkbox" name="comment_id" value="{{v.comments.comment_id}}"></td>
                         <td class="tc">{{v.user_name}}</td>
                         <td class="tc">{{v.project_name}}</td>
-                        <td class="tc">{{v.section_name or ''}}</td>
+                        <td class="tc">{{v.section_name}}</td>
                         <td class="tc">{{v.department_name}}</td>
                         <td class="tc comment_name">{{v.comments.comment_name}}</td>
                         <td class="tc comment_phone">{{v.comments.comment_phone}}</td>

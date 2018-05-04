@@ -18,3 +18,10 @@ $loader->registerNamespaces([
     'app\Controllers' => $config->application->controllersDir,
     'app\Library'     => $config->application->libraryDir,
 ])->register();
+
+/**
+ * 注册类.
+ */
+$loader->registerClasses([
+    'QRcode' => BASE_PATH . '/app/library/phpqrcode.php'
+]);
