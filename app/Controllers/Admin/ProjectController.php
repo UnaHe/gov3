@@ -449,26 +449,21 @@ class ProjectController extends ControllerBase
             'user_intro' => $user_intro,
         ];
 
-        // 创建事务管理.
-        $manager = new TxManager();
-        // 请求事务.
-        $transaction = $manager->get();
+        $Users = new Users();
+        $AdminRoleUser = new AdminRoleUser();
+
+        // 开启事务.
+        $this->db->begin();
 
         try {
-
-            // 开启事务.
-            $Users = new Users();
-            $Users->setTransaction($transaction);
-            $AdminRoleUser = new AdminRoleUser();
-            $AdminRoleUser->setTransaction($transaction);
 
             if ($user_id == '0') {
                 // 创建用户, 用户角色关联记录.
                 if ($Users->create($data) === true && $Users->user_id) {
-                    $res = $AdminRoleUser->create(['user_id' => $Users->user_id, 'role_id' => $userRole]);
+                    if ($AdminRoleUser->create(['user_id' => $Users->user_id, 'role_id' => $userRole]) === false) {
+                        throw new \LogicException('创建失败，请稍后重试');
+                    };
                     $this->flashSession->success('创建成功');
-                } else {
-                    $res = false;
                 }
             } else {
                 unset($data['user_pass']);
@@ -497,23 +492,23 @@ class ProjectController extends ControllerBase
                         'bind' => [
                             'user_id' => $user_id
                         ]
-                    ])->update(['role_id' => $userRole]);
+                    ]);
+
+                   if ($res->update(['role_id' => $userRole]) === false) {
+                       throw new \LogicException('更新失败，请稍后重试');
+                   }
+
                     $this->flashSession->success('更新成功');
-                } else {
-                    $res = false;
                 }
             }
 
-            // 事务回滚.
-            if ($res === false) {
-                $transaction->rollback('系统错误, 请稍后再试');
-            }
-
             // 执行保存.
-            $transaction->commit();
+            $this->db->commit();
             return $this->response->redirect('admin/project/adminuserlist');
-        } catch (TxFailed $e) {
-            $this->flashSession->error($e->getMessage() ? $e->getMessage() : '系统错误, 请稍后再试');
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $error = $e instanceof \LogicException ? $e->getMessage() : '系统错误, 请稍后再试';
+            $this->flashSession->error($error);
             return $this->response->redirect('admin/project/adminuserlist');
         }
     }

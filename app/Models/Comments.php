@@ -154,6 +154,7 @@ class Comments extends ModelBase
             $transaction->commit();
             return true;
         } catch (TxFailed $e) {
+            $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }
     }
@@ -194,6 +195,7 @@ class Comments extends ModelBase
             $transaction->commit();
             return true;
         } catch (TxFailed $e) {
+            $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }
     }

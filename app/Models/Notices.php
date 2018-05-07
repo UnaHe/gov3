@@ -251,7 +251,7 @@ class Notices extends ModelBase
             // 保存.
             $transaction->commit();
             return true;
-        }catch (TxFailed $e) {
+        } catch (TxFailed $e) {
             $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }

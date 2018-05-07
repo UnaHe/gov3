@@ -140,6 +140,7 @@ class QrCodeController extends ControllerBase
 
     /**
      * 更新or添加.
+     * @throws \Exception
      */
     public function updateAction()
     {
@@ -189,54 +190,58 @@ class QrCodeController extends ControllerBase
 
         $user = $this->session->get('user');
 
-        if($id === '0'){
-            //新增
-            $params['project_id'] = !empty($user['project_id']) ? $user['project_id'] : $params['project_id'];
-            // 开启事务.
-            $this->db->begin();
+        $Forwards = new Forwards();
 
-            $old_department = Forwards::findFirst([
-                'project_id = :project_id: AND department_id = :department_id:',
-                'bind' => [
-                    'project_id' => $projectId,
-                    'department_id'=>$departmentId
-                ]
-            ]);
+        // 开启事务.
+        $this->db->begin();
 
-            if ($old_department !== false) {
-                if ($old_department->delete() === false){
-                    $this->db->rollback();
-                    return $this->flash->error('系统错误，请稍后重试');
+        try{
+
+            if($id === '0'){
+                //新增
+                $params['project_id'] = !empty($user['project_id']) ? $user['project_id'] : $params['project_id'];
+
+                $old_department = $Forwards->findFirst([
+                    'project_id = :project_id: AND department_id = :department_id:',
+                    'bind' => [
+                        'project_id' => $projectId,
+                        'department_id'=>$departmentId
+                    ]
+                ]);
+
+                if ($old_department !== false) {
+                    if ($old_department->delete() === false){
+                        throw new \LogicException('绑定失败，请稍后重试');
+                    }
+                }
+
+                if ($Forwards->create($params) === false) {
+                    throw new \LogicException('创建失败，请稍后重试');
+                }
+            }else{
+                // 更新.
+                $department = $Forwards->findFirst([
+                    'id = :id:',
+                    'bind' => [
+                        'id' => $id
+                    ]
+                ]);
+
+                if($department->update($params) === false) {
+                    throw new \LogicException('更新失败，请稍后重试');
                 }
             }
 
-            if ((new Forwards())->create($params) === true) {
-                $this->db->commit();
-
-                $res = true;
-            } else {
-                $this->db->rollback();
-
-                $res = false;
-            }
-        }else{
-            // 更新.
-            $res = Forwards::findFirst([
-                'id = :id:',
-                'bind' => [
-                    'id' => $id
-                ]
-            ])->update($params);
-        }
-
-        if ($res) {
+            // 保存.
+            $this->db->commit();
             $this->flashSession->success('绑定成功');
-
             return $this->response->redirect('admin/qrcode');
-        } else {
-            return $this->flash->error('绑定失败，请稍后重试');
+        }catch (\Exception $e){
+            $this->db->rollback();
+            $error = $e instanceof \LogicException ? $e->getMessage() : '系统错误，请稍后重试';
+            $this->flashSession->error($error);
+            return $this->response->redirect('admin/qrcode');
         }
-
     }
 
     /**

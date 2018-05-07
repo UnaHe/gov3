@@ -146,11 +146,13 @@ class NoticeController extends ControllerBase
      */
     public function deleteAction()
     {
-        try{
-            $noticeId = $this->request->getPost('notice_id');
+        // 获取参数.
+        $noticeId = $this->request->getPost('notice_id');
 
-            // 开启事务.
-            $this->db->begin();
+        // 开启事务.
+        $this->db->begin();
+
+        try{
 
             // 关联表.
             $Dn = DepartmentNotices::find([
@@ -162,7 +164,6 @@ class NoticeController extends ControllerBase
 
             foreach ($Dn as $v) {
                 if ($v->delete() === false) {
-                    $this->db->rollback();
                     throw new \LogicException('删除关联表失败');
                 }
             }
@@ -176,7 +177,6 @@ class NoticeController extends ControllerBase
             ]);
 
             if ($Notice->delete() === false) {
-                $this->db->rollback();
                 throw new \LogicException('删除公告失败');
             }
 
@@ -184,8 +184,9 @@ class NoticeController extends ControllerBase
             $this->db->commit();
             return $this->ajaxSuccess('删除成功', 201);
         }catch (\Exception $e){
+            $this->db->rollback();
             $error = $e instanceof \LogicException ? $e->getMessage() : '删除失败，请稍后重试';
-            throw new \Exception($error);
+            return $this->ajaxError($error);
         }
     }
 
