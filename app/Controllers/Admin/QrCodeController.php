@@ -174,9 +174,9 @@ class QrCodeController extends ControllerBase
         $APP_URL = $this->config->APP_URL;
         $route = '/status/workerStatusList';
 
-        //匹配加号
-        $p = str_replace('+','%2B', CryptModel::encrypt($projectId,CryptModel::KEY));
-        $d = str_replace('+','%2B', CryptModel::encrypt($departmentId, CryptModel::KEY));
+        // 匹配加号.
+        $p = str_replace('+','%2B', CryptModel::encrypt($projectId,CryptModel::POINT_KEY));
+        $d = str_replace('+','%2B', CryptModel::encrypt($departmentId, CryptModel::POINT_KEY));
 
         $forwardString = $APP_URL . $route . '?p=' . $p . '&d=' . $d;
 
