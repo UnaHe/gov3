@@ -14,7 +14,7 @@ use app\Models\Users;
 /**
  * 登录控制器
  * Class LoginController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class LoginController extends ControllerBase
 {

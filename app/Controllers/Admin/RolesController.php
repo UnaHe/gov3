@@ -16,7 +16,7 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 /**
  * 角色控制器
  * Class RolesController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class RolesController  extends ControllerBase
 {

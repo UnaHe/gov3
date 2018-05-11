@@ -19,7 +19,7 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 /**
  * 人员状态控制器
  * Class StatusController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class StatusController extends ControllerBase
 {
@@ -473,25 +473,25 @@ class StatusController extends ControllerBase
 
         $projects = array_unique($projects);
 
-        $project_default_status = Status::getDefaultStatusByProject($projects);
+        $project_default_status = (new Status())->getDefaultStatusByProject($projects);
 
         $project_default_status_arr = [];
         foreach ($project_default_status as $v) {
             $project_default_status_arr[$v->project_id][$v->status_is_default] = $v;
         }
+        unset($project_default_status);
 
         // 对象赋值循环内可以, 出了循环失效, 曲线救国.
         $params = [];
-
         foreach ($data['list']->items as $k => $v) {
             if ($v->user_status_id) {
-                //其他事件
+                // 其他事件.
                 $params[$v->a->user_id]['status_id'] = $v->status_id;
                 $params[$v->a->user_id]['status_name'] = $v->status_name;
                 $params[$v->a->user_id]['status_color'] = $v->status_color;
                 $params[$v->a->user_id]['user_status_desc'] = $v->user_status_desc;
             } else {
-                //默认事件
+                // 默认事件.
                 $key = (date("H:i",  $input['time']) > $v->a->work_start_time && date("H:i",  $input['time']) < $v->a->work_end_time) ? 1 : 2;
                 $project = isset($project_default_status_arr[$v->a->project_id]) && array_key_exists($key, $project_default_status_arr[$v->a->project_id]) !== false ? $v->a->project_id : 0;
                 $params[$v->a->user_id]['status_id'] = $project_default_status_arr[$project][$key]->status_id;

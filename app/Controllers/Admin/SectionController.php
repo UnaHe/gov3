@@ -14,7 +14,7 @@ use app\Models\Sections;
 /**
  * 部门控制器
  * Class SectionController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class SectionController extends ControllerBase
 {

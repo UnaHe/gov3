@@ -14,7 +14,7 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 /**
  * 权限控制器
  * Class PermissionsController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class PermissionsController extends ControllerBase
 {

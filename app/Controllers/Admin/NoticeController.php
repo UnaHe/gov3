@@ -16,7 +16,7 @@ use app\Models\Project;
 /**
  * 告示控制器
  * Class NoticeController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class NoticeController extends ControllerBase
 {

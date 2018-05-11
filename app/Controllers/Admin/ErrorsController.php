@@ -11,7 +11,7 @@ namespace app\Controllers\Admin;
 /**
  * 错误控制器
  * Class ErrorsController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class ErrorsController  extends ControllerBase
 {

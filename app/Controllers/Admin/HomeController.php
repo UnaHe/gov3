@@ -13,7 +13,7 @@ use app\Models\Users;
 /**
  * 主页控制器
  * Class HomeController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class HomeController extends ControllerBase
 {

@@ -20,7 +20,7 @@ use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 /**
  * 单位控制器
  * Class ProjectController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class ProjectController extends ControllerBase
 {

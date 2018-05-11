@@ -16,7 +16,7 @@ use app\Models\Sections;
 /**
  * 留言控制器
  * Class CommentController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class CommentController extends ControllerBase
 {

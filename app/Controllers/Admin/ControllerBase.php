@@ -33,7 +33,10 @@ class ControllerBase extends Controller
 
     public function afterExecuteRoute()
     {
+        // 设置视图目录.
         $this->view->setViewsDir($this->view->getViewsDir() . 'admin/');
+
+        // 设置页面公共参数.
         $this->view->setVars([
             '_csrfKey' => $this->security->getTokenKey(),
             '_csrf' => $this->security->getToken(),

@@ -5,57 +5,62 @@
  * Date: 2018/4/3
  * Time: 14:56
  */
+use Phalcon\Mvc\Router\Group as RouterGroup;
+use Phalcon\Mvc\Router;
 
-$router = new Phalcon\Mvc\Router(false);
+// 默认事件.
+$router = new Router(false);
 
 /**
- * 首页相关.
+ * Admin路由组.
+ */
+$admin = new RouterGroup([
+    'namespace'  => 'app\Controllers\Admin',
+]);
+
+// URL前缀.
+$admin->setPrefix('/admin');
+
+/**
+ * 后台首页相关.
  */
 
 // 登录页面.
-$router->addGet("/", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/", [
     'controller' => 'login',
     'action'     => 'index',
 ]);
-$router->addGet("/admin/login", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/login", [
     'controller' => 'login',
     'action'     => 'index',
 ]);
-$router->addPost("/admin/login", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost("/login", [
     'controller' => 'login',
     'action'     => 'login',
 ]);
 
 // 主页.
-$router->addGet("/admin/home", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/home", [
     'controller' => 'home',
     'action'     => 'index',
 ]);
 
 // 修改密码.
-$router->addGet("/admin/changepwd", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/changepwd", [
     'controller' => 'home',
     'action'     => 'changePwd',
 ]);
-$router->addPost("/admin/updatepwd", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost("/updatepwd", [
     'controller' => 'home',
     'action'     => 'updatePwd',
 ]);
-$router->addPost("/admin/authpwd", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost("/authpwd", [
     'controller' => 'home',
     'action'     => 'authPwd',
 ]);
 
 // 退出登录.
-$router->addGet("/admin/logout", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/logout", [
     'controller' => 'login',
     'action'     => 'logout',
 ]);
@@ -65,33 +70,29 @@ $router->addGet("/admin/logout", [
  */
 
 // 图片上传.
-$router->addPost('/admin/upload', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/upload', [
     'controller' => 'common',
     'action'     => 'upload',
 ]);
 
 // 得到单位列表通过项目id.
-$router->addPost('/admin/ajaxGetOptionsByProject', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/ajaxGetOptionsByProject', [
     'controller' => 'common',
     'action'     => 'ajaxGetOptionsByProject',
 ]);
 
 /**
- * Errors
+ * Errors.
  */
 
 // 401.
-$router->addGet("/admin/errors/show401", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/errors/show401", [
     'controller' => 'errors',
     'action'     => 'show401',
 ]);
 
 // 404.
-$router->addGet("/admin/errors/show404", [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet("/errors/show404", [
     'controller' => 'errors',
     'action'     => 'show404',
 ]);
@@ -99,15 +100,29 @@ $router->addGet("/admin/errors/show404", [
 /**
  * 页面未找到.
  */
-$router->notFound(
-    [
-        'namespace'  => 'app\Controllers\Admin',
-        'controller' => 'errors',
-        'action'     => 'show404',
-    ]
-);
+$router->notFound([
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'errors',
+    'action'     => 'show404',
+]);
 
+// 引入路由文件.
 include 'routes/admin.php';
-//include 'routes/User.php';
+
+// 注册路由组.
+$router->mount($admin);
+
+/**
+ * Home路由组.
+ */
+$home = new RouterGroup([
+    'namespace'  => 'app\Controllers\Home',
+]);
+
+// 引入路由文件.
+include 'routes/Home.php';
+
+// 注册路由组.
+$router->mount($home);
 
 return $router;

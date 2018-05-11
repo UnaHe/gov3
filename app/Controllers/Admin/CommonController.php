@@ -15,7 +15,7 @@ use app\Models\Status;
 /**
  * 通用控制器
  * Class CommonController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class CommonController extends ControllerBase
 {

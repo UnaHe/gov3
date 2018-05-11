@@ -15,7 +15,7 @@ use app\Models\Users;
 /**
  * 单位控制器
  * Class DepartmentController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class DepartmentController extends ControllerBase
 {

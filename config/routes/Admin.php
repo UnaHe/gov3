@@ -11,69 +11,59 @@
  */
 
 // 单位列表.
-$router->addGet('/admin/project', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/project', [
     'controller' => 'project',
     'action'     => 'index',
 ]);
 
 // 添加单位页面.
-$router->addGet('/admin/project/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/project/create', [
     'controller' => 'project',
     'action'     => 'create',
 ]);
 
 // 保存单位.
-$router->addPost('/admin/project', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/project', [
     'controller' => 'project',
     'action'     => 'save',
 ]);
 
 // 编辑单位信息.
-$router->addGet('/admin/project/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/project/{id:[0-9]+}/edit', [
     'controller' => 'project',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/project/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/project/update', [
     'controller' => 'project',
     'action'     => 'update',
 ]);
 
 // 关闭单位.
-$router->addPost('/admin/project/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/project/delete', [
     'controller' => 'project',
     'action'     => 'delete',
 ]);
 
 // 显示单位详情.
-$router->addPost('/admin/project/show', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/project/show', [
     'controller' => 'project',
     'action'     => 'show',
 ]);
 
 // 创建管理员.
-$router->addGet('/admin/project/createadmin', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/project/createadmin', [
     'controller' => 'project',
     'action'     => 'createAdmin',
 ]);
 
 // 保存管理员.
-$router->addPost('/admin/project/saveadmin', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/project/saveadmin', [
     'controller' => 'project',
     'action'     => 'saveAdmin',
 ]);
 
 // 管理员列表.
-$router->addGet('/admin/project/adminuserlist', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/project/adminuserlist', [
     'controller' => 'project',
     'action'     => 'adminUserList',
 ]);
@@ -83,81 +73,69 @@ $router->addGet('/admin/project/adminuserlist', [
  */
 
 // 人员列表.
-$router->addGet('/admin/users', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/users', [
     'controller' => 'user',
     'action'     => 'index',
 ]);
 
 // 新增用户.
-$router->addGet('/admin/users/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/users/create', [
     'controller' => 'user',
     'action'     => 'create',
 ]);
 
 // 保存用户.
-$router->addPost('/admin/users', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users', [
     'controller' => 'user',
     'action'     => 'save',
 ]);
 
 // 修改用户信息.
-$router->addGet('/admin/users/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/users/{id:[0-9]+}/edit', [
     'controller' => 'user',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/users/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users/update', [
     'controller' => 'user',
     'action'     => 'update',
 ]);
 
 // 删除用户.
-$router->addPost('/admin/users/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users/delete', [
     'controller' => 'user',
     'action'     => 'delete',
 ]);
 
 // 重置密码.
-$router->addPost('/admin/users/resetpwd', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users/resetpwd', [
     'controller' => 'user',
     'action'     => 'resetPwd',
 ]);
 
 // 新增归属.
-$router->add('/admin/users/addbelong', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->add('/users/addbelong', [
     'controller' => 'user',
     'action'     => 'addBelong',
 ]);
 
 // 角色管理.
-$router->addGet('/admin/users/{id:[0-9]+}/role', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/users/{id:[0-9]+}/role', [
     'controller' => 'user',
     'action'     => 'role',
 ]);
-$router->addPost('/admin/users/role', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users/role', [
     'controller' => 'user',
     'action'     => 'roleSave',
 ]);
 
 // 人员归属关系列表.
-$router->addGet('/admin/users/belongs', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/users/belongs', [
     'controller' => 'user',
     'action'     => 'belongs',
 ]);
 
 // 删除归属.
-$router->addPost('/admin/users/belongs/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/users/belongs/delete', [
     'controller' => 'user',
     'action'     => 'belongsDelete',
 ]);
@@ -167,62 +145,53 @@ $router->addPost('/admin/users/belongs/delete', [
  */
 
 // 科室列表.
-$router->addGet('/admin/department', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/department', [
     'controller' => 'department',
     'action'     => 'index',
 ]);
 
 // 添加科室.
-$router->addGet('/admin/department/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/department/create', [
     'controller' => 'department',
     'action'     => 'create',
 ]);
 
 // 保存科室.
-$router->addPost('/admin/department', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department', [
     'controller' => 'department',
     'action'     => 'save',
 ]);
 
 // 显示科室详情.
-$router->addPost('/admin/department/show', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department/show', [
     'controller' => 'department',
     'action'     => 'show',
 ]);
 
 // 编辑科室详情.
-$router->addGet('/admin/department/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/department/{id:[0-9]+}/edit', [
     'controller' => 'department',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/department/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department/update', [
     'controller' => 'department',
     'action'     => 'update',
 ]);
 
 // 删除科室.
-$router->addPost('/admin/department/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department/delete', [
     'controller' => 'department',
     'action'     => 'delete',
 ]);
 
 // 获取单位所有人员.
-$router->addPost('/admin/department/ajaxGetUsersByDepartmentOrOthers', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department/ajaxGetUsersByDepartmentOrOthers', [
     'controller' => 'department',
     'action'     => 'ajaxGetUsersByDepartmentOrOthers',
 ]);
 
 // 更新人员所在科室.
-$router->addPost('/admin/department/updateUsersDepartment', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/department/updateUsersDepartment', [
     'controller' => 'department',
     'action'     => 'updateUsersDepartment',
 ]);
@@ -233,41 +202,35 @@ $router->addPost('/admin/department/updateUsersDepartment', [
  */
 
 // 二维码列表.
-$router->addGet('/admin/qrcode', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/qrcode', [
     'controller' => 'qrcode',
     'action'     => 'index',
 ]);
 
 // 编辑二维码信息.
-$router->addGet('/admin/qrcode/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/qrcode/{id:[0-9]+}/edit', [
     'controller' => 'qrcode',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/qrcode/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/qrcode/update', [
     'controller' => 'qrcode',
     'action'     => 'update',
 ]);
 
 // 验证二维码ID.
-$router->addPost('/admin/qrcode/valid', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/qrcode/valid', [
     'controller' => 'qrcode',
     'action'     => 'valid',
 ]);
 
 // 删除绑定.
-$router->addPost('/admin/qrcode/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/qrcode/delete', [
     'controller' => 'qrcode',
     'action'     => 'delete',
 ]);
 
 // 获取二维码.
-$router->addPost('/admin/qrcode/ajaxGetForwardQrCode', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/qrcode/ajaxGetForwardQrCode', [
     'controller' => 'qrcode',
     'action'     => 'ajaxGetForwardQrCode',
 ]);
@@ -277,36 +240,31 @@ $router->addPost('/admin/qrcode/ajaxGetForwardQrCode', [
  */
 
 // 留言列表.
-$router->addGet('/admin/comment', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/comment', [
     'controller' => 'comment',
     'action'     => 'index',
 ]);
 
 // 批量修改留言状态.
-$router->addPost('/admin/comment/changeall', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/comment/changeall', [
     'controller' => 'comment',
     'action'     => 'changeAll',
 ]);
 
 // 批量删除留言.
-$router->addPost('/admin/comment/deleteall', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/comment/deleteall', [
     'controller' => 'comment',
     'action'     => 'deleteAll',
 ]);
 
 // 修改一条留言状态.
-$router->addPost('/admin/comment/change', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/comment/change', [
     'controller' => 'comment',
     'action'     => 'change',
 ]);
 
 // 删除一条留言.
-$router->addPost('/admin/comment/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/comment/delete', [
     'controller' => 'comment',
     'action'     => 'delete',
 ]);
@@ -316,69 +274,59 @@ $router->addPost('/admin/comment/delete', [
  */
 
 // 告示列表.
-$router->addGet('/admin/notice', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/notice', [
     'controller' => 'notice',
     'action'     => 'index',
 ]);
 
 // 添加告示.
-$router->addGet('/admin/notice/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/notice/create', [
     'controller' => 'notice',
     'action'     => 'create',
 ]);
 
 // 保存告示.
-$router->addPost('/admin/notice', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice', [
     'controller' => 'notice',
     'action'     => 'save',
 ]);
 
 // 编辑告示详情.
-$router->addGet('/admin/notice/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/notice/{id:[0-9]+}/edit', [
     'controller' => 'notice',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/notice/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/update', [
     'controller' => 'notice',
     'action'     => 'update',
 ]);
 
 // 编辑公告部门.
-$router->addPost('/admin/notice/ajaxGetDepartments', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/ajaxGetDepartments', [
     'controller' => 'notice',
     'action'     => 'ajaxGetDepartments',
 ]);
 
 // 保存公告部门列表.
-$router->addPost('/admin/notice/updateNoticeDepartment', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/updateNoticeDepartment', [
     'controller' => 'notice',
     'action'     => 'updateNoticeDepartment',
 ]);
 
 // 删除公告.
-$router->addPost('/admin/notice/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/delete', [
     'controller' => 'notice',
     'action'     => 'delete',
 ]);
 
 // 显示详情.
-$router->addPost('/admin/notice/show', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/show', [
     'controller' => 'notice',
     'action'     => 'show',
 ]);
 
 // 告示状态变更.
-$router->addPost('/admin/notice/changestatus', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/notice/changestatus', [
     'controller' => 'notice',
     'action'     => 'changeStatus',
 ]);
@@ -388,111 +336,95 @@ $router->addPost('/admin/notice/changestatus', [
  */
 
 // 事件列表.
-$router->addGet('/admin/status', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status', [
     'controller' => 'status',
     'action'     => 'index',
 ]);
 
 // 添加事件.
-$router->addGet('/admin/status/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status/create', [
     'controller' => 'status',
     'action'     => 'create',
 ]);
 
 // 保存事件.
-$router->addPost('/admin/status', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status', [
     'controller' => 'status',
     'action'     => 'save',
 ]);
 
 // 修改事件信息.
-$router->addGet('/admin/status/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status/{id:[0-9]+}/edit', [
     'controller' => 'status',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/status/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/update', [
     'controller' => 'status',
     'action'     => 'update',
 ]);
 
 // 删除事件.
-$router->addPost('/admin/status/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/delete', [
     'controller' => 'status',
     'action'     => 'delete',
 ]);
 
 // 修改排序.
-$router->addPost('/admin/status/changeOrder', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/changeOrder', [
     'controller' => 'status',
     'action'     => 'changeOrder',
 ]);
 
 // 设置默认事件.
-$router->addPost('/admin/status/setDefault', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/setDefault', [
     'controller' => 'status',
     'action'     => 'setDefault',
 ]);
 
 // 验证事件名称.
-$router->addPost('/admin/status/validName', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/validName', [
     'controller' => 'status',
     'action'     => 'validName',
 ]);
 
 // 设置工作时间表.
-$router->addGet('/admin/status/settingworktimelist', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status/settingworktimelist', [
     'controller' => 'status',
     'action'     => 'settingWorkTimeList',
 ]);
 
 // 设置工作时间.
-$router->addPost('/admin/status/settingWorkTime', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/settingWorkTime', [
     'controller' => 'status',
     'action'     => 'settingWorkTime',
 ]);
 
 // 已设事件.
-$router->addGet('/admin/status/userStatus', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status/userStatus', [
     'controller' => 'status',
     'action'     => 'userStatus',
 ]);
 
 // 修改状态.
-$router->addPost('/admin/status/changeStatus', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/changeStatus', [
     'controller' => 'status',
     'action'     => 'changeStatus',
 ]);
 
 // 人员(员工)状态列表.
-$router->addGet('/admin/status/workerStatusList', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/status/workerStatusList', [
     'controller' => 'status',
     'action'     => 'workerStatusList',
 ]);
 
 // 得到用户可选的事件选项.
-$router->addPost('/admin/status/ajaxGetStatusOptionByUser', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/ajaxGetStatusOptionByUser', [
     'controller' => 'status',
     'action'     => 'ajaxGetStatusOptionByUser',
 ]);
 
 // 保存用户事件.
-$router->addPost('/admin/status/saveUserStatus', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/status/saveUserStatus', [
     'controller' => 'status',
     'action'     => 'saveUserStatus',
 ]);
@@ -502,55 +434,47 @@ $router->addPost('/admin/status/saveUserStatus', [
  */
 
 // 部门列表.
-$router->addGet('/admin/section', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/section', [
     'controller' => 'section',
     'action'     => 'index',
 ]);
 
 // 添加部门页面.
-$router->addGet('/admin/section/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/section/create', [
     'controller' => 'section',
     'action'     => 'create',
 ]);
 
 // 保存部门.
-$router->addPost('/admin/section', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/section', [
     'controller' => 'section',
     'action'     => 'save',
 ]);
 
 // 修改部门信息.
-$router->addGet('/admin/section/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/section/{id:[0-9]+}/edit', [
     'controller' => 'section',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/section/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/section/update', [
     'controller' => 'section',
     'action'     => 'update',
 ]);
 
 // 获取部门人员.
-$router->addPost('/admin/section/ajaxGetUsersBySectionOrOthers', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/section/ajaxGetUsersBySectionOrOthers', [
     'controller' => 'section',
     'action'     => 'ajaxGetUsersBySectionOrOthers',
 ]);
 
 // 修改部门人员.
-$router->addPost('/admin/section/updateUsersSection', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/section/updateUsersSection', [
     'controller' => 'section',
     'action'     => 'updateUsersSection',
 ]);
 
 // 删除部门.
-$router->addPost('/admin/section/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/section/delete', [
     'controller' => 'section',
     'action'     => 'delete',
 ]);
@@ -560,41 +484,35 @@ $router->addPost('/admin/section/delete', [
  */
 
 // 权限列表.
-$router->addGet('/admin/permissions', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/permissions', [
     'controller' => 'permissions',
     'action'     => 'index',
 ]);
 
 // 添加权限.
-$router->addGet('/admin/permissions/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/permissions/create', [
     'controller' => 'permissions',
     'action'     => 'create',
 ]);
 
 // 保存.
-$router->addPost('/admin/permissions/save', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/permissions/save', [
     'controller' => 'permissions',
     'action'     => 'save',
 ]);
 
 // 编辑权限信息.
-$router->addGet('/admin/permissions/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/permissions/{id:[0-9]+}/edit', [
     'controller' => 'permissions',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/permissions/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/permissions/update', [
     'controller' => 'permissions',
     'action'     => 'update',
 ]);
 
 // 删除权限.
-$router->addPost('/admin/permissions/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/permissions/delete', [
     'controller' => 'permissions',
     'action'     => 'delete',
 ]);
@@ -604,55 +522,47 @@ $router->addPost('/admin/permissions/delete', [
  */
 
 // 角色列表.
-$router->addGet('/admin/roles', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/roles', [
     'controller' => 'roles',
     'action'     => 'index',
 ]);
 
 // 编辑角色信息.
-$router->addGet('/admin/roles/{id:[0-9]+}/edit', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/roles/{id:[0-9]+}/edit', [
     'controller' => 'roles',
     'action'     => 'edit',
 ]);
-$router->addPost('/admin/roles/update', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/roles/update', [
     'controller' => 'roles',
     'action'     => 'update',
 ]);
 
 // 添加角色.
-$router->addGet('/admin/roles/create', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/roles/create', [
     'controller' => 'roles',
     'action'     => 'create',
 ]);
 
 // 保存.
-$router->addPost('/admin/roles/save', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/roles/save', [
     'controller' => 'roles',
     'action'     => 'save',
 ]);
 
 // 删除角色.
-$router->addPost('/admin/roles/delete', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/roles/delete', [
     'controller' => 'roles',
     'action'     => 'delete',
 ]);
 
 // 角色权限列表.
-$router->addGet('/admin/roles/{id:[0-9]+}/permission', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addGet('/roles/{id:[0-9]+}/permission', [
     'controller' => 'roles',
     'action'     => 'permission',
 ]);
 
 // 保存角色权限.
-$router->addPost('/admin/roles/permission', [
-    'namespace'  => 'app\Controllers\Admin',
+$admin->addPost('/roles/permission', [
     'controller' => 'roles',
     'action'     => 'savePermission',
 ]);

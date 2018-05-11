@@ -77,6 +77,7 @@ class SecurityDeep extends Plugin {
         // 控制器,方法名.
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
+        $namespace = $dispatcher->getNamespaceName();
 
         $role = '';
 
@@ -88,8 +89,12 @@ class SecurityDeep extends Plugin {
         if (empty($role)) $role = 'User';
         $acl = $this->_getAcl();
 
-        // 是否有访问权限.
-        $isAllowed = $acl->isAllowed($role, $controller, $action);
+        // 是否访问后台并且是否有有访问权限.
+        if ($namespace === 'app\Controllers\Admin') {
+            $isAllowed = $acl->isAllowed($role, $controller, $action);
+        } else {
+            $isAllowed = true;
+        }
 
         if (!$isAllowed) {
             $dispatcher->forward(

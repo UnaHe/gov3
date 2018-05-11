@@ -162,11 +162,9 @@ class Status extends ModelBase
      * @param $projects
      * @return mixed
      */
-    public static function getDefaultStatusByProject($projects)
+    public function getDefaultStatusByProject($projects)
     {
         $status_list = [];
-        $status = new Status();
-
         if (!empty($projects)) {
             if (is_array($projects)) {
 
@@ -178,11 +176,11 @@ class Status extends ModelBase
 
                 $sql = 'select "n_z_status".* from "n_z_status" where "status_is_default" = 1 or "status_is_default" = 2 and "n_z_status"."project_id" in ('.$params.') or "n_z_status"."project_id" = 0';
 
-                $status_list = new Simple(null, $status, $status->getReadConnection()->query($sql));
+                $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql));
             } else {
                 $sql = 'select "n_z_status".* from "n_z_status" where "status_is_default" = 1 or "status_is_default" = 2 and "n_z_status"."project_id" = ? or "n_z_status"."project_id" = 0';
 
-                $status_list = new Simple(null, $status, $status->getReadConnection()->query($sql, $projects));
+                $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql, [$projects]));
             }
         }
 

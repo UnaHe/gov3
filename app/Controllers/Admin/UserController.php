@@ -20,7 +20,7 @@ use Phalcon\Http\Response;
 /**
  * 用户控制器
  * Class UserController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class UserController extends ControllerBase
 {

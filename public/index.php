@@ -9,6 +9,7 @@
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Application;
 
+ini_set("display_errors", "On");
 error_reporting(E_ALL);
 date_default_timezone_set('PRC');
 
@@ -17,8 +18,6 @@ date_default_timezone_set('PRC');
  */
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
-
-
 
 try {
     /**

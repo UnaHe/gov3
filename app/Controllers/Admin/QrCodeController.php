@@ -17,7 +17,7 @@ use QRcode;
 /**
  * 二维码控制器
  * Class LoginController
- * @package app\Controller
+ * @package app\Controller\Admin
  */
 class QrCodeController extends ControllerBase
 {
