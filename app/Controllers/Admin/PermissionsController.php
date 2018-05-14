@@ -94,7 +94,7 @@ class PermissionsController extends ControllerBase
     /**
      * 编辑权限信息.
      * @param $permissionId
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
      */
     public function editAction($permissionId)
     {
@@ -112,7 +112,9 @@ class PermissionsController extends ControllerBase
             'permission' => $permission,
         ]);
 
-        return $this->view->pick('permissions/create');
+        $this->view->pick('permissions/create');
+
+        return true;
     }
 
     /**

@@ -147,7 +147,7 @@ class StatusController extends ControllerBase
     /**
      * 修改事件信息.
      * @param $statusId
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
      */
     public function editAction($statusId)
     {
@@ -169,10 +169,12 @@ class StatusController extends ControllerBase
         }
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'status' => $status,
             'project' => $project,
         ]);
+
+        return true;
     }
 
     /**
@@ -477,13 +479,15 @@ class StatusController extends ControllerBase
 
         $project_default_status_arr = [];
         foreach ($project_default_status as $v) {
-            $project_default_status_arr[$v->project_id][$v->status_is_default] = $v;
+            $project_default_status_arr[$v->project_id][$v->status_is_default]['status_id'] = $v->status_id;
+            $project_default_status_arr[$v->project_id][$v->status_is_default]['status_name'] = $v->status_name;
+            $project_default_status_arr[$v->project_id][$v->status_is_default]['status_color'] = $v->status_color;
         }
         unset($project_default_status);
 
         // 对象赋值循环内可以, 出了循环失效, 曲线救国.
         $params = [];
-        foreach ($data['list']->items as $k => $v) {
+        foreach ($data['list']->items as $v) {
             if ($v->user_status_id) {
                 // 其他事件.
                 $params[$v->a->user_id]['status_id'] = $v->status_id;
@@ -492,11 +496,11 @@ class StatusController extends ControllerBase
                 $params[$v->a->user_id]['user_status_desc'] = $v->user_status_desc;
             } else {
                 // 默认事件.
-                $key = (date("H:i",  $input['time']) > $v->a->work_start_time && date("H:i",  $input['time']) < $v->a->work_end_time) ? 1 : 2;
+                $key = (date("H:i", $input['time']) > $v->a->work_start_time && date("H:i",  $input['time']) < $v->a->work_end_time) ? 1 : 2;
                 $project = isset($project_default_status_arr[$v->a->project_id]) && array_key_exists($key, $project_default_status_arr[$v->a->project_id]) !== false ? $v->a->project_id : 0;
-                $params[$v->a->user_id]['status_id'] = $project_default_status_arr[$project][$key]->status_id;
-                $params[$v->a->user_id]['status_name'] = $project_default_status_arr[$project][$key]->status_name;
-                $params[$v->a->user_id]['status_color'] = $project_default_status_arr[$project][$key]->status_color;
+                $params[$v->a->user_id]['status_id'] = $project_default_status_arr[$project][$key]['status_id'];
+                $params[$v->a->user_id]['status_name'] = $project_default_status_arr[$project][$key]['status_name'];
+                $params[$v->a->user_id]['status_color'] = $project_default_status_arr[$project][$key]['status_color'];
                 $params[$v->a->user_id]['user_status_desc'] = '默认状态';
             }
         }

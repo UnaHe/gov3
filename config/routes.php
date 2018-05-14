@@ -97,15 +97,6 @@ $admin->addGet("/errors/show404", [
     'action'     => 'show404',
 ]);
 
-/**
- * 页面未找到.
- */
-$router->notFound([
-    'namespace'  => 'app\Controllers\Admin',
-    'controller' => 'errors',
-    'action'     => 'show404',
-]);
-
 // 引入路由文件.
 include 'routes/admin.php';
 
@@ -124,5 +115,14 @@ include 'routes/Home.php';
 
 // 注册路由组.
 $router->mount($home);
+
+/**
+ * 页面未找到.
+ */
+$router->notFound([
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'errors',
+    'action'     => 'show404',
+]);
 
 return $router;

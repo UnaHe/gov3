@@ -8,6 +8,7 @@
 
 namespace app\Models;
 
+use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Mvc\Model\Transaction\Failed as TxFailed;
 use Phalcon\Mvc\Model\Transaction\Manager as TxManager;
 
@@ -197,6 +198,35 @@ class Departments extends ModelBase
             $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    /**
+     * 获取科室列表根据ProjectId.
+     * @param $ProjectId
+     * @param bool $isPage
+     * @param int $page
+     * @param int $limit
+     * @return array|Simple
+     */
+    public function getDepartmentsByProject($ProjectId, $isPage = false, $page = 1, $limit = 10)
+    {
+        $departments = [];
+        if (!empty($ProjectId)) {
+            if ($isPage) {
+                $sql = "SELECT * FROM n_z_departments WHERE project_id = ? LIMIT ? OFFSET ?";
+
+                $offset = ($page - 1) * $limit;
+
+                $departments = new Simple(null, $this, $this->getReadConnection()->query($sql, [$ProjectId, $limit, $offset]));
+            } else {
+                $sql = "SELECT * FROM n_z_departments WHERE project_id = ?";
+
+                $departments = new Simple(null, $this, $this->getReadConnection()->query($sql, [$ProjectId]));
+            }
+
+        }
+
+        return $departments;
     }
 
 }

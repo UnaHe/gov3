@@ -8,6 +8,7 @@
 
 namespace app\Models;
 
+use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 use stdClass;
 
@@ -139,6 +140,46 @@ class UserStatus extends ModelBase
         $data = $paginator->getPaginate();
 
         return $data;
+    }
+
+    /**
+     * 获取事务列表,根据userId.
+     * @param $users
+     * @param bool $time
+     * @return array
+     */
+    public function getStatusByUser($users, $time = false)
+    {
+        $data = false;
+        if (!empty($users)) {
+            $time = $time ? $time : time();
+            if (is_array($users)) {
+
+                $params = '';
+                foreach ($users as $v) {
+                    $params .= $v . ',';
+                }
+                $params = rtrim($params, ',');
+
+                $sql = 'SELECT n_z_user_status.*, n_z_status.status_name, n_z_status.status_color 
+                        FROM n_z_user_status 
+                        LEFT JOIN n_z_status ON n_z_status.status_id = n_z_user_status.status_id 
+                        WHERE n_z_user_status.start_time <= '. $time .' AND n_z_user_status.end_time >= '. $time .' AND n_z_user_status.user_id IN ('.$params.')';
+
+                $data = new Simple(null, $this, $this->getReadConnection()->query($sql));
+            } else if(is_string($users)) {
+                $sql = 'SELECT n_z_user_status.*, n_z_status.status_name, n_z_status.status_color 
+                        FROM n_z_user_status 
+                        LEFT JOIN n_z_status ON n_z_status.status_id = n_z_user_status.status_id 
+                        WHERE n_z_user_status.start_time <= '. $time .' AND n_z_user_status.end_time >= '. $time .' AND n_z_user_status.user_id = ?';
+
+                $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$users]));
+            }
+        }
+
+        $status_list = $data->valid() ? $data->toArray() : false;
+
+        return $status_list;
     }
 
 }

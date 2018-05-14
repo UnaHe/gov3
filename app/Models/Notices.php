@@ -45,34 +45,34 @@ class Notices extends ModelBase
         $params = [];
 
         if (isset($input['department_id']) && !empty($input['department_id'])) {
-            $sql = 'select "n_z_notices".*, "n_z_project"."project_name" as "project_name", "n_z_departments"."department_name" 
-                    from "n_z_notices" 
-                    left join "n_z_department_notices" on "n_z_department_notices"."notice_id" = "n_z_notices"."notice_id" 
-                    inner join "n_z_departments" on "n_z_department_notices"."department_id" = "n_z_departments"."department_id" ';
+            $sql = 'select n_z_notices.*, n_z_project.project_name as project_name, n_z_departments.department_name 
+                    from n_z_notices 
+                    left join n_z_department_notices on n_z_department_notices.notice_id = n_z_notices.notice_id 
+                    inner join n_z_departments on n_z_department_notices.department_id = n_z_departments.department_id ';
         } else {
-            $sql = 'select "n_z_notices".*, "n_z_project"."project_name" as "project_name", b.department_name 
-                    from "n_z_notices" 
+            $sql = 'select n_z_notices.*, n_z_project.project_name as project_name, b.department_name 
+                    from n_z_notices 
                     left join (
                       SELECT dn.notice_id n_id, GROUP_CONCAT(d.department_name) department_name 
                       FROM n_z_department_notices as dn 
                       left join n_z_departments as d on d.department_id = dn.department_id 
                       GROUP BY dn.notice_id
-                    ) b on b.n_id = "n_z_notices"."notice_id" ';
+                    ) b on b.n_id = n_z_notices.notice_id ';
         }
 
-        $sql .= 'left join "n_z_project" on "n_z_notices"."project_id" = "n_z_project"."project_id" ';
+        $sql .= 'left join n_z_project on n_z_notices.project_id = n_z_project.project_id ';
 
         if (isset($input['project_id']) && !empty($input['project_id'])) {
-            $sql .= 'where "n_z_notices"."project_id" = ? ';
+            $sql .= 'where n_z_notices.project_id = ? ';
             $params[] = $input['project_id'];
         }
 
         if (isset($input['department_id']) && !empty($input['department_id'])) {
-            $sql .= 'and "n_z_department_notices"."department_id" = ? ';
+            $sql .= 'and n_z_department_notices.department_id = ? ';
             $params[] = $input['department_id'];
         }
 
-        $sql .= 'order by "n_z_notices"."created_at" desc, "n_z_notices"."project_id" asc ';
+        $sql .= 'order by n_z_notices.created_at desc, n_z_notices.project_id asc ';
 
         $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $params));
 
@@ -347,6 +347,33 @@ class Notices extends ModelBase
             $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    /**
+     * 获取部门的告示列表.
+     * @param $input
+     * @param int $page
+     * @param int $limit
+     * @return array|Simple
+     */
+    public function getListByDepartment($input, $page = 1, $limit = 10)
+    {
+        $notice_list = [];
+        if (isset($input['department_id'])) {
+            $sql = "SELECT to_char(to_timestamp(n_z_notices.created_at), 'YYYY/MM/DD') as created_at, n_z_notices.notice_id, n_z_notices.notice_content, n_z_notices.notice_status, n_z_notices.notice_title 
+                FROM n_z_notices 
+                LEFT JOIN n_z_department_notices AS dn ON dn.notice_id = n_z_notices.notice_id 
+                WHERE dn.department_id = ? AND n_z_notices.notice_status = '1' 
+                ORDER BY n_z_notices.created_at DESC 
+                LIMIT ? 
+                OFFSET ?";
+
+            $offset = ($page - 1) * $limit;
+
+            $notice_list = new Simple(null, $this, $this->getReadConnection()->query($sql, [$input['department_id'], $limit, $offset]));
+        }
+
+        return $notice_list;
     }
 
 }

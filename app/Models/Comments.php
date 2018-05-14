@@ -8,6 +8,7 @@
 
 namespace app\Models;
 
+use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Mvc\Model\Transaction\Failed as TxFailed;
 use Phalcon\Mvc\Model\Transaction\Manager as TxManager;
 use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
@@ -19,9 +20,36 @@ use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
  */
 class Comments extends ModelBase
 {
+    public $created_time;
+
     public function initialize()
     {
         $this->useDynamicUpdate(true);
+    }
+
+    public function beforeSave()
+    {
+        // 设置创建时间.
+        $this->created_time = time();
+    }
+
+    /**
+     * 根据userId查询留言.
+     * @param $user_id
+     * @return array|bool
+     */
+    public function getCommentsByUserId($user_id)
+    {
+        $comment_list = [];
+        if (!empty($user_id)) {
+            $sql = 'SELECT * FROM n_z_comments WHERE user_id = ? ORDER BY created_time DESC LIMIT 5';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_id]));
+
+            $comment_list = $data->valid() ? $data->toArray() : false;
+        }
+
+        return $comment_list;
     }
 
     /**

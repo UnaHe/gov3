@@ -57,6 +57,7 @@ class Users extends ModelBase
 
             $user_info = $data->valid() ? $data->toArray()[0] : false;
         }
+
         return $user_info;
     }
 
@@ -78,6 +79,7 @@ class Users extends ModelBase
 
             $user_info = $data->valid() ? $data->toArray()[0] : false;
         }
+
         return $user_info;
     }
 
@@ -407,6 +409,29 @@ class Users extends ModelBase
         $data = $paginator->getPaginate();
 
         return $data;
+    }
+
+    /**
+     * 获取用户的项目部门等详细信息.
+     * @param $userId
+     * @return array|bool
+     */
+    public function getProjectDetailsById($userId)
+    {
+        $user_info = [];
+        if (!empty($userId)) {
+            $sql = 'SELECT n_z_users.user_id, n_z_users.user_name, n_z_users.user_job, n_z_users.user_image, n_z_users.user_phone, n_z_users.user_sex, n_z_users.user_intro, n_z_users.user_comments, n_z_users.user_age, n_z_users.user_status, n_z_project.project_id, n_z_project.project_name, n_z_project.work_start_time, n_z_project.work_end_time, n_z_departments.department_id, n_z_departments.department_name 
+                    FROM n_z_users 
+                    LEFT JOIN n_z_project ON n_z_project.project_id = n_z_users.project_id 
+                    LEFT JOIN n_z_departments ON n_z_users.department_id = n_z_departments.department_id 
+                    WHERE n_z_users.user_id = ? AND n_z_users.user_status = 1';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$userId]));
+
+            $user_info = $data->valid() ? $data->toArray()[0] : false;
+        }
+
+        return $user_info;
     }
 
 }

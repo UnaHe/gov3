@@ -81,7 +81,7 @@
                         <td class="tc comment_phone">{{v.comments.comment_phone}}</td>
                         <td>
                             <a class="comment_content"
-                               content="{{v.comments.comment_content}}"><?php echo mb_substr($v->comments->comment_content,0,20,'utf-8').'...'; ?></a>
+                               content="{{v.comments.comment_content}}"><?php echo strlen($v->comments->comment_content) > 20 ? mb_substr($v->comments->comment_content,0,20,'utf-8').'...' : $v->comments->comment_content; ?></a>
                         </td>
                         <td>
                             <select id="testSelect"

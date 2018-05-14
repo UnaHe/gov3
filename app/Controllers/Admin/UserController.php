@@ -181,7 +181,7 @@ class UserController extends ControllerBase
     /**
      * 修改用户信息.
      * @param $userId
-     * @return Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
      */
     public function editAction($userId)
     {
@@ -197,11 +197,13 @@ class UserController extends ControllerBase
         $section_list = (new Sections())->getTree(0, 0, $field['project_id']);
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'field' => $field,
             'department_list' => $department_list,
             'section_list' => $section_list,
         ]);
+
+        return true;
     }
 
     /**
@@ -431,7 +433,7 @@ class UserController extends ControllerBase
                 $first_chars['zother'] = 'zother';
 
                 // 页面参数.
-                return $this->view->setVars([
+                $this->view->setVars([
                     'user' => $users,
                     'old_list' => $old_list,
                     'department_list' => $department_list,
@@ -439,6 +441,8 @@ class UserController extends ControllerBase
                     'user_list_by_name' => $user_list_by_name,
                     'first_chars' => $first_chars
                 ]);
+
+                return true;
             }
         }
 
@@ -498,7 +502,7 @@ class UserController extends ControllerBase
     /**
      * 角色管理.
      * @param $userId
-     * @return mixed
+     * @return bool|Response|\Phalcon\Http\ResponseInterface
      */
     public function roleAction($userId)
     {
@@ -517,10 +521,12 @@ class UserController extends ControllerBase
         }
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'roles' => $roles,
             'userRole' => $userRole,
         ]);
+
+        return true;
     }
 
     /**

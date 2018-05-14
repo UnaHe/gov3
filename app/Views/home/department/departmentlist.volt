@@ -21,7 +21,7 @@
     </div>
 
     <script>
-        var url = '{{ url('department/departmentlist?pid=' ~ project_id ~ '&did=' ~ department_id) }}';
+        var url = '{{ url('department/ajaxDepartmentList?pid=' ~ project_id ~ '&did=' ~ department_id) }}';
         $(function () {
             var page_size = 20;
             var page = 1;
@@ -53,18 +53,22 @@
                             "{{ _csrfKey }}": "{{ _csrf }}",
                         },
                         success: function (data) {
-                            $('.list').empty();
-                            if (data.total != 0) {
-                                var result = ul_data(data.data);
-                                $('.list').html(result);
-                                me.resetload();
-                                me.unlock();
-                                me.noData(false);
-                            } else {
-                                have_data = false;
-                                me.noData(true);
-                                me.resetload();
-                                me.unlock();
+                            if(data.status == 200){
+                                $('.list').empty();
+                                if (!data.data) {
+                                    have_data = false;
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(true);
+                                }else{
+                                    var result = ul_data(data.data);
+                                    $('.list').html(result);
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(false);
+                                }
+                            }else{
+                                layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                             }
                         },
                         error: function () {
@@ -86,18 +90,22 @@
                                 page: page
                             },
                             success: function (data) {
-                                page++;
-                                if (data.total == 0) {
-                                    have_data = false;
-                                    me.unlock();
-                                    me.noData(true);
-                                    me.resetload();
-                                    return false;
+                                if(data.status == 200) {
+                                    page++;
+                                    if (!data.data) {
+                                        have_data = false;
+                                        me.noData(true);
+                                        me.resetload();
+                                        me.unlock();
+                                        return false;
+                                    }else{
+                                        var result = ul_data(data.data);
+                                        $('.list').append(result);
+                                        // 每次数据加载完，必须重置
+                                        me.resetload();
+                                    }
                                 }else{
-                                    var result = ul_data(data.data);
-                                    $('.list').append(result);
-                                    // 每次数据加载完，必须重置
-                                    me.resetload();
+                                    layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                                 }
                             },
                             error: function () {

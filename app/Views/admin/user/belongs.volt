@@ -47,7 +47,7 @@
                             <td>{{v.user_job}}</td>
                             <td>{{v.project_name}}</td>
                             <td>{{v.department_name}}</td>
-                            <td><?php echo mb_substr(rtrim(ltrim($v->users,'{'),'}'),0,35,'utf-8').'...'; ?></td>
+                            <td><?php echo strlen($v->users) > 35 ? mb_substr(rtrim(ltrim($v->users,'{'),'}'),0,35,'utf-8').'...' : rtrim(ltrim($v->users,'{'),'}'); ?></td>
                             <td>
                                 <a href="{{url('admin/users/addbelong?user_id=' ~ v.belong_id)}}">编辑</a>
                                 <a href="javascript:;" onclick="del({{v.belong_id}})">删除</a>

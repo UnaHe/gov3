@@ -97,7 +97,7 @@ class RolesController  extends ControllerBase
     /**
      * 编辑角色.
      * @param $roleId
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
      */
     public function editAction($roleId)
     {
@@ -115,7 +115,9 @@ class RolesController  extends ControllerBase
             'role' => $role,
         ]);
 
-        return $this->view->pick('roles/create');
+        $this->view->pick('roles/create');
+
+        return true;
     }
 
     /**
@@ -176,7 +178,7 @@ class RolesController  extends ControllerBase
     /**
      * 角色权限列表.
      * @param $roleId
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
      */
     public function permissionAction($roleId)
     {
@@ -202,11 +204,13 @@ class RolesController  extends ControllerBase
         }
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'roleId' => $roleId,
             'permissions' => $permissions,
             'myPermissionsArray' => $myPermissionsArray,
         ]);
+
+        return true;
     }
 
     /**

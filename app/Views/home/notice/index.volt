@@ -56,21 +56,27 @@
                     $.ajax({
                         type: 'POST',
                         dataType: 'JSON',
-                        url: "{{ url('notice/index?pid=' ~ project_id ~ '&did=' ~ department_id ~ '&page=1') }}",
+                        url: "{{ url('notice/ajaxIndex?pid=' ~ project_id ~ '&did=' ~ department_id ~ '&page=1') }}",
                         data: {
                             "{{ _csrfKey }}": "{{ _csrf }}",
                         },
                         success: function (data) {
-                            $('.list').empty();
-                            if (data.total != 0) {
-                                var result = '';
-                                $.each(data.data, function (k, v) {
-                                    result += '<li>'+
-                                        '<span class="bulletin_time">'+ v.created_at+'</span>'+
-                                        '<span class="bulletin_font text_overflow" onclick="show_detail('+v.notice_id+')">' +
-                                        v.notice_title+'</span>'+
-                                        '</li>';
-                                    {#result += '<li>' +#}
+                            if(data.status == 200){
+                                $('.list').empty();
+                                if (!data.data) {
+                                    have_data = false;
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(true);
+                                }else{
+                                    var result = '';
+                                    $.each(data.data, function (k, v) {
+                                        result += '<li>'+
+                                            '<span class="bulletin_time">'+ v.created_at+'</span>'+
+                                            '<span class="bulletin_font text_overflow" onclick="show_detail('+v.notice_id+')">' +
+                                            v.notice_title+'</span>'+
+                                            '</li>';
+                                        {#result += '<li>' +#}
                                         {#'<span style="margin-right: 50px">' +#}
                                         {#v.created_time +#}
                                         {#'</span>' +#}
@@ -78,20 +84,20 @@
                                         {#v.notice_title +#}
                                         {#'</a>' +#}
                                         {#'</li>';#}
-                                });
-                                $('.list').html(result);
-                                me.resetload();
-                                me.unlock();
-                                me.noData(false);
-                            } else {
-                                have_data = false;
-                                me.noData(true);
-                                me.resetload();
-                                me.unlock();
+                                    });
+                                    $('.list').html(result);
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(false);
+                                }
+                            }else{
+                                layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                             }
                         },
                         error: function () {
                             layer.msg('系统错误，请刷新后重试！', {icon: 2});
+                            // 即使加载出错，也得重置
+//                            me.resetload();
                         }
                     });
                 },
@@ -103,30 +109,34 @@
                         $.ajax({
                             type: 'POST',
                             dataType: 'JSON',
-                            url: "{{ url('notice/index?pid=' ~ project_id ~ '&did=' ~ department_id ~ '&page=') }}" + page,
+                            url: "{{ url('notice/ajaxIndex?pid=' ~ project_id ~ '&did=' ~ department_id ~ '&page=') }}" + page,
                             data: {
                                 "{{ _csrfKey }}": "{{ _csrf }}",
                             },
                             success: function (data) {
-                                page++;
-                                if (data.total == 0) {
-                                    have_data = false;
-                                    me.unlock();
-                                    me.noData(true);
-                                    me.resetload();
-                                    return false;
+                                if(data.status == 200) {
+                                    page++;
+                                    if (!data.data) {
+                                        have_data = false;
+                                        me.noData(true);
+                                        me.resetload();
+                                        me.unlock();
+                                        return false;
+                                    }else{
+                                        var result = '';
+                                        $.each(data.data, function (k, v) {
+                                            result += '<li>'+
+                                                '<span class="bulletin_time">'+ v.created_at+'</span>'+
+                                                '<span class="bulletin_font text_overflow" onclick="show_detail('+v.notice_id+')">' +
+                                                v.notice_title+'</span>'+
+                                                '</li>';
+                                        });
+                                        $('.list').append(result);
+                                        // 每次数据加载完，必须重置
+                                        me.resetload();
+                                    }
                                 }else{
-                                    var result = '';
-                                    $.each(data.data, function (k, v) {
-                                        result += '<li>'+
-                                            '<span class="bulletin_time">'+ v.created_at+'</span>'+
-                                            '<span class="bulletin_font text_overflow" onclick="show_detail('+v.notice_id+')">' +
-                                            v.notice_title+'</span>'+
-                                            '</li>';
-                                    });
-                                    $('.list').append(result);
-                                    // 每次数据加载完，必须重置
-                                    me.resetload();
+                                    layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                                 }
                             },
                             error: function () {

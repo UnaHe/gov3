@@ -166,7 +166,7 @@ class SectionController extends ControllerBase
     /**
      * 修改部门信息.
      * @param $sectionId
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function editAction($sectionId)
     {
@@ -182,10 +182,12 @@ class SectionController extends ControllerBase
         $data = (new Sections())->getTree(0, 0, $section->project_id, $section->section_id);
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'section' => $section,
             'data' => $data,
         ]);
+
+        return true;
     }
 
     /**

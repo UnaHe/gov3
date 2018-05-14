@@ -45,20 +45,20 @@ class UserBelongs extends ModelBase
             $bindParams[] = $input['department_id'];
         }
 
-        $sql = 'SELECT "n_z_user_belongs"."belong_id","n_z_users"."user_name","n_z_users"."user_job","n_z_project"."project_name","n_z_departments"."department_name",b.users 
-                FROM "n_z_user_belongs" 
-                LEFT JOIN "n_z_users" ON "n_z_user_belongs"."belong_id"="n_z_users"."user_id" 
-                LEFT JOIN "n_z_project" ON "n_z_users"."project_id"="n_z_project"."project_id" 
-                LEFT JOIN "n_z_departments" ON "n_z_users"."department_id"="n_z_departments"."department_id" 
+        $sql = 'SELECT n_z_user_belongs.belong_id,n_z_users.user_name,n_z_users.user_job,n_z_project.project_name,n_z_departments.department_name,b.users 
+                FROM n_z_user_belongs 
+                LEFT JOIN n_z_users ON n_z_user_belongs.belong_id=n_z_users.user_id 
+                LEFT JOIN n_z_project ON n_z_users.project_id=n_z_project.project_id 
+                LEFT JOIN n_z_departments ON n_z_users.department_id=n_z_departments.department_id 
                 LEFT JOIN (
                                 SELECT ub.belong_id,GROUP_CONCAT (u.user_name) users 
                                 FROM n_z_user_belongs AS ub 
                                 LEFT JOIN n_z_users AS u ON u.user_id=ub.user_id 
                                 GROUP BY ub.belong_id
-                            ) b ON b.belong_id="n_z_user_belongs"."belong_id" 
+                            ) b ON b.belong_id=n_z_user_belongs.belong_id 
                 ' . $where . '
-                GROUP BY "n_z_user_belongs"."belong_id","n_z_users"."user_name","n_z_users"."user_job","n_z_project"."project_name","n_z_departments"."department_name","n_z_project"."project_id",b.users 
-                ORDER BY "n_z_project"."project_id" ASC';
+                GROUP BY n_z_user_belongs.belong_id,n_z_users.user_name,n_z_users.user_job,n_z_project.project_name,n_z_departments.department_name,n_z_project.project_id,b.users 
+                ORDER BY n_z_project.project_id ASC';
 
         $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $bindParams));
 

@@ -5,13 +5,13 @@
     <title>主页</title>
     <div class="wrap">
         <div class="index_bg">
-            <img src="{{ title_info is defined and title_info.project_image is not empty ? '/upload/' ~ title_info.project_image : '/home/style/img/index.jpg' }}" />
+            <img src="{{ title_info is defined and title_info.project.project_image is not empty ? _config['upload_url'] ~ title_info.project.project_image : '/home/style/img/index.jpg' }}" />
         </div>
         <div class="im_index">
-            <h3 class="im_index_title">{{ title_info.project_name }}</h3>
+            <h3 class="im_index_title">{{ title_info.project.project_name }}</h3>
             <a href="{{ url('status/workerStatusList?pid=' ~ project_id ~ '&did=' ~ department_id) }}">工作状态</a>
-            <a href="{{ url('department/projectdetail?pid=' ~ project_id ~ '&did=' ~ department_id) }}">单位介绍</a>
-            <a href="{{ url('department/departmentlist?pid=' ~ project_id ~ '&did=' ~ department_id) }}">科室列表</a>
+            <a href="{{ url('department/projectDetail?pid=' ~ project_id ~ '&did=' ~ department_id) }}">单位介绍</a>
+            <a href="{{ url('department/departmentList?pid=' ~ project_id ~ '&did=' ~ department_id) }}">科室列表</a>
         </div>
     </div>
     <script>

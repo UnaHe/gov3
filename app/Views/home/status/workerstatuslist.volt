@@ -167,13 +167,13 @@
                     ' <ul style="overflow: hidden" class="ul_'+k+'">';
             }
             $.each(v.user_list,function(kk,vv){
-                var img_src = vv.user_image ? img_path + vv.user_image : defalut_staff_img;
+                var img_src = vv.a.user_image ? img_path + vv.a.user_image : defalut_staff_img;
                 ul += '<li>' +
                     '<span class="status" style="background-color:' + vv.status_color + '">' + vv.status_name + '</span>' +
-                    '<div class="portrait" onclick="detail(' + vv.user_id + ')"><img src="' + img_src + '"></div>' +
-                    '<span class="name text_no">' + vv.user_name + '</span>' +
-                    '<p class="Duties text_no">' + (vv.user_job ? vv.user_job : '科员') + '</p>' +
-                    '<span class="effect text_overflow">' + (vv.user_intro ? vv.user_intro : '') + '</span>' +
+                    '<div class="portrait" onclick="detail(' + vv.a.user_id + ')"><img src="' + img_src + '"></div>' +
+                    '<span class="name text_no">' + vv.a.user_name + '</span>' +
+                    '<p class="Duties text_no">' + (vv.a.user_job ? vv.a.user_job : '科员') + '</p>' +
+                    '<span class="effect text_overflow">' + (vv.a.user_intro ? vv.a.user_intro : '') + '</span>' +
                     '</li>';
             });
             if(!have_flag){

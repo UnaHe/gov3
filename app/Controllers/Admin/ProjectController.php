@@ -149,7 +149,7 @@ class ProjectController extends ControllerBase
     /**
      * 编辑单位信息.
      * @param $id
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\Model
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\Model
      */
     public function editAction($id)
     {
@@ -162,7 +162,9 @@ class ProjectController extends ControllerBase
             return $this->response->redirect('admin/project');
         }
 
-        return $this->view->unit = $unit;
+        $this->view->unit = $unit;
+
+        return true;
     }
 
     /**

@@ -34,7 +34,7 @@
                 <tr class="tr_{{v.project_id}}">
                     <td class="tc">{{v.project_id}}</td>
                     <td>
-                        <a href="#"><?php echo mb_substr($v->project_name,0,30,'utf-8'); ?></a>
+                        <a href="#"><?php echo strlen($v->project_name) > 30 ? mb_substr($v->project_name,0,30,'utf-8') : $v->project_name; ?></a>
                     </td>
                     <td><input class="hunterTimePicker" type="text" value="{{v.work_start_time}}" id="{{v.project_id}}_work_start_time"></td>
                     <td><input class="hunterTimePicker" type="text" value="{{v.work_end_time}}" id="{{v.project_id}}_work_end_time"></td>

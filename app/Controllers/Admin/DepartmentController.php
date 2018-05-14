@@ -13,7 +13,7 @@ use app\Models\Project;
 use app\Models\Users;
 
 /**
- * 单位控制器
+ * 科室控制器
  * Class DepartmentController
  * @package app\Controller\Admin
  */
@@ -183,6 +183,8 @@ class DepartmentController extends ControllerBase
 
     /**
      * 编辑科室详情.
+     * @param $id
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function editAction($id)
     {
@@ -198,10 +200,12 @@ class DepartmentController extends ControllerBase
         $data = (new Departments())->getTree(0, 0, $unit->project_id, $unit->department_id);
 
         // 页面参数.
-        return $this->view->setVars([
+        $this->view->setVars([
             'unit' => $unit,
             'data' => $data,
         ]);
+
+        return true;
     }
 
     /**

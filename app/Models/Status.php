@@ -174,11 +174,11 @@ class Status extends ModelBase
                 }
                 $params = rtrim($params, ',');
 
-                $sql = 'select "n_z_status".* from "n_z_status" where "status_is_default" = 1 or "status_is_default" = 2 and "n_z_status"."project_id" in ('.$params.') or "n_z_status"."project_id" = 0';
+                $sql = 'select n_z_status.* from n_z_status where status_is_default = 1 or status_is_default = 2 and n_z_status.project_id in ('.$params.') or n_z_status.project_id = 0';
 
                 $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql));
-            } else {
-                $sql = 'select "n_z_status".* from "n_z_status" where "status_is_default" = 1 or "status_is_default" = 2 and "n_z_status"."project_id" = ? or "n_z_status"."project_id" = 0';
+            } else if(is_string($projects)) {
+                $sql = 'select n_z_status.* from n_z_status where status_is_default = 1 or status_is_default = 2 and n_z_status.project_id = ? or n_z_status.project_id = 0';
 
                 $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql, [$projects]));
             }

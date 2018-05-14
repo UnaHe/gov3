@@ -66,10 +66,10 @@
                         <tr>
                             <td class="tc">{{v.notice_id}}</td>
                             <td>{{v.project_name}}</td>
-                            <td><?php echo mb_substr(rtrim(ltrim($v->department_name,'{'),'}'),0,20,'utf-8').'...'; ?></td>
+                            <td><?php echo strlen($v->department_name) > 20 ? mb_substr(rtrim(ltrim($v->department_name,'{'),'}'),0,20,'utf-8').'...' : rtrim(ltrim($v->department_name,'{'),'}'); ?></td>
                             <td>
                                 <a href="#" onclick="showdetail({{v.notice_id}})">
-                                    <?php echo mb_substr($v->notice_title,0,20,'utf-8').'...'; ?>
+                                    <?php echo strlen($v->notice_title) > 20 ? mb_substr($v->notice_title,0,20,'utf-8').'...' : $v->notice_title; ?>
                                 </a>
                             </td>
                             <td>
