@@ -26,7 +26,7 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ _session['user_image'] is defined and _session['user_image'] is not empty ? _config['upload_url'] ~ _session['user_image'] : _config['defalut_staff_img'] }}" class="user-image" alt="User Image">
+                        <img src="{{ _session['user_image'] is defined and _session['user_image'] is not empty ? _config['upload_url'] ~ _session['user_image'] : _config['default_staff_img'] }}" class="user-image" alt="User Image">
                         <span class="hidden-xs">{{_session['user_name']}}</span>
                     </a>
                     <ul id="rightPos" class="dropdown-menu" style="width: 85px;margin: 0px">

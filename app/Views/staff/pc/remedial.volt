@@ -1,17 +1,19 @@
-@extends('staff.pc.header')
-@section('content')
+{% extends "pc/header.volt" %}
+
+{% block content %}
+
     <title>修改密码</title>
     <div class="warp" style="margin-top: 0rem;">
-        {{--<div class="title_g">--}}
-            {{--<a class="return center" href="{{url('staff/setting')}}"><img src="../staff/style/img/return_03.png"></a>--}}
-            {{--<h5 class="tetle_font">修改密码</h5>--}}
-            {{--<a class="Reserved"></a>--}}
-        {{--</div>--}}
+        {#<div class="title_g">#}
+            {#<a class="return center" href="{{url('staff/setting')}}"><img src="../staff/style/img/return_03.png"></a>#}
+            {#<h5 class="tetle_font">修改密码</h5>#}
+            {#<a class="Reserved"></a>#}
+        {#</div>#}
         <p class="lf_title">工作状态管理系统</p>
         <form name="edit_form" id="edit_form">
             <div class="phone">
-                <input type="hidden"  name="user_phone" value="{{session('staff')['user_phone']}}">
-                {{--<input type="number"  name="user_phone" placeholder="输入账号">--}}
+                <input type="hidden"  name="user_phone" value="{{ _session['user_phone'] }}">
+                {#<input type="number"  name="user_phone" placeholder="输入账号">#}
                 <input type="password" name="old_password" placeholder="输入原密码">
                 <input type="hidden"  name="user_pass">
                 <input type="password" name="password" placeholder="输入密码">
@@ -65,37 +67,39 @@
                     }
                 }
             });
-        })
+        });
 
         function submitHandler(){
             $("input[name='user_pass']").val($.md5($("input[name='old_password']").val()));
             $("input[name='new_user_pass']").val($.md5($("input[name='password']").val()));
             $.ajax({
-                type: 'post',
-                url: '{{url('staff/changepassword')}}',
+                type: 'POST',
                 dataType: 'JSON',
+                url: '{{url('staff/changepassword')}}',
                 beforeSubmit: function(){
                     layer('提交中...');
                 },
                 data:{
-                    '_token': '{{csrf_token()}}',
-                    'user_phone':$("input[name='user_phone']").val(),
-                    'user_pass':$("input[name='user_pass']").val(),
-                    'new_user_pass':$("input[name='new_user_pass']").val()
+                    "{{ _csrfKey }}": "{{ _csrf }}",
+                    'user_phone': $("input[name='user_phone']").val(),
+                    'user_pass': $("input[name='user_pass']").val(),
+                    'new_user_pass': $("input[name='new_user_pass']").val(),
                 },success: function(data){
-                    if(data.status == 200){
-                        layer.msg('修改成功，请重新登陆！');
-                        location.href = '{{url('staff/loginout')}}';
-                        {{--setTimeout(function(){--}}
-                            {{--location.href = '{{url('staff/login')}}';--}}
-                        {{--},3000);--}}
-                    }else{
-                        layer.msg(data.msg);
+                    if (data.status == 200) {
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 2000, //2s后自动关闭
+                        },function (){
+                            location.href = '{{url('staff/loginout')}}';
+                        });
+                    } else {
+                        layer.msg(data.msg, {icon: 5});
                     }
                 },error: function(){
-                    layer.msg('系统错误，请刷新后重试！');
+                    layer.msg('系统错误，请刷新后重试！', {icon: 2});
                 }
             })
         }
     </script>
-@endsection
+
+{% endblock %}

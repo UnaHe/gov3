@@ -37,7 +37,7 @@ return new Config([
         'upload'                => BASE_PATH . '/public/upload/',
         'upload_url'            => 'http://' . $_SERVER['SERVER_NAME'] . '/upload/',
         'upload_path'           => BASE_PATH . '/public/upload/',
-        'defalut_staff_img'     => 'http://' . $_SERVER['SERVER_NAME'] . '/admin/style/img/user_default.jpg',
+        'default_staff_img'     => 'http://' . $_SERVER['SERVER_NAME'] . '/admin/style/img/user_default.jpg',
         'staff_remember_token'  => 'staff_remember_token',
     ],
     'APP_URL' => 'https://gov2.signp.cn',

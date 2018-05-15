@@ -1,5 +1,7 @@
-@extends('staff.mobile.header')
-@section('content')
+{% extends "mobile/header.volt" %}
+
+{% block content %}
+
     <style type="text/css">
         #wrapper {
             width: 100%;
@@ -9,7 +11,6 @@
             left: 0;
             overflow: auto;
         }
-
         #scroller {
             position: absolute;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -47,11 +48,11 @@
                 </div>
                 <div class="main">
                     <div class="personnel_info clear">
-                        <div class="personnel_info_img"><img src="{{$data['user_image']}}"></div>
+                        <div class="personnel_info_img"><img src="{{ data['user_image'] }}"></div>
                         <div class="personnel_info_font y_personnel_info_font">
-                            <span class="PersonnelName y_PersonnelName">{{$data['user_name']}}</span>
-                            <span class="PersonnelDuties">{{$data['user_job'] or '科员'}}</span>
-                            <span class="PersonnelRole text_overflow">{{$data['user_intro'] or '无个人简介'}}</span>
+                            <span class="PersonnelName y_PersonnelName">{{ data['user_name'] }}</span>
+                            <span class="PersonnelDuties">{{ data['user_job'] is defined ? data['user_job'] : '科员' }}</span>
+                            <span class="PersonnelRole text_overflow">{{ data['user_intro'] is defined ? data['user_intro'] : '无个人简介' }}</span>
                         </div>
                     </div>
                     <div class="CurrentState y_CurrentState">
@@ -62,36 +63,36 @@
                         <div class="y_time clear">
                             <div class="y_time_left center">
                         <span class="y_xiuxi no_status"
-                              style="background:{{$data['nowstatus']['status_color']}}">{{$data['nowstatus']['status_name']}}</span>
+                              style="background:{{ data['nowstatus']['status_color'] }}">{{ data['nowstatus']['status_name'] }}</span>
                             </div>
                             <div class="y_time_con">
-                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{$data['nowstatus']['start_time']}}</a></p>
-                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{$data['nowstatus']['end_time']}}</a></p>
+                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['start_time'] }}</a></p>
+                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['end_time'] }}</a></p>
                             </div>
-                            {{--<div class="y_shutdown center"><img src="../staff/style/img/y_shutdown_03.png"></div>--}}
+                            {#<div class="y_shutdown center"><img src="../staff/style/img/y_shutdown_03.png"></div>#}
                         </div>
                     </div>
                     <div class="CurrentState y_CurrentState">
                         <div class="CurrentState_title y_CurrentState_title">
                             <span class="ghost"></span>
                             <span class="CurrentState_title_font">计划列表</span>
-                            {{--<span class="CurrentState_d CurrentState_e" onclick="edit_user_status(0)"><img--}}
-                                        {{--src="../staff/style/img/xz1.png"></span>--}}
+                            {#<span class="CurrentState_d CurrentState_e" onclick="edit_user_status(0)"><img#}
+                                        {#src="../staff/style/img/xz1.png"></span>#}
                         </div>
-                        @if(!empty($data['statuslist']))
-                            @foreach($data['statuslist'] as $v)
+                        {% if data['statuslist'] is not empty %}
+                            {% for v in data['statuslist'] %}
                                 <div class="y_time clear">
-                                    <div class="y_time_left center edit_status" data-status="{{$v['user_status_id']}}">
+                                    <div class="y_time_left center edit_status" data-status="{{ v['user_status_id'] }}">
                                 <span class="y_xiuxi no_status"
-                                      style="background:{{$v['status_color']}}">{{$v['status_name']}}</span>
+                                      style="background:{{ v['status_color'] }}">{{ v['status_name'] }}</span>
                                     </div>
-                                    <div class="y_time_con edit_status" data-status="{{$v['user_status_id']}}">
-                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{$v['start_time']}}</a></p>
-                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{$v['end_time']}}</a></p>
+                                    <div class="y_time_con edit_status" data-status="{{ v['user_status_id'] }}">
+                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ v['start_time'] }}</a></p>
+                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ v['end_time'] }}</a></p>
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -105,43 +106,43 @@
 //                edit_user_status(user_status_id);
 //            })
 
-        })
-        {{--//编辑计划--}}
-        {{--function edit_user_status(user_status_id) {--}}
-            {{--location.href = '{{url('staff/addstatus?user_status_id=')}}' + user_status_id;--}}
-        {{--}--}}
-        {{--//删除--}}
-        {{--function del_user_status(user_status_id, status_name) {--}}
-            {{--layer.confirm('确实要删除  ' + status_name + '  计划吗？', {--}}
-                {{--btn: ['确定', '取消'] //按钮--}}
-            {{--}, function () {--}}
-                {{--$.ajax({--}}
-                    {{--type: 'post',--}}
-                    {{--url: '{{url('staff/delstatus')}}',--}}
-                    {{--dataType: 'JSON',--}}
-                    {{--beforeSubmit: function () {--}}
-                        {{--layer('提交中...');--}}
-                    {{--},--}}
-                    {{--data: {--}}
-                        {{--'_token': '{{csrf_token()}}',--}}
-                        {{--'user_status_id': user_status_id--}}
-                    {{--}, success: function (data) {--}}
-                        {{--if (data.status == 200) {--}}
-                            {{--layer.msg(data.msg);--}}
-                            {{--setTimeout(function () {--}}
-                                {{--location.href = '{{url('staff/refresh')}}';--}}
-                            {{--}, 3000);--}}
-                        {{--} else {--}}
-                            {{--layer.msg(data.msg);--}}
-                        {{--}--}}
-                    {{--}, error: function () {--}}
-                        {{--layer.msg('系统错误，请刷新后重试！');--}}
-                    {{--}--}}
-                {{--})--}}
-            {{--});--}}
-        {{--}--}}
+        });
+        {#//编辑计划#}
+        {#function edit_user_status(user_status_id) {#}
+            {#location.href = '{{url('staff/addstatus?user_status_id=')}}' + user_status_id;#}
+        {#}#}
+        {#//删除#}
+        {#function del_user_status(user_status_id, status_name) {#}
+            {#layer.confirm('确实要删除  ' + status_name + '  计划吗？', {#}
+                {#btn: ['确定', '取消'] //按钮#}
+            {#}, function () {#}
+                {#$.ajax({#}
+                    {#type: 'post',#}
+                    {#url: '{{url('staff/delstatus')}}',#}
+                    {#dataType: 'JSON',#}
+                    {#beforeSubmit: function () {#}
+                        {#layer('提交中...');#}
+                    {#},#}
+                    {#data: {#}
+                        {#'_token': '{{csrf_token()}}',#}
+                        {#'user_status_id': user_status_id#}
+                    {#}, success: function (data) {#}
+                        {#if (data.status == 200) {#}
+                            {#layer.msg(data.msg);#}
+                            {#setTimeout(function () {#}
+                                {#location.href = '{{url('staff/refresh')}}';#}
+                            {#}, 3000);#}
+                        {#} else {#}
+                            {#layer.msg(data.msg);#}
+                        {#}#}
+                    {#}, error: function () {#}
+                        {#layer.msg('系统错误，请刷新后重试！');#}
+                    {#}#}
+                {#})#}
+            {#});#}
+        {#}#}
     </script>
-    <script src="{{asset('js/lib/iScroll/iscroll.js')}}"></script>
+    {{ javascript_include('js/lib/iScroll/iscroll.js') }}
     <script>
         function loaded() {
 //            var myScroll = new iScroll("wrapper");

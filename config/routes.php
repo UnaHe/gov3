@@ -117,6 +117,22 @@ include 'routes/Home.php';
 $router->mount($home);
 
 /**
+ * API路由组.
+ */
+$api = new RouterGroup([
+    'namespace'  => 'app\Controllers\Api',
+]);
+
+// URL前缀.
+$api->setPrefix('/staff');
+
+// 引入路由文件.
+include 'routes/Api.php';
+
+// 注册路由组.
+$router->mount($api);
+
+/**
  * 页面未找到.
  */
 $router->notFound([

@@ -193,7 +193,7 @@ class ProjectController extends ControllerBase
         if (empty($projectName) || mb_strlen($projectName, 'UTF-8') > 100) {
             $this->flashSession->warning('名称最大长度 100 个字符');
 
-            return $this->response->redirect('/admin/project/' . $projectId . '/edit');
+            return $this->response->redirect('admin/project/' . $projectId . '/edit');
         }
 
         $unit = Project::findFirst([
@@ -205,7 +205,7 @@ class ProjectController extends ControllerBase
 
         if ($unit !== false && $unit->project_id != $projectId) {
             $this->flashSession->error('单位名已经存在');
-            return $this->response->redirect('/admin/project/' . $projectId . '/edit');
+            return $this->response->redirect('admin/project/' . $projectId . '/edit');
         }
 
         // 准备数据.
@@ -234,7 +234,7 @@ class ProjectController extends ControllerBase
             if ($session['user_is_super'] || ($session['user_is_admin'] && $session['project_id'] == '')) {
                 return $this->response->redirect('admin/project');
             } else {
-                return $this->response->redirect('/admin/project/' . $projectId . '/edit');
+                return $this->response->redirect('admin/project/' . $projectId . '/edit');
             }
         } else {
             return $this->flash->error('项目更新失败，请稍后重试');

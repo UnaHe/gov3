@@ -44,7 +44,7 @@
     var page_size = 20;
     var page = 1;
     var have_data = true;
-    var defalut_staff_img = '{{ _config['defalut_staff_img'] }}';
+    var default_staff_img = '{{ _config['default_staff_img'] }}';
     var img_path = '{{ _config['upload_url'] }}';
     var flag = true;
     $(function () {
@@ -167,7 +167,7 @@
                     ' <ul style="overflow: hidden" class="ul_'+k+'">';
             }
             $.each(v.user_list,function(kk,vv){
-                var img_src = vv.a.user_image ? img_path + vv.a.user_image : defalut_staff_img;
+                var img_src = vv.a.user_image ? img_path + vv.a.user_image : default_staff_img;
                 ul += '<li>' +
                     '<span class="status" style="background-color:' + vv.status_color + '">' + vv.status_name + '</span>' +
                     '<div class="portrait" onclick="detail(' + vv.a.user_id + ')"><img src="' + img_src + '"></div>' +

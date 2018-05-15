@@ -1,17 +1,17 @@
-@extends('staff.mobile.header')
-@section('content')
+{% extends "pc/header.volt" %}
+
+{% block content %}
+
     <style>
         .mypie {
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 300px;
             float: left;
         }
-
         .pie_list {
             float: left;
             margin-left: 20px;
         }
-
         .color_li {
             display: inline-block;
             width: 10px;
@@ -19,27 +19,31 @@
             border-radius: 100%;
             background: #df4a4a
         }
-
-        body {
-            background: #fff !important;
+        .color_value {
+            font-size: 0.3rem;
         }
-
-
+        .tt_all1{
+            /*background: #f9f4fa;*/
+            border: 1px solid #f9f4fa;
+        }
     </style>
     <title>统计</title>
     <div id="wrapper">
         <div class="wrap" id="wrap">
+            <div class="title_g">
+                <a class="return center" href="{{url('staff/refresh')}}">
+                    <img src="{{ url('staff/style/img/return_03.png') }}" />
+                </a>
+                <h5 class="tetle_font">统计</h5>
+                <a class="Reserved"></a>
+            </div>
             <div class="main">
-                {{--<div id="my_status" style="width: 50%;height:300px;float: left;"></div>--}}
-                {{--<div id="test" style="width: 100%;height:200px;"></div>--}}
-
-                <ul class="canvssssUl hide">
+                <ul class="canvssssUl">
                     <li class="canvssssUl_active">我的留言</li>
                     <li>下属状态</li>
                     <li>下属留言</li>
                 </ul>
                 <div class="tt_all"></div>
-
                 <div class="pie_box">
                     <div class="list_li_pies pie_li_show">
                         <div class="pie_li_mycomment">
@@ -51,13 +55,12 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="tt_all_ul">
                         </div>
                         <div class="detail_ul_1">
                         </div>
-
                         <div class="tt_all1"></div>
+
                     </div>
                     <div class="list_li_pies pie_li_hide">
                         <div class="pie_li_status hide">
@@ -67,12 +70,10 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="tt_all_ul">
                         </div>
                         <div class="detail_ul_2">
                         </div>
-
                         <div class="tt_all1"></div>
                     </div>
                     <div class="list_li_pies pie_li_hide">
@@ -85,21 +86,20 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="tt_all_ul">
                         </div>
                         <div class="detail_ul_3">
                         </div>
-
                         <div class="tt_all1"></div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{--    <script type="text/javascript" src="{{asset('org/echart/js/echarts.simple.min.js')}}"></script>--}}
-    <script type="text/javascript" src="{{asset('org/echart/js/echarts.js')}}"></script>
-    {{--    <script type="text/javascript" src="{{asset('org/echart/js/echarts.min.js')}}"></script>--}}
+    {#    <script type="text/javascript" src="{{asset('org/echart/js/echarts.simple.min.js')}}"></script>#}
+    {{ javascript_include('org/echart/js/echarts.js') }}
+    {#    <script type="text/javascript" src="{{asset('org/echart/js/echarts.min.js')}}"></script>#}
     <script>
         //        test();
         var colors = ['#1F73C2', '#BEE5E9', '#AE5DE6', '#FFDE8D', '#F37216', '#13D06A', '#D90A79', '#A9C921', '#EF232E', '#03AAB0'];
@@ -111,19 +111,25 @@
             var myCommentChart = echarts.init(myCommentContainer);
 
             var public_option = {
-//                title: {
-//                    show: true,
-//                    text: '我的留言',
-//                    textStyle: {
-//                        fontSize: 12,
-//                        fontWeight: 'bolder',
-//                        color: '#333'
-//                    },
-//                    x: 'center',
-//                    y: 'center',
+//                graphic: {
+//                    type: 'text',
+//                    left: 'center',
+//                    top: 'center',
+//                    style: {
+//                        text: '我的留言'
+//                    }
 //                },
                 color: colors,
                 calculable: true,
+                toolbox: {
+                    show: false,
+                    dataView: {
+                        show: false,
+                        title: '数据视图',
+                        readOnly: false,
+                        lang: ['数据视图', '关闭', '刷新']
+                    },
+                },
                 series: [
                     {
                         name: '我的状态',
@@ -160,7 +166,6 @@
                     }
                 ]
             };
-
             var my_comment_option = {
                 series: {
                     label: {
@@ -209,11 +214,11 @@
 //                myStatusChart.setOption(my_status_option);
                 myCommentChart.setOption(my_comment_option);
                 $.ajax({
-                    type: 'post',
-                    dataType: 'json',
+                    type: 'POST',
+                    dataType: 'JSON',
                     url: '{{url('staff/mycount')}}',
                     data: {
-                        '_token': '{{csrf_token()}}'
+                        "{{ _csrfKey }}": "{{ _csrf }}",
                     },
                     success: function (data) {
                         if (data.status == 200) {
@@ -221,11 +226,10 @@
                             //组装我的状态的数据
                             my_comment = package_comment(data.data.my_comments);
                             add_data_to_pie(myCommentChart, my_comment);
-                            add_pie_list($("#my_comment"),data.data.my_comments,1);
+                            add_pie_list($("#my_comment"), data.data.my_comments, 1);
 
                             //有下属表
                             if (data.data.belongs) {
-                                $(".canvssssUl").removeClass('hide');
                                 $('.pie_box .hide').removeClass('hide');
                                 var StatusContainer = document.getElementById('status');
                                 var CommentContainer = document.getElementById('comments');
@@ -244,22 +248,22 @@
 
                                 status = package_status(data.data.today_belong_status_list);
                                 add_data_to_pie(StatusChart, status);
-                                add_pie_list($("#status"),data.data.today_belong_status_list,2);
+                                add_pie_list($("#status"), data.data.today_belong_status_list, 2);
 //                                testChart.setOption(option);
 
                                 comment = package_comment(data.data.my_belong_comments);
                                 add_data_to_pie(CommentChart, comment);
-                                add_pie_list($("#comments"),data.data.my_belong_comments,3);
+                                add_pie_list($("#comments"), data.data.my_belong_comments, 3);
                             } else {
                                 StatusChart.clear();
                                 CommentChart.clear();
                             }
                         } else {
-                            layer.msg('数据加载失败，请刷新后重试！');
+                            layer.msg('数据加载失败，请刷新后重试！', {icon: 5});
                         }
                     },
                     error: function () {
-                        layer.msg('数据加载失败，请刷新后重试！');
+                        layer.msg('数据加载失败，请刷新后重试！', {icon: 2});
 //                        myStatusChart.hideLoading();
                         myCommentChart.hideLoading();
                     }
@@ -278,7 +282,7 @@
                         value: v.value
 
                     });
-                })
+                });
                 return my_status;
             }
 
@@ -290,7 +294,7 @@
                         name: v.name,
                         value: v.value
                     });
-                })
+                });
                 return my_comment;
             }
 
@@ -309,48 +313,43 @@
                     layer.msg(name + '暂无统计数据！');
                 }
             }
-
-        //
+            //
             function add_pie_list(obj, data_list, type){
                 var str = str1 = "";
-
                 $.each(data_list,function (k,v) {
-
                     var link = percent = zl_img = '';
                     if(v.value > 0 && v.percent > 0 && v.status_id >= 0){
 //                        console.log(v.status_id);
                         link = type%2 ? "location.href = '/staff/countcommentdetail?type="+type+"&status_id="+v.status_id +"'": "location.href = '/staff/countstatusdetail?type="+type+"&status_id="+v.status_id+"'";
                     }
                     percent = v.percent+'%';
-
                     zl_img = !!link ? '<img src="/staff/style/img/zl.png" mode="widthFix" class="img_lf">' : '';
-                    console.log(zl_img);
                     str += '<li>'+
                         '<span class="color_li" style="background:'+colors[k]+'"></span>'+
                         '<span class="color_value">'+v.name+'</span>'+
                         '</li>';
-                    str1 += '<div class="tt_all1"></div><ul class="ul_detail" onclick="'+link+'">' +
+                    str1 += '<div class="tt_all1"></div>' +
+                        '<ul onclick="'+link+'">' +
                         '<li >'+
-                        '<a class="ul_detail_a">'+v.name+
+                        '<a class="ul_detail_a">'+v.name+'—'+percent+''+
                         '</a>' +
                         zl_img+
-                        '<span class="bfb">'+percent+'</span>'+
                         '</li>' +
                         '</ul>';
-                })
+                });
                 $(obj).next('div.pie_list').find('ul').html(str);
                 $(".detail_ul_"+type).html(str1);
             }
-        })
+        });
 
-		
-		$('.canvssssUl li').bind('click',function(){
-			$('.canvssssUl li').removeClass('canvssssUl_active');
-			   $(this).addClass('canvssssUl_active');
-			   var _index=$(this).index();
-				$('.pie_box .list_li_pies').hide();
-					
-				$('.pie_box .list_li_pies').eq(_index).show();
-		})
+        $('.canvssssUl li').bind('click',function(){
+            $('.canvssssUl li').removeClass('canvssssUl_active');
+            $(this).addClass('canvssssUl_active');
+            var _index=$(this).index();
+            $('.pie_box .list_li_pies').hide();
+
+            $('.pie_box .list_li_pies').eq(_index).show();
+        })
     </script>
-@endsection
+
+{% endblock %}

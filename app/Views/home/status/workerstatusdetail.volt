@@ -14,7 +14,7 @@
         <div class="main">
             <div class="personnel_info clear">
                 <div class="personnel_info_img">
-                    <img src="{{ data['user_info']['user_image'] is not empty ? _config['upload_url'] ~ data['user_info']['user_image'] : _config['defalut_staff_img'] }}">
+                    <img src="{{ data['user_info']['user_image'] is not empty ? _config['upload_url'] ~ data['user_info']['user_image'] : _config['default_staff_img'] }}">
                 </div>
                 <div class="personnel_info_font">
                     <span class="PersonnelName">{{ data['user_info']['user_name'] }}</span>

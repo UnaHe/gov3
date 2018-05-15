@@ -234,7 +234,7 @@ class DepartmentController extends ControllerBase
         if (empty($departmentName) || mb_strlen($departmentName, 'UTF-8') > 100) {
             $this->flashSession->warning('名称最大长度 100 个字符');
 
-            return $this->response->redirect('/admin/department/' . $departmentId . '/edit');
+            return $this->response->redirect('admin/department/' . $departmentId . '/edit');
         }
 
         if ($parentId === NULL || $parentId === '0') {

@@ -1,12 +1,9 @@
-@extends('staff.pc.header')
-@section('content')
-    <title>下属留言处理详情</title>
+{% extends "mobile/header.volt" %}
+
+{% block content %}
+
+    <title>统计留言列表</title>
     <div class="warp_1">
-        <div class="title_g">
-            <a class="return center" href="{{url('staff/count')}}"><img src="../staff/style/img/return_03.png"></a>
-            <h5 class="tetle_font">下属留言处理详情</h5>
-            <a class="Reserved"></a>
-        </div>
         <div class="main">
             <div class="bulletin">
                 <ul class="" style="overflow: hidden">
@@ -18,29 +15,27 @@
                     </li>
                 </ul>
                 <ul class="list" style="overflow: hidden">
-                    {{--@foreach($data['data'] as $v)--}}
-                        {{--<li data-id="">--}}
-                            {{--<span class="bulletin_font">{{$v->user_name}}</span>--}}
-                            {{--<span class="bulletin_font text_overflow">{{$v->department_name}}</span>--}}
-                            {{--<span class="bulletin_font text_overflow">{{date("Y/m/d",$v->created_time)}}</span>--}}
-                            {{--<span class="bulletin_font text_overflow"><a--}}
-                                        {{--class="comment_content"--}}
-                                        {{--content="{{$v->comment_content}}">{{str_limit($v->comment_content,'5','...')}}</a></span>--}}
-                        {{--</li>--}}
-                    {{--@endforeach--}}
+                    {#@foreach($data['data'] as $v)#}
+                        {#<li data-id="">#}
+                            {#<span class="bulletin_font">{{$v->user_name}}</span>#}
+                            {#<span class="bulletin_font text_overflow">{{$v->department_name}}</span>#}
+                            {#<span class="bulletin_font text_overflow">{{date("Y/m/d",$v->created_time)}}</span>#}
+                            {#<span class="bulletin_font text_overflow"><a#}
+                                        {#class="comment_content"#}
+                                        {#content="{{$v->comment_content}}">{{str_limit($v->comment_content,'5','...')}}</a></span>#}
+                        {#</li>#}
+                    {#@endforeach#}
                 </ul>
             </div>
         </div>
     </div>
-    <link rel="stylesheet" href="{{asset('js/lib/dropload/dropload.css')}}">
-    <script src="{{asset('js/lib/dropload/dropload.min.js')}}"></script>
+    {{ stylesheet_link('js/lib/dropload/dropload.css') }}
+    {{ javascript_include('js/lib/dropload/dropload.min.js') }}
     <script>
+        var page_size = 20;
+        var page = 1;
+        var have_data = true;
         $(function () {
-            var counter = 0;
-            var page_size = 20;
-            var page = 1;
-            var have_data = true;
-
             // dropload
             $('.main').dropload({
                 scrollArea: window,
@@ -61,29 +56,34 @@
                     have_data = true;
                     $.ajax({
                         type: 'POST',
+                        dataType: 'JSON',
                         url: "{{url('staff/countcommentdetail')}}",
                         data: {
-                            '_token': "{{csrf_token()}}",
-                            'type' : '{{$type}}',
-                            'status_id' : '{{$status_id}}'
+                            "{{ _csrfKey }}": "{{ _csrf }}",
+                            'type' : '{{ type }}',
+                            'status_id' : '{{ status_id }}'
                         },
                         success: function (data) {
-                            $('.list').empty();
-                            if (data.data.data.from <= data.data.data.last_page) {
-                                var result = set_list(data.data.data.data);
-                                $('.list').html(result);
-                                me.resetload();
-                                me.unlock();
-                                me.noData(false);
-                            } else {
-                                have_data = false;
-                                me.noData(true);
-                                me.resetload();
-                                me.unlock();
+                            if(data.status == 200){
+                                $('.list').empty();
+                                if (!data.data) {
+                                    have_data = false;
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(true);
+                                }else{
+                                    var result = set_list(data.data);
+                                    $('.list').html(result);
+                                    me.resetload();
+                                    me.unlock();
+                                    me.noData(false);
+                                }
+                            }else{
+                                layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                             }
                         },
                         error: function (xhr, type) {
-                            layer.msg('网络错误，请刷新后重试！');
+                            layer.msg('网络错误，请刷新后重试！', {icon: 2});
                             // 即使加载出错，也得重置
 //                            me.resetload();
                         }
@@ -96,30 +96,35 @@
                         flag = false;
                         $.ajax({
                             type: 'POST',
+                            dataType: 'JSON',
                             url: "{{url('staff/countcommentdetail')}}",
                             data: {
-                                '_token': "{{csrf_token()}}",
-                                'type' : "{{$type}}",
-                                'status_id' : "{{$status_id}}"
+                                "{{ _csrfKey }}": "{{ _csrf }}",
+                                'type' : "{{ type }}",
+                                'status_id' : "{{ status_id }}",
+                                page:page
                             },
                             success: function (data) {
-                                page++;
-//                                console.log();
-                                if (!data.data.data.last_page || !data.data.data.from){
-                                    have_data = false;
-                                    me.unlock();
-                                    me.noData(true);
-                                    me.resetload();
-                                    return false;
-                                } else {
-                                    var result = set_list(data.data.data.data);
-                                    $('.list').append(result);
-                                    // 每次数据加载完，必须重置
-                                    me.resetload();
+                                if(data.status == 200) {
+                                    page++;
+                                    if (!data.data) {
+                                        have_data = false;
+                                        me.noData(true);
+                                        me.resetload();
+                                        me.unlock();
+                                        return false;
+                                    }else{
+                                        var result = set_list(data.data);
+                                        $('.list').append(result);
+                                        // 每次数据加载完，必须重置
+                                        me.resetload();
+                                    }
+                                }else{
+                                    layer.msg('服务器错误，请刷新后重试！', {icon: 5});
                                 }
                             },
                             error: function (xhr, type) {
-                                layer.msg('网络错误，请刷新后重试！');
+                                layer.msg('网络错误，请刷新后重试！', {icon: 2});
                                 me.lock();
                                 // 即使加载出错，也得重置
 //                                me.resetload();
@@ -134,14 +139,14 @@
                 threshold: 50
             });
         });
-        {{--function show_detail(notice_id) {--}}
-            {{--location.href = "{{url('notice/detail?notice_id=')}}" + notice_id + '&pid=' + '{{$project_id}}' + '&did=' + '{{$department_id}}';--}}
-        {{--}--}}
+        {#function show_detail(notice_id) {#}
+            {#location.href = "{{url('notice/detail?notice_id=')}}" + notice_id + '&pid=' + '{{$project_id}}' + '&did=' + '{{$department_id}}';#}
+        {#}#}
         function set_list(data) {
             var result = '';
             $.each(data, function (k, v) {
                 var created_time = '{{date("Y/m/d")}}';
-                var content = v.comment_content
+                var content = v.comment_content;
                 var link = "{{url('staff/commentone?comment_id=')}}"+v.comment_id;
                 result += ' <li data-id="">'+
                     ' <span class="bulletin_font">'+v.user_name+'</span>'+
@@ -157,8 +162,8 @@
                 var status_id = $(this).parent('li').data('id');
                 //ajax
                 $.ajax({
-                    type: 'post',
-                    dataType: 'json',
+                    type: 'POST',
+                    dataType: 'JSON',
                     url: '{{url('staff/countdetail')}}',
                     data: {
                         'type': type,
@@ -168,10 +173,11 @@
 
                     },
                     error: function (data) {
-                        layer.msg('加载失败，请重试！');
+                        layer.msg('加载失败，请重试！', {icon: 2});
                     }
                 })
             })
         })
     </script>
-@endsection
+
+{% endblock %}

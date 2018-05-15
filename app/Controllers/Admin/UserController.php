@@ -233,19 +233,19 @@ class UserController extends ControllerBase
         // 验证.
         if (mb_strlen($input['user_name'], 'UTF-8') < 2 || mb_strlen($input['user_name'], 'UTF-8') > 18) {
             $this->flashSession->warning('名称长度 2 - 18 个字符');
-            return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
+            return $this->response->redirect('admin/users/' . $input['user_id'] . '/edit');
         }
         if ($input['user_age'] <= 0 || $input['user_age'] >= 100) {
             $this->flashSession->warning('请输入正确的年龄');
-            return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
+            return $this->response->redirect('admin/users/' . $input['user_id'] . '/edit');
         }
         if ($input['user_sex'] === NULL) {
             $this->flashSession->warning('请选择性别');
-            return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
+            return $this->response->redirect('admin/users/' . $input['user_id'] . '/edit');
         }
         if (!preg_match('/^1[3456789]{1}\d{9}$/', $input['user_phone'])) {
             $this->flashSession->warning('手机号格式不正确');
-            return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
+            return $this->response->redirect('admin/users/' . $input['user_id'] . '/edit');
         }
         $issetUser = Users::findFirst([
             'user_phone = :user_phone: AND user_id <> :user_id:',
@@ -256,7 +256,7 @@ class UserController extends ControllerBase
         ]);
         if ($issetUser !== false) {
             $this->flashSession->warning('手机号码已存在');
-            return $this->response->redirect('/admin/users/' . $input['user_id'] . '/edit');
+            return $this->response->redirect('admin/users/' . $input['user_id'] . '/edit');
         }
 
         // 更新.

@@ -10,12 +10,11 @@ namespace app\Controllers\Home;
 
 use app\Library\AjaxResponse;
 use app\Library\CryptModel;
-use app\Library\helper;
 use Phalcon\Mvc\Controller;
 
 class ControllerBase extends Controller
 {
-    use AjaxResponse, helper;
+    use AjaxResponse;
 
     public static $upload_url = '';
     public static $project_id = '';
@@ -47,25 +46,15 @@ class ControllerBase extends Controller
         $this->view->setVars([
             '_csrfKey' => $this->security->getTokenKey(),
             '_csrf' => $this->security->getToken(),
-            '_session' => $this->session->get('user'),
             '_config' => $this->config->img,
-            '_Controller' => $this->getCname(),
             'project_id' => self::$project_id,
             'department_id' => self::$department_id,
         ]);
     }
 
     /**
-     * 获取控制器名称.
-     * @return mixed
-     */
-    public function getCname()
-    {
-        return explode('\\',$this->dispatcher->getControllerClass())[3];
-    }
-
-    /**
      * 错误提示.
+     * @param string $msg
      * @return mixed
      */
     function error($msg = '网络错误,请重新扫码！')
