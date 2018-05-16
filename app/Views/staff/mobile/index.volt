@@ -66,8 +66,8 @@
                         <div class="personnel_info_font y_personnel_info_font">
                             <span class="PersonnelName y_PersonnelName">{{ data['user_name'] }}</span>
                             <span class="my_set" >
-                                <img src="../staff/style/img/tongji.png" onclick="location.href = '{{url('staff/count')}}'" >
-                                <img src="../staff/style/img/sc.png" onclick="location.href = '{{url('staff/setting')}}'">
+                                <img src="{{ url('staff/style/img/tongji.png') }}" onclick="location.href = '{{url('staff/count')}}'" >
+                                <img src="{{ url('staff/style/img/sc.png') }}" onclick="location.href = '{{url('staff/setting')}}'">
                             </span>
                             <span class="PersonnelDuties">{{ data['user_job'] is defined ? data['user_job'] : '科员' }}</span>
                             {#<span class="my_set" >#}
@@ -86,8 +86,8 @@
                               style="background:{{ data['nowstatus']['status_color'] }}">{{ data['nowstatus']['status_name'] }}</span>
                             </div>
                             <div class="y_time_con">
-                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['start_time'] }}</a></p>
-                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['end_time'] }}</a></p>
+                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', data['nowstatus']['start_time']) }}</a></p>
+                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', data['nowstatus']['end_time']) }}</a></p>
                             </div>
                             {#<div class="y_shutdown center"><img src="../staff/style/img/y_shutdown_03.png"></div>#}
                         </div>
@@ -96,8 +96,7 @@
                         <div class="CurrentState_title y_CurrentState_title">
                             <span class="ghost"></span>
                             <span class="CurrentState_title_font">计划列表</span>
-                            <span class="CurrentState_d CurrentState_e" onclick="edit_user_status(0)"><img
-                                        src="../staff/style/img/xz1.png"></span>
+                            <span class="CurrentState_d CurrentState_e" onclick="edit_user_status(0)"><img src="{{ url('staff/style/img/xz1.png') }}"></span>
                         </div>
                         {% if data['statuslist'] is not empty %}
                             {% for v in data['statuslist'] %}
@@ -107,12 +106,12 @@
                                       style="background:{{ v['status_color'] }}">{{ v['status_name'] }}</span>
                                     </div>
                                     <div class="y_time_con edit_status" data-status="{{ v['user_status_id'] }}">
-                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ v['start_time'] }}</a></p>
-                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ v['end_time'] }}</a></p>
+                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', v['start_time']) }}</a></p>
+                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', v['end_time']) }}</a></p>
                                     </div>
                                     <div class="y_shutdown center"
                                          onclick="del_user_status({{ v['user_status_id'] }},'{{ v['status_name'] }}')">
-                                        <img src="../staff/style/img/y_shutdown_03.png" />
+                                        <img src="{{ url('staff/style/img/y_shutdown_03.png') }}" />
                                     </div>
                                 </div>
                             {% endfor %}
@@ -132,7 +131,7 @@
                         <div class="CurrentState_title y_CurrentState_title">
                             <span class="ghost"></span>
                             <span class="CurrentState_title_font">我的留言</span>
-                            <span class="CurrentState_d CurrentState_e" onclick="location.href='{{url('staff/edit_comments')}}'"><img src="../staff/style/img/bj.png"></span>
+                            <span class="CurrentState_d CurrentState_e" onclick="location.href='{{url('staff/edit_comments')}}'"><img src="{{ url('staff/style/img/bj.png') }}"></span>
                             <span class="CurrentState_font">{{ data['user_comments'] }}</span>
                         </div>
                     </div>

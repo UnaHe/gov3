@@ -46,7 +46,7 @@
     <div class="warp_1">
         <div class="title_g">
             <a class="return center" href="#" onclick="history.go(-1)">
-                <img src="../staff/style/img/return_03.png" />
+                <img src="{{ url('staff/style/img/return_03.png') }}" />
             </a>
             <h5 class="tetle_font">详情</h5>
             <a class="Reserved"></a>

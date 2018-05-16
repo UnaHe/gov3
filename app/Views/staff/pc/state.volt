@@ -6,7 +6,7 @@
     <div class="warp_2">
         <div class="title_g">
             <a class="return center" href="{{url('staff/refresh')}}">
-                <img src="../staff/style/img/return_03.png" />
+                <img src="{{ url('staff/style/img/return_03.png') }}" />
             </a>
             <h5 class="tetle_font">计划编辑</h5>
             <a class="Reserved"></a>

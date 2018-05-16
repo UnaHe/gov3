@@ -25,8 +25,8 @@ class CommonController extends ControllerBase
     public function initialize()
     {
         //设置用户照片的URL
-        self::$upload_url = self::$upload_url ? self::$upload_url : ($this->config->img)['upload_url'];
-        self::$upload_path = self::$upload_path ? self::$upload_path : ($this->config->img)['upload_path'];
+        self::$upload_url = self::$upload_url ? self::$upload_url : ($this->config->constants)['upload_url'];
+        self::$upload_path = self::$upload_path ? self::$upload_path : ($this->config->constants)['upload_path'];
     }
 
     /**
@@ -43,7 +43,7 @@ class CommonController extends ControllerBase
             $folder = $this->request->getPost('type');
 
             // 文件上传路径.
-            $path = ($this->config->img)['upload'] . $folder . '/';
+            $path = ($this->config->constants)['upload'] . $folder . '/';
             if (!file_exists($path)) {
                 @mkdir($path,0777,true);
             }

@@ -27,7 +27,7 @@ class Status extends ModelBase
         $this->useDynamicUpdate(true);
     }
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置时间.
         $this->created_at = time();
@@ -177,7 +177,7 @@ class Status extends ModelBase
                 $sql = 'select n_z_status.* from n_z_status where status_is_default = 1 or status_is_default = 2 and n_z_status.project_id in ('.$params.') or n_z_status.project_id = 0';
 
                 $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql));
-            } else if(is_string($projects)) {
+            } else {
                 $sql = 'select n_z_status.* from n_z_status where status_is_default = 1 or status_is_default = 2 and n_z_status.project_id = ? or n_z_status.project_id = 0';
 
                 $status_list = new Simple(null, $this, $this->getReadConnection()->query($sql, [$projects]));

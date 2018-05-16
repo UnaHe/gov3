@@ -22,7 +22,7 @@ class Project extends ModelBase
         $this->useDynamicUpdate(true);
     }
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置创建时间.
         $this->created_at = time();

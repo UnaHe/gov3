@@ -260,7 +260,7 @@ class QrCodeController extends ControllerBase
         if ($Forward->delete() === true) {
             return $this->ajaxSuccess('删除成功', 201);
         } else {
-            return $this->ajaxError('删除失败, 请稍后在试');
+            return $this->ajaxError('删除失败, 请稍后重试');
         }
     }
 
@@ -288,7 +288,7 @@ class QrCodeController extends ControllerBase
         if ($image) {
             return $this->ajaxSuccess($image);
         } else {
-            return $this->ajaxError('系统错误, 请稍后在试');
+            return $this->ajaxError('系统错误, 请稍后重试');
         }
     }
 

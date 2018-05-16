@@ -27,7 +27,7 @@ class Comments extends ModelBase
         $this->useDynamicUpdate(true);
     }
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置创建时间.
         $this->created_time = time();
@@ -43,6 +43,28 @@ class Comments extends ModelBase
         $comment_list = [];
         if (!empty($user_id)) {
             $sql = 'SELECT * FROM n_z_comments WHERE user_id = ? ORDER BY created_time DESC LIMIT 5';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_id]));
+
+            $comment_list = $data->valid() ? $data->toArray() : false;
+        }
+
+        return $comment_list;
+    }
+
+    /**
+     * 根据userId查询留言2.
+     * @param $user_id
+     * @return array|bool
+     */
+    public function getCommentByUserId($user_id)
+    {
+        $comment_list = [];
+        if (!empty($user_id)) {
+            $sql = "SELECT to_char(to_timestamp(created_time), 'YYYY-MM-DD HH24:MI:SS') as created_time, comment_id, comment_content, comment_phone, comment_name, comment_status, user_id 
+                    FROM n_z_comments 
+                    WHERE user_id = ? 
+                    ORDER BY created_time DESC";
 
             $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_id]));
 

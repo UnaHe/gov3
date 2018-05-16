@@ -18,8 +18,10 @@ class ControllerBase extends Controller
 
     public function beforeExecuteRoute()
     {
+        $namespace = $this->dispatcher->getNamespaceName();
+
         // 是否登录.
-        if (!$this->session->has('user') && $this->getCname() !== 'LoginController') {
+        if (!$this->session->has('user') && $this->getCname() !== 'LoginController' && $namespace !== 'app\Controllers\Admin') {
             // 跳转首页.
             $this->dispatcher->forward(
                 [
@@ -41,7 +43,7 @@ class ControllerBase extends Controller
             '_csrfKey' => $this->security->getTokenKey(),
             '_csrf' => $this->security->getToken(),
             '_session' => $this->session->get('user'),
-            '_config' => $this->config->img,
+            '_config' => $this->config->constants,
             '_Controller' => $this->getCname(),
         ]);
     }

@@ -265,10 +265,10 @@ class UserController extends ControllerBase
             // 判断是否删除图片.
             if ($input['user_image'] && $oldImg) {
                 // 都存在, 删除旧图.
-                @unlink($this->config->img['upload_path'] . $oldImg);
+                @unlink($this->config->constants['upload_path'] . $oldImg);
             } else if (!$input['user_image'] && $oldImg) {
                 // 没新图, 移除旧图, 删除旧图.
-                @unlink($this->config->img['upload_path'] . $oldImg);
+                @unlink($this->config->constants['upload_path'] . $oldImg);
             }
 
             $this->flashSession->success('更新成功');
@@ -336,7 +336,7 @@ class UserController extends ControllerBase
         if ($res === true) {
             return $this->ajaxSuccess('密码已重置', 201);
         } else {
-            return $this->ajaxError('密码重置失败, 请稍后在试');
+            return $this->ajaxError('密码重置失败, 请稍后重试');
         }
 
     }

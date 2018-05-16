@@ -248,7 +248,7 @@
                     '<span class="bulletin_font text_overflow">'+(v.section_name ?v.section_name : '--')+'</span>'+
                     '<span class="bulletin_font text_overflow">'+(v.department_name ?v.department_name : '--')+'</span>'+
                     '<span class="bulletin_font text_overflow" onclick="'+link+'">'+v.status_name+'' +
-                    '<span class="more" ><img src="/staff/style/img/zl.png" alt=""></span>' +
+                    '<span class="more" ><img src="{{ url('staff/style/img/zl.png') }}" alt=""></span>' +
                     '</span>'+
                     ' </li>';
             });

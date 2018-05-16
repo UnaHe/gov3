@@ -117,20 +117,20 @@ include 'routes/Home.php';
 $router->mount($home);
 
 /**
- * API路由组.
+ * Staff路由组.
  */
-$api = new RouterGroup([
+$staff = new RouterGroup([
     'namespace'  => 'app\Controllers\Api',
 ]);
 
 // URL前缀.
-$api->setPrefix('/staff');
+$staff->setPrefix('/staff');
 
 // 引入路由文件.
-include 'routes/Api.php';
+include 'routes/Staff.php';
 
 // 注册路由组.
-$router->mount($api);
+$router->mount($staff);
 
 /**
  * 页面未找到.

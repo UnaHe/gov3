@@ -222,10 +222,10 @@ class ProjectController extends ControllerBase
             // 判断是否删除图片.
             if ($projectImage && $oldImg) {
                 // 都存在, 删除旧图.
-                @unlink($this->config->img['upload_path'] . $oldImg);
+                @unlink($this->config->constants['upload_path'] . $oldImg);
             } else if (!$projectImage && $oldImg) {
                 // 没新图, 移除旧图, 删除旧图.
-                @unlink($this->config->img['upload_path'] . $oldImg);
+                @unlink($this->config->constants['upload_path'] . $oldImg);
             }
 
             // 判断用户权限.
@@ -481,10 +481,10 @@ class ProjectController extends ControllerBase
                 // 判断是否删除图片.
                 if ($user_image && $oldImg) {
                     // 都存在, 删除旧图.
-                    @unlink($this->config->img['upload_path'] . $oldImg);
+                    @unlink($this->config->constants['upload_path'] . $oldImg);
                 } else if (!$user_image && $oldImg) {
                     // 没新图, 移除旧图, 删除旧图.
-                    @unlink($this->config->img['upload_path'] . $oldImg);
+                    @unlink($this->config->constants['upload_path'] . $oldImg);
                 }
 
                 if ($user->update($data) === true) {
@@ -509,7 +509,7 @@ class ProjectController extends ControllerBase
             return $this->response->redirect('admin/project/adminuserlist');
         } catch (\Exception $e) {
             $this->db->rollback();
-            $error = $e instanceof \LogicException ? $e->getMessage() : '系统错误, 请稍后再试';
+            $error = $e instanceof \LogicException ? $e->getMessage() : '系统错误, 请稍后重试';
             $this->flashSession->error($error);
             return $this->response->redirect('admin/project/adminuserlist');
         }

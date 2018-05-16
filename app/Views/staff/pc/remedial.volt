@@ -20,7 +20,7 @@
                 <input type="hidden"  name="new_user_pass">
                 <input type="password" name="password_two" placeholder="再次输入密码">
             </div>
-            <a class="linkLogin" href="{{url('staff/login')}}">已有账号？点此登录</a>
+            <a class="linkLogin" href="{{url('staff/login')}}">已有帐号？点此登录</a>
             <input type="submit" value="修改" id="Remediation">
         </form>
         <p class="wangji">忘记密码请联系管理员</p>
@@ -85,7 +85,7 @@
                     'user_pass': $("input[name='user_pass']").val(),
                     'new_user_pass': $("input[name='new_user_pass']").val(),
                 },success: function(data){
-                    if (data.status == 200) {
+                    if (data.status == 201) {
                         layer.msg(data.msg, {
                             icon: 6,
                             time: 2000, //2s后自动关闭

@@ -21,7 +21,7 @@ class Departments extends ModelBase
 {
     public $created_at;
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置时间.
         $this->created_at = time();

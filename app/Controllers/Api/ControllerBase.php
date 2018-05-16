@@ -20,7 +20,7 @@ class ControllerBase extends Controller
     public function beforeExecuteRoute()
     {
         // 设置用户照片的URL.
-        self::$upload_url = self::$upload_url ? self::$upload_url : $this->config->img['upload_url'];
+        self::$upload_url = self::$upload_url ? self::$upload_url : $this->config->constants['upload_url'];
     }
 
     public function afterExecuteRoute()
@@ -32,7 +32,8 @@ class ControllerBase extends Controller
         $this->view->setVars([
             '_csrfKey' => $this->security->getTokenKey(),
             '_csrf' => $this->security->getToken(),
-            '_config' => $this->config->img,
+            '_config' => $this->config->constants,
+            '_session' => $this->session->get('staff'),
         ]);
     }
 

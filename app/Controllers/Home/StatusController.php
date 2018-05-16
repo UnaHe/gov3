@@ -82,7 +82,7 @@ class StatusController extends ControllerBase
         // 准备数据.
         $user_list = [];
         foreach ($data['user_list']->items as $v) {
-            if($v->user_status_id === NULL) {//默认事件
+            if($v->user_status_id === NULL) {
                 $key = (date("H:i", $input['time']) > $v->a->work_start_time && date("H:i",  $input['time']) < $v->a->work_end_time) ? 1 : 2;
                 $project = isset($project_default_status_arr[$v->a->project_id]) && array_key_exists($key, $project_default_status_arr[$v->a->project_id]) !== false ? $v->a->project_id : 0;
                 $v->status_id = $project_default_status_arr[$project][$key]['status_id'];
@@ -127,6 +127,7 @@ class StatusController extends ControllerBase
             $project_default_status_arr[$v->project_id][$v->status_is_default]['status_name'] = $v->status_name;
             $project_default_status_arr[$v->project_id][$v->status_is_default]['status_color'] = $v->status_color;
         }
+        unset($project_default_status);
 
         // 用户状态.
         $other_status_arr = [];

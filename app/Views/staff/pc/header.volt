@@ -18,10 +18,8 @@
                 if (!clientWidth) {
                     return;
                 }else if (clientWidth >= 750) {
-                    console.log(12);
                     docEl.style.fontSize = '45px';
                 } else {
-                    console.log(23);
                     // docEl.style.fontSize = 50 * (clientWidth / 1080) + 'px';
                 }
             };

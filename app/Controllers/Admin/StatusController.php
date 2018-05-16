@@ -358,7 +358,7 @@ class StatusController extends ControllerBase
         if ($result === true) {
             return $this->ajaxSuccess('工作时间修改成功', 201);
         } else {
-            return $this->ajaxError('工作时间修改失败, 请稍后在试');
+            return $this->ajaxError('工作时间修改失败, 请稍后重试');
         }
     }
 

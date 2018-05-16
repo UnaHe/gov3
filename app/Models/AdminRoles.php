@@ -23,10 +23,14 @@ class AdminRoles extends ModelBase
         $this->useDynamicUpdate(true);
     }
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置时间.
         $this->created_at = date('Y-m-d H:i:s');
+    }
+
+    public function beforeUpdate()
+    {
         $this->updated_at = date('Y-m-d H:i:s');
     }
 

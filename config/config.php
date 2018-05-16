@@ -33,7 +33,7 @@ return new Config([
         'logLevel' => Logger::DEBUG,
         'filename' => date('Y-m-d') . '.log',
     ],
-    'img' => [
+    'constants' => [
         'upload'                => BASE_PATH . '/public/upload/',
         'upload_url'            => 'http://' . $_SERVER['SERVER_NAME'] . '/upload/',
         'upload_path'           => BASE_PATH . '/public/upload/',

@@ -150,7 +150,7 @@ class UserStatus extends ModelBase
      */
     public function getStatusByUser($users, $time = false)
     {
-        $data = false;
+        $status_list = [];
         if (!empty($users)) {
             $time = $time ? $time : time();
             if (is_array($users)) {
@@ -161,23 +161,48 @@ class UserStatus extends ModelBase
                 }
                 $params = rtrim($params, ',');
 
-                $sql = 'SELECT n_z_user_status.*, n_z_status.status_name, n_z_status.status_color 
-                        FROM n_z_user_status 
-                        LEFT JOIN n_z_status ON n_z_status.status_id = n_z_user_status.status_id 
-                        WHERE n_z_user_status.start_time <= '. $time .' AND n_z_user_status.end_time >= '. $time .' AND n_z_user_status.user_id IN ('.$params.')';
+                $sql = 'SELECT userStatus.*, status.status_name, status.status_color 
+                        FROM n_z_user_status AS userStatus
+                        LEFT JOIN n_z_status AS status ON status.status_id = userStatus.status_id 
+                        WHERE userStatus.start_time <= '. $time .' AND userStatus.end_time >= '. $time .' AND userStatus.user_id IN ('.$params.')';
 
                 $data = new Simple(null, $this, $this->getReadConnection()->query($sql));
-            } else if(is_string($users)) {
-                $sql = 'SELECT n_z_user_status.*, n_z_status.status_name, n_z_status.status_color 
-                        FROM n_z_user_status 
-                        LEFT JOIN n_z_status ON n_z_status.status_id = n_z_user_status.status_id 
-                        WHERE n_z_user_status.start_time <= '. $time .' AND n_z_user_status.end_time >= '. $time .' AND n_z_user_status.user_id = ?';
+            } else {
+                $sql = 'SELECT userStatus.*, status.status_name, status.status_color 
+                        FROM n_z_user_status AS userStatus
+                        LEFT JOIN n_z_status AS status ON status.status_id = userStatus.status_id 
+                        WHERE userStatus.start_time <= '. $time .' AND userStatus.end_time >= '. $time .' AND userStatus.user_id = ?';
 
                 $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$users]));
             }
+
+            $status_list = $data->valid() ? $data->toArray() : false;
         }
 
-        $status_list = $data->valid() ? $data->toArray() : false;
+        return $status_list;
+    }
+
+    /**
+     * 获取计划列表,根据userId.
+     * @param $user_id
+     * @param bool $time
+     * @return array|bool
+     */
+    public function getPlanListByUserId($user_id, $time = false)
+    {
+        $status_list = [];
+        if (!empty($user_id)) {
+            $time = $time ? $time : time();
+            $sql = 'SELECT userStatus.*, status.status_name, status.status_color 
+                    FROM n_z_user_status AS userStatus
+                    LEFT JOIN n_z_status AS status ON status.status_id = userStatus.status_id 
+                    WHERE userStatus.user_id = ? AND (userStatus.end_time > '. $time .' OR userStatus.start_time > '. $time .') 
+                    ORDER BY userStatus.start_time ASC';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_id]));
+
+            $status_list = $data->valid() ? $data->toArray() : false;
+        }
 
         return $status_list;
     }

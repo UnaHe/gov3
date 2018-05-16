@@ -44,6 +44,10 @@ class HomeController extends ControllerBase
         $oldPass = $this->session->get('user')['user_pass'];
         $newPass = $this->request->getPost('user_pass');
 
+        if (!$userId || !$oldPass || !$newPass) {
+            return $this->ajaxError('参数错误', 406);
+        }
+
         if ($this->security->checkHash($newPass, $oldPass)) {
             return $this->ajaxError('新密码不能与旧密码相同', 406);
         }
@@ -59,7 +63,7 @@ class HomeController extends ControllerBase
         if ($res === true) {
             return $this->ajaxSuccess('密码修改成功, 请重新登录', 201);
         } else {
-            return $this->ajaxError('密码修改失败, 请稍后在试');
+            return $this->ajaxError('密码修改失败, 请稍后重试');
         }
     }
 

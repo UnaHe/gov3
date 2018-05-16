@@ -29,12 +29,17 @@ class Users extends ModelBase
         $this->useDynamicUpdate(true);
     }
 
-    public function beforeSave()
+    public function beforeCreate()
     {
         // 设置时间.
         $this->created_at = date('Y-m-d H:i:s');
+    }
+
+    public function beforeUpdate()
+    {
         $this->updated_at = date('Y-m-d H:i:s');
     }
+
 
     /**
      * 根据手机号查询相应信息.
@@ -46,12 +51,35 @@ class Users extends ModelBase
         $user_info = [];
         if (!empty($tel)) {
             $sql = "SELECT users.*, project.project_id, project.project_name, departments.department_id, departments.department_name, project.work_start_time, project.work_end_time, roleuser.role_id, role.code as role_code
-            FROM n_z_users AS users
-            LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
-            LEFT JOIN n_z_departments AS departments ON departments.department_id = users.department_id
-            LEFT JOIN n_z_admin_role_user AS roleuser ON roleuser.user_id = users.user_id
-            LEFT JOIN n_z_admin_roles AS role ON role.id = roleuser.role_id
-            WHERE users.user_phone = ? AND users.user_status <> 0";
+                    FROM n_z_users AS users
+                    LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
+                    LEFT JOIN n_z_departments AS departments ON departments.department_id = users.department_id
+                    LEFT JOIN n_z_admin_role_user AS roleuser ON roleuser.user_id = users.user_id
+                    LEFT JOIN n_z_admin_roles AS role ON role.id = roleuser.role_id
+                    WHERE users.user_phone = ? AND users.user_status <> 0";
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$tel]));
+
+            $user_info = $data->valid() ? $data->toArray()[0] : false;
+        }
+
+        return $user_info;
+    }
+
+    /**
+     * 根据手机号查询相应信息2.
+     * @param $tel
+     * @return array|bool
+     */
+    public function getUserDetailsByTel($tel)
+    {
+        $user_info = [];
+        if (!empty($tel)) {
+            $sql = 'SELECT users.user_id, users.user_name, users.user_age, users.user_sex, users.user_intro, users.user_status, users.user_phone, users.user_image, users.user_job, users.remember_token, users.user_comments, project.project_id, project.project_name, departments.department_id, departments.department_name, project.work_start_time, project.work_end_time 
+                    FROM n_z_users AS users
+                    LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
+                    LEFT JOIN n_z_departments AS departments ON departments.department_id = users.department_id 
+                    WHERE users.user_phone = ? AND project.project_status = 1 AND users.user_status <> 0';
 
             $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$tel]));
 
@@ -71,9 +99,9 @@ class Users extends ModelBase
         $user_info = [];
         if (!empty($user_id)) {
             $sql = "SELECT users.user_id, users.user_name, users.user_job, users.user_image, users.user_phone, users.user_sex, users.user_intro, users.user_comments, users.user_age, users.user_status, project.project_id, project.project_name, users.department_id, users.section_id
-            FROM n_z_users AS users
-            LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
-            WHERE users.user_id = ?";
+                    FROM n_z_users AS users
+                    LEFT JOIN n_z_project AS project ON project.project_id = users.project_id
+                    WHERE users.user_id = ?";
 
             $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_id]));
 

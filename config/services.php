@@ -8,6 +8,7 @@
 
 use Phalcon\Cache\Backend\Redis as CacheRedis;
 use Phalcon\Cache\Frontend\Data as FrontData;
+use Phalcon\Crypt;
 use Phalcon\Db\Adapter\Pdo\Factory;
 use Phalcon\Db\Profiler as DbProfiler;
 use Phalcon\Flash\Direct as FlashDirect;
@@ -22,6 +23,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Session\Adapter\Redis as SessionRedis;
+use app\Library\CryptModel;
 use app\Library\SecurityDeep;
 
 /**
@@ -92,6 +94,20 @@ $di->setShared('view', function () use ($config) {
 });
 
 /**
+ * Crypt.
+ */
+$di->set(
+    "crypt",
+    function () {
+        $crypt = new Crypt();
+
+        $crypt->setKey(CryptModel::POINT_KEY); // 使用你自己的key！
+
+        return $crypt;
+    }
+);
+
+/**
  * DB.
  */
 $di->set('db', function () use ($config, $di) {
@@ -111,6 +127,7 @@ $di->set('db', function () use ($config, $di) {
             // 获取分析结果.
             $profile = $profiler->getLastProfile();
             $sql = $profile->getSQLStatement();
+            $sql = str_replace(PHP_EOL, NULL, $sql);
             $params = $connection->getSqlVariables();
             (is_array($params) && count($params)) && $params = json_encode($params);
             $executeTime = $profile->getTotalElapsedSeconds();

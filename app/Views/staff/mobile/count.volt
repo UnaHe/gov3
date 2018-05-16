@@ -320,7 +320,7 @@
                     }
                     percent = v.percent+'%';
 
-                    zl_img = !!link ? '<img src="/staff/style/img/zl.png" mode="widthFix" class="img_lf">' : '';
+                    zl_img = !!link ? '<img src="{{ url('staff/style/img/zl.png') }}" mode="widthFix" class="img_lf">' : '';
                     str += '<li>'+
                         '<span class="color_li" style="background:'+colors[k]+'"></span>'+
                         '<span class="color_value">'+v.name+'</span>'+
