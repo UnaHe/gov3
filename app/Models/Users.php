@@ -317,13 +317,13 @@ class Users extends ModelBase
     /**
      * 获取项目用户.
      * @param array $input
-     * @param bool $ispage
+     * @param bool $isPage
      * @param int $page
      * @param int $limit
      * @param bool $user_status
      * @return mixed|stdClass
      */
-    public function getProjectUsersByProject($input = [], $ispage = true, $page = 1, $limit = 10, $user_status = false)
+    public function getProjectUsersByProject($input = [], $isPage = true, $page = 1, $limit = 10, $user_status = false)
     {
         $builder = Users::getModelsManager()->createBuilder()->addFrom('app\Models\GetUserDetail', 'a');
 
@@ -360,7 +360,7 @@ class Users extends ModelBase
             ]);
         }
 
-        if ($ispage) {
+        if ($isPage) {
             $builder->orderBy('a.project_id DESC, a.department_id DESC, a.user_is_admin ASC, a.user_job ASC, a.user_is_leader ASC');
 
             // 分页.
@@ -460,6 +460,157 @@ class Users extends ModelBase
         }
 
         return $user_info;
+    }
+
+    /**
+     * 用于统计, 包括所有状态的用户列表.
+     * @param array $input
+     * @param bool $isPage
+     * @param int $page
+     * @param int $limit
+     * @param bool $need_relation
+     * @return array|bool
+     */
+    public function getUsersListUseCountByUser($input = [], $isPage = true, $page = 1, $limit = 10, $need_relation = true)
+    {
+        $input['time'] = isset($input['time']) ? $input['time'] : time();
+
+        $where = '';
+        $bindParams = [];
+
+        $where .= (empty($where) ? ' WHERE' : ' AND') . ' A.project_id > 0 AND A.user_status = 1';
+
+        if (isset($input['department_id']) && !empty($input['department_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' A.department_id = ?';
+            $bindParams[] = $input['department_id'];
+        }
+        if (isset($input['section_id']) && !empty($input['section_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' A.section_id = ?';
+            $bindParams[] = $input['section_id'];
+        }
+
+        if ($isPage) {
+            $offset = ($page - 1) * $limit;
+            $limits = ' ORDER BY A.project_id DESC, status.status_id ASC, A.department_id DESC, A.user_job ASC LIMIT ? OFFSET ?';
+            $bindParams[] = $limit;
+            $bindParams[] = $offset;
+        } else {
+            $limits = ' ORDER BY A.department_id DESC';
+        }
+
+        $sql = 'SELECT A.*, userStatus.user_status_id, userStatus.start_time, userStatus.end_time, userStatus.user_status_desc, status.status_id, status.status_name, status.status_color 
+                FROM n_z_get_user_detail AS A 
+                INNER JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = A.user_id AND userBelongs.belong_id = '. $input['user_id'] .'
+                LEFT JOIN n_z_user_status AS userStatus ON A.user_id = userStatus.user_id AND userStatus.start_time <= '. $input['time'] .' AND userStatus.end_time >= '. $input['time'] .'
+                LEFT JOIN n_z_status AS status ON userStatus.status_id = status.status_id '
+                . $where . $limits;
+
+        $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $bindParams));
+
+        $users_list = $data->valid() ? $data->toArray() : false;
+
+        return $users_list;
+    }
+
+    /**
+     * 用于统计(默认状态时)用户列表.
+     * @param $input
+     * @param bool $need_relation
+     * @param int $page
+     * @param int $limit
+     * @return array|bool
+     */
+    public function getUserListUseCountOnDefault($input, $need_relation = false, $page = 1, $limit = 10)
+    {
+        $where = '';
+        $bindParams = [];
+
+        $where .= (empty($where) ? ' WHERE' : ' AND') . ' users.user_status = 1 AND b.user_id IS NULL';
+
+        if (isset($input['department_id']) && !empty($input['department_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' users.department_id = ?';
+            $bindParams[] = $input['department_id'];
+        }
+        if (isset($input['section_id']) && !empty($input['section_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' sections.section_id = ?';
+            $bindParams[] = $input['section_id'];
+        }
+
+        $sql = 'SELECT users.user_id, users.user_name, users.user_phone, departments.department_name, sections.section_name 
+                FROM n_z_users AS users 
+                LEFT JOIN n_z_departments AS departments ON departments.department_id = users.department_id 
+                LEFT JOIN n_z_sections AS sections ON sections.section_id = users.section_id ';
+
+        if ($need_relation) {
+            $sql .= 'INNER JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = users.user_id AND userBelongs.belong_id = '. $input['user_id'] .'
+	                LEFT JOIN (SELECT user_id FROM n_z_user_status WHERE start_time <= '. $input['time'] .' AND end_time >= '. $input['time'] .' ) b ON b.user_id = users.user_id ';
+        }
+
+        $offset = ($page - 1) * $limit;
+        $sql .= $where . ' ORDER BY users.project_id DESC, users.department_id DESC, users.user_job ASC LIMIT ? OFFSET ?';
+        $bindParams[] = $limit;
+        $bindParams[] = $offset;
+
+        $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $bindParams));
+
+        $users_list = $data->valid() ? $data->toArray() : false;
+
+        return $users_list;
+    }
+
+    /**
+     * 用于统计(非默认状态时)用户列表.
+     * @param $input
+     * @param bool $need_relation
+     * @param int $page
+     * @param int $limit
+     * @return array|bool
+     */
+    public function getUserListUseCount($input, $need_relation = false, $page = 1, $limit = 10)
+    {
+        $where = '';
+        $bindParams = [];
+
+        $where .= (empty($where) ? ' WHERE' : ' AND') . ' users.user_status = 1';
+
+        if (isset($input['department_id']) && !empty($input['department_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' users.department_id = ?';
+            $bindParams[] = $input['department_id'];
+        }
+        if (isset($input['section_id']) && !empty($input['section_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' sections.section_id = ?';
+            $bindParams[] = $input['section_id'];
+        }
+        if (isset($input['status_id']) && !empty($input['status_id'])) {
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' userStatus.status_id = ?';
+            $bindParams[] = $input['status_id'];
+        }
+
+        $sql = 'SELECT userStatus.*, status.status_id, status.status_name, status.status_color, users.user_name, users.user_phone, departments.department_name, sections.section_name 
+                FROM n_z_users AS users 
+                INNER JOIN n_z_user_status AS userStatus ON userStatus.user_id = users.user_id 
+                INNER JOIN n_z_status AS status ON status.status_id = userStatus.status_id 
+                INNER JOIN n_z_departments AS departments ON departments.department_id = users.department_id 
+                LEFT JOIN n_z_sections AS sections ON sections.section_id = users.section_id ';
+
+        if ($need_relation) {
+            $sql .= 'INNER JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = users.user_id AND userBelongs.belong_id = '. $input['user_id'];
+
+            if (isset($input['time']) && !empty($input['time'])) {
+                $where .= (empty($where) ? ' WHERE' : ' AND') . ' (userStatus.start_time <= '. $input['time'] .' AND userStatus.end_time >= '. $input['time'] .')';
+            }
+        }
+
+        $offset = ($page - 1) * $limit;
+        $sql .= $where . ' ORDER BY users.project_id DESC, users.department_id DESC, users.user_job ASC LIMIT ? OFFSET ?';
+        $bindParams[] = $limit;
+        $bindParams[] = $offset;
+
+        $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $bindParams));
+
+        $status_list = $data->valid() ? $data->toArray() : false;
+
+        return $status_list;
     }
 
 }

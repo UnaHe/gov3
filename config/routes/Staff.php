@@ -69,3 +69,43 @@ $staff->addPost('/mycount', [
     'controller' => 'count',
     'action'     => 'myCount',
 ]);
+
+// 状态统计详情（下属员工列表）.
+$staff->add('/countstatusdetail', [
+    'controller' => 'count',
+    'action'     => 'countStatusList',
+]);
+
+// 状态统计详情（按分类查询具体信息）.
+$staff->addPost('/countstatusdetailbystatus', [
+    'controller' => 'count',
+    'action'     => 'countStatusDetailByStatus',
+]);
+
+// 获取单个用户的计划列表和个人信息.
+$staff->add('/userstatuslist', [
+    'controller' => 'count',
+    'action'     => 'userStatusList',
+]);
+
+// 留言统计详情（按分类查询具体信息）.
+$staff->add('/countcommentdetail', [
+    'controller' => 'count',
+    'action'     => 'countCommentDetail',
+]);
+
+/**
+ * 留言.
+ */
+
+// 留言详情.
+$staff->addGet('/commentone', [
+    'controller' => 'comment',
+    'action'     => 'commentOne',
+]);
+
+// 修改状态.
+$staff->addPost('/changecommentstatus', [
+    'controller' => 'comment',
+    'action'     => 'changeCommentStatus',
+]);

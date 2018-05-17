@@ -187,4 +187,32 @@ class Status extends ModelBase
         return $status_list;
     }
 
+    /**
+     * 根据项目ID获取事务(包括默认事件).
+     * @param $projectId
+     * @return array
+     */
+    public function getListByProjectMore($projectId)
+    {
+        $status_list = Status::find([
+            'project_id = :project_id: OR (project_id = 0 AND status_is_default >=1)',
+            'bind' => [
+                'project_id' => $projectId,
+            ],
+            'order' => 'project_id DESC',
+        ])->toArray();
+
+        $flag = false;
+        foreach ($status_list as $k => $v) {
+            if($v['project_id'] == $projectId && $v['status_is_default'] >= 1 ){
+                $flag = true;
+            }
+            if($v['project_id'] == 0 && $v['status_is_default'] >= 1 && $flag){
+                unset($status_list[$k]);
+            }
+        }
+
+        return $status_list;
+    }
+
 }

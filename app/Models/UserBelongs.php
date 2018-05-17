@@ -145,9 +145,8 @@ class UserBelongs extends ModelBase
 
     /**
      * 删除归属.
-     * @param $userId
+     * @param $belongId
      * @return bool
-     * @throws \Exception
      */
     public function belongsDelete($belongId)
     {
@@ -193,6 +192,34 @@ class UserBelongs extends ModelBase
             $transaction->rollback($e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    /**
+     * 获取一个人的所有下级.
+     * @param $user_id
+     * @param bool $return_string
+     */
+    public function getUsersByUserId($user_id, $return_string = false)
+    {
+        $sql = 'SELECT userBelongs.*, users.user_name 
+                FROM n_z_user_belongs AS userBelongs 
+                LEFT JOIN n_z_users AS users ON userBelongs.user_id = users.user_id 
+                WHERE userBelongs.belong_id = ?  AND users.user_status = ? 
+                ORDER BY users.department_id ASC';
+
+        $data = new Simple (null, $this, $this->getReadConnection()->query($sql, [$user_id, '1']));
+
+        $list = $data->valid() ? $data->toArray() : false;
+
+        $users = [];
+        if($return_string){
+            foreach ($list as $k=>$v){
+                $users[] = $v['user_id'];
+            }
+            $list = $users;
+        }
+
+        return $list;
     }
 
 }

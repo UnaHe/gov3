@@ -135,7 +135,7 @@ class LoginController  extends ControllerBase
         if ($userInfo['user_image']) {
             $userInfo['user_image'] = self::$upload_url . $userInfo['user_image'];
         } else {
-            $userInfo['user_image'] = Config("constants.defalut_staff_img");
+            $userInfo['user_image'] = $this->config->constants['default_staff_img'];
         }
 
         // 留言列表.
@@ -179,6 +179,7 @@ class LoginController  extends ControllerBase
             $this->view->setVars([
                 'data' => $userInfo,
             ]);
+
             $this->view->pick($this->session->get('tpl') . '/index');
 
             return true;

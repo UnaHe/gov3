@@ -66,8 +66,8 @@
                               style="background:{{ data['nowstatus']['status_color'] }}">{{ data['nowstatus']['status_name'] }}</span>
                             </div>
                             <div class="y_time_con">
-                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['start_time'] }}</a></p>
-                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ data['nowstatus']['end_time'] }}</a></p>
+                                <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', data['nowstatus']['start_time']) }}</a></p>
+                                <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', data['nowstatus']['end_time']) }}</a></p>
                             </div>
                             {#<div class="y_shutdown center"><img src="../staff/style/img/y_shutdown_03.png"></div>#}
                         </div>
@@ -87,8 +87,8 @@
                                       style="background:{{ v['status_color'] }}">{{ v['status_name'] }}</span>
                                     </div>
                                     <div class="y_time_con edit_status" data-status="{{ v['user_status_id'] }}">
-                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ v['start_time'] }}</a></p>
-                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ v['end_time'] }}</a></p>
+                                        <p class="beginning"><a>始</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', v['start_time']) }}</a></p>
+                                        <p class="expiry"><a>终</a>&nbsp;&nbsp;<a>{{ date('Y/m/d H:i', v['end_time']) }}</a></p>
                                     </div>
                                 </div>
                             {% endfor %}

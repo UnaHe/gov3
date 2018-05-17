@@ -250,4 +250,47 @@ class Comments extends ModelBase
         }
     }
 
+    /**
+     * 查询comments表数量（用于统计）.
+     * @param $input
+     * @param bool $need_relation
+     * @return mixed
+     */
+    public function getCommentsCount($input, $need_relation = false)
+    {
+        $where = '';
+        $bindParams = [];
+
+        $sql = 'SELECT COUNT(*) AS AGGREGATE FROM n_z_comments AS comments INNER JOIN n_z_users AS users ON comments.user_id = users.user_id ';
+
+        if($need_relation){
+            $sql .= 'LEFT JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = comments.user_id AND userBelongs.belong_id = ?';
+            $bindParams[] = $input['user_id'];
+        }
+
+        if (!$need_relation && isset($input['user_id']) && !is_array($input['user_id'])){
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' comments.user_id = ?';
+            $bindParams[] = $input['user_id'];
+        }
+
+        if (isset($input['time']) && !is_array($input['time'])){
+            $input['time'] = strtotime(date("y-m-d"),$input['time']);
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' comments.created_time >= ?';
+            $bindParams[] = $input['time'];
+        }
+
+        $sql .= $where;
+        $sql1 = $sql;
+
+        $sql .= (empty($where) ? ' WHERE' : ' AND') . ' comments.comment_status = \'1\'';
+        $sql1 .= (empty($where) ? ' WHERE' : ' AND') . ' comments.comment_status = \'0\'';
+
+        $obj = new Simple(null, $this, $this->getReadConnection()->query($sql, $bindParams));
+        $obj1 = new Simple(null, $this, $this->getReadConnection()->query($sql1, $bindParams));
+        $data['read'] = $obj->valid() ? $obj->toArray()[0]['aggregate'] : false;
+        $data['unread'] = $obj1->valid() ? $obj1->toArray()[0]['aggregate'] : false;
+
+        return $data;
+    }
+
 }

@@ -75,13 +75,13 @@
                         success: function (data) {
                             if(data.status == 200){
                                 $('.list').empty();
-                                if (!data.data) {
+                                if (!data.data.data.items) {
                                     have_data = false;
                                     me.resetload();
                                     me.unlock();
                                     me.noData(true);
                                 }else{
-                                    var result = set_list(data.data);
+                                    var result = set_list(data.data.data.items);
                                     $('.list').html(result);
                                     me.resetload();
                                     me.unlock();
@@ -115,14 +115,14 @@
                             success: function (data) {
                                 if(data.status == 200) {
                                     page++;
-                                    if (!data.data) {
+                                    if (!data.data.data.items) {
                                         have_data = false;
                                         me.noData(true);
                                         me.resetload();
                                         me.unlock();
                                         return false;
                                     }else{
-                                        var result = set_list(data.data);
+                                        var result = set_list(data.data.data.items);
                                         $('.list').append(result);
                                         // 每次数据加载完，必须重置
                                         me.resetload();
@@ -147,14 +147,13 @@
                 threshold: 50
             });
         });
-        {#function show_detail(notice_id) {#}
-            {#location.href = "{{url('notice/detail?notice_id=')}}" + notice_id + '&pid=' + '{{$project_id}}' + '&did=' + '{{$department_id}}';#}
-        {#}#}
+
         function set_list(data) {
+            console.log(data);
             var result = '';
             $.each(data, function (k, v) {
                 var created_time = '{{date("Y/m/d")}}';
-                var content = v.comment_content;
+                var content = v.comments.comment_content;
                 var link = "{{url('staff/commentone?comment_id=')}}"+v.comment_id;
                 result += ' <li data-id="">'+
                     ' <span class="bulletin_font">'+v.user_name+'</span>'+

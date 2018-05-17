@@ -72,7 +72,7 @@ class StatusController extends ControllerBase
         $project_default_status = (new Status())->getDefaultStatusByProject($input['project_id']);
 
         $project_default_status_arr = [];
-        foreach($project_default_status as $v) {
+        foreach ($project_default_status as $v) {
             $project_default_status_arr[$v->project_id][$v->status_is_default]['status_id'] = $v->status_id;
             $project_default_status_arr[$v->project_id][$v->status_is_default]['status_name'] = $v->status_name;
             $project_default_status_arr[$v->project_id][$v->status_is_default]['status_color'] = $v->status_color;

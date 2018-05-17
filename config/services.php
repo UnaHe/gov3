@@ -127,7 +127,7 @@ $di->set('db', function () use ($config, $di) {
             // 获取分析结果.
             $profile = $profiler->getLastProfile();
             $sql = $profile->getSQLStatement();
-            $sql = str_replace(PHP_EOL, NULL, $sql);
+            $sql = preg_replace("/(\s+)/",' ', str_replace(PHP_EOL, NULL, $sql));;
             $params = $connection->getSqlVariables();
             (is_array($params) && count($params)) && $params = json_encode($params);
             $executeTime = $profile->getTotalElapsedSeconds();
