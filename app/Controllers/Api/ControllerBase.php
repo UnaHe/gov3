@@ -19,6 +19,20 @@ class ControllerBase extends Controller
 
     public function beforeExecuteRoute()
     {
+        $action = $this->dispatcher->getActionName();
+
+        // 是否登录.
+        if (!$this->session->has('staff') && $action !== 'login' && $action !== 'loginout') {
+            // 跳转登录首页.
+            $this->dispatcher->forward(
+                [
+                    'namespace'  => 'app\Controllers\Api',
+                    'controller' => 'login',
+                    'action'     => 'login',
+                ]
+            );
+        }
+
         // 设置用户照片的URL.
         self::$upload_url = self::$upload_url ? self::$upload_url : $this->config->constants['upload_url'];
     }

@@ -139,7 +139,7 @@
             var status_id = $("select[name='status_id']").val();
             var user_status_id = $("input[name='user_status_id']").val();
             var desc = $.trim($("textarea[name='desc']").val());
-            var user_id = '{{session('staff')['user_id']}}';
+            var user_id = '{{_session['user_id']}}';
             $.ajax({
                 type: 'POST',
                 dataType: 'JSON',
@@ -156,7 +156,7 @@
                     'user_status_id': user_status_id,
                     'desc': desc,
                 },success: function(data){
-                    if (data.status == 200) {
+                    if (data.status == 201) {
                         layer.msg(data.msg, {
                             icon: 6,
                             time: 2000, //2s后自动关闭

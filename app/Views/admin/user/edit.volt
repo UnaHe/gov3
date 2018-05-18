@@ -198,6 +198,12 @@
                     return false;
                 } else {
                     var totalBytes = files[0].size;
+
+                    if (totalBytes > 2097152) {
+                        alert("上传图片应小于2兆");
+                        return false;
+                    }
+
                     $("#thumbnail").attr("disabled", "disabled");
 
                     formData.set("{{ _csrfKey }}", "{{ _csrf }}");

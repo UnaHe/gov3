@@ -264,7 +264,8 @@ class Comments extends ModelBase
         $sql = 'SELECT COUNT(*) AS AGGREGATE FROM n_z_comments AS comments INNER JOIN n_z_users AS users ON comments.user_id = users.user_id ';
 
         if($need_relation){
-            $sql .= 'LEFT JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = comments.user_id AND userBelongs.belong_id = ?';
+            $sql .= 'LEFT JOIN n_z_user_belongs AS userBelongs ON userBelongs.user_id = comments.user_id';
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' userBelongs.belong_id = ?';
             $bindParams[] = $input['user_id'];
         }
 
@@ -291,6 +292,27 @@ class Comments extends ModelBase
         $data['unread'] = $obj1->valid() ? $obj1->toArray()[0]['aggregate'] : false;
 
         return $data;
+    }
+
+    /**
+     * 查询留言根据CommentId.
+     * @param $CommentId
+     * @return array|bool
+     */
+    public function getDetailsByCommentId($CommentId)
+    {
+        $comment = [];
+        if (!empty($CommentId)) {
+            $sql = 'SELECT to_char(to_timestamp(created_time), \'YYYY-MM-DD HH24:MI:SS\') AS created_time, comment_id, comment_content, comment_phone, comment_name, comment_status, user_id 
+                    FROM n_z_comments 
+                    WHERE comment_id = ?';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$CommentId]));
+
+            $comment = $data->valid() ? $data->toArray()[0] : false;
+        }
+
+        return $comment;
     }
 
 }

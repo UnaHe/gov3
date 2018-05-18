@@ -165,7 +165,7 @@
                         "{{ _csrfKey }}": "{{ _csrf }}",
                         'user_status_id': user_status_id
                     }, success: function (data) {
-                        if (data.status == 200) {
+                        if (data.status == 201) {
                             layer.msg(data.msg, {
                                 icon: 6,
                                 time: 2000, //2s后自动关闭

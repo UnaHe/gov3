@@ -26,10 +26,6 @@ $admin->setPrefix('/admin');
  */
 
 // 登录页面.
-$admin->addGet("/", [
-    'controller' => 'login',
-    'action'     => 'index',
-]);
 $admin->addGet("/login", [
     'controller' => 'login',
     'action'     => 'index',
@@ -101,7 +97,7 @@ $admin->addGet("/errors/show404", [
 include 'routes/admin.php';
 
 // 注册路由组.
-$router->mount($admin);
+$router->mount($admin);unset($admin);
 
 /**
  * Home路由组.
@@ -114,7 +110,7 @@ $home = new RouterGroup([
 include 'routes/Home.php';
 
 // 注册路由组.
-$router->mount($home);
+$router->mount($home);unset($home);
 
 /**
  * Staff路由组.
@@ -130,7 +126,23 @@ $staff->setPrefix('/staff');
 include 'routes/Staff.php';
 
 // 注册路由组.
-$router->mount($staff);
+$router->mount($staff);unset($staff);
+
+/**
+ * Api路由组.
+ */
+$api = new RouterGroup([
+    'namespace'  => 'app\Controllers\Api',
+]);
+
+// URL前缀.
+$api->setPrefix('/apis');
+
+// 引入路由文件.
+include 'routes/Api.php';
+
+// 注册路由组.
+$router->mount($api);unset($api);
 
 /**
  * 页面未找到.
@@ -139,6 +151,13 @@ $router->notFound([
     'namespace'  => 'app\Controllers\Admin',
     'controller' => 'errors',
     'action'     => 'show404',
+]);
+
+// 后台登录页面.
+$router->addGet("/", [
+    'namespace'  => 'app\Controllers\Admin',
+    'controller' => 'login',
+    'action'     => 'index',
 ]);
 
 return $router;

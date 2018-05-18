@@ -23,6 +23,7 @@ class LoginController extends ControllerBase
      */
     public function indexAction()
     {
+        // 已登录.
         if ($this->session->has('user') === true) {
             // 跳转首页.
             $this->dispatcher->forward(

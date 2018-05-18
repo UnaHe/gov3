@@ -207,4 +207,27 @@ class UserStatus extends ModelBase
         return $status_list;
     }
 
+
+    /**
+     * 根据id查单个状态.
+     * @param $user_status_id
+     * @return object|bool
+     */
+    public function getInfoById($user_status_id)
+    {
+        $user_status = [];
+        if (!empty($user_status_id)) {
+            $sql = 'SELECT userStatus.*, status.status_name 
+                    FROM n_z_user_status AS userStatus
+                    LEFT JOIN n_z_status AS status ON status.status_id = userStatus.status_id 
+                    WHERE userStatus.user_status_id = ?';
+
+            $data = new Simple(null, $this, $this->getReadConnection()->query($sql, [$user_status_id]));
+
+            $user_status = $data->valid() ? $data[0] : false;
+        }
+
+        return $user_status;
+    }
+
 }

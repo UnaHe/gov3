@@ -22,7 +22,7 @@ class ControllerBase extends Controller
 
         // 是否登录.
         if (!$this->session->has('user') && $this->getCname() !== 'LoginController' && $namespace !== 'app\Controllers\Admin') {
-            // 跳转首页.
+            // 跳转登录页.
             $this->dispatcher->forward(
                 [
                     'namespace'  => 'app\Controllers\Admin',

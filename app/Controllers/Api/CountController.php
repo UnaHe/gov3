@@ -38,7 +38,7 @@ class CountController  extends ControllerBase
     {
         $routes = explode('/', $this->request->getURI());
 
-        if (!in_array('api', $routes)) {
+        if (!in_array('apis', $routes)) {
             $user_id = $this->session->get('staff')['user_id'];
         } else {
             $user_phone = $this->request->get('user_phone');
@@ -200,7 +200,7 @@ class CountController  extends ControllerBase
         if ($this->request->isPost()) {
             $routes = explode('/', $this->request->getURI());
 
-            if (!in_array('api', $routes)) {
+            if (!in_array('apis', $routes)) {
                 $user_info = $this->session->get('staff');
             } else {
                 $user_phone = $this->request->get('user_phone');
@@ -303,7 +303,7 @@ class CountController  extends ControllerBase
     {
         $routes = explode('/', $this->request->getURI());
 
-        if (!in_array('api', $routes)) {
+        if (!in_array('apis', $routes)) {
             $user_info = $this->session->get('staff');
         } else {
             $user_phone = $this->request->get('user_phone');
@@ -441,12 +441,15 @@ class CountController  extends ControllerBase
         }
     }
 
+    /**
+     * 留言统计详情（按分类查询具体信息）.
+     */
     public function countCommentDetailAction()
     {
         if ($this->request->isPost()) {
             $routes = explode('/', $this->request->getURI());
 
-            if (!in_array('api', $routes)) {
+            if (!in_array('apis', $routes)) {
                 $user_id = $this->session->get('staff')['user_id'];
             } else {
                 $user_phone = $this->request->get('user_phone');
@@ -486,8 +489,7 @@ class CountController  extends ControllerBase
 
                 if ($need_relation) {
                     // 多人.
-                    $users = (new UserBelongs())->getUsersByUserId($user_id, true);
-                    $input['user_id'] = explode(',', $users);
+                    $input['user_id'] = (new UserBelongs())->getUsersByUserId($user_id, true);
                     $comment_list = (new Comments())->index($input, true, $page, $limit);
                 } else {
                     // 自己的.
@@ -518,6 +520,67 @@ class CountController  extends ControllerBase
         $this->view->pick($this->session->get('tpl') . '/countcommentdetail');
 
         return true;
+    }
+
+    /**
+     * 获取下拉列表.
+     */
+    public function getSelectOptionsAction()
+    {
+        if ($this->request->isPost()) {
+            $routes = explode('/', $this->request->getURI());
+
+            if (!in_array('apis', $routes)) {
+                $user_project_id = $this->session->get('staff')['project_id'];
+            } else {
+                $user_phone = $this->request->get('user_phone');
+
+                if (!preg_match('/^1[3456789]{1}\d{9}$/', $user_phone)) {
+                    return $this->ajaxError('参数错误', 406);
+                }
+
+                $user = Users::findFirst([
+                    'user_phone = :user_phone:',
+                    'bind' => [
+                        'user_phone' => $user_phone,
+                    ],
+                ]);
+
+                if ($user === false) {
+                    return $this->ajaxError('用户不存在');
+                } else {
+                    $user_project_id = $user->project_id;
+                }
+            }
+
+            $department_list = Departments::findFirst([
+                'project_id = :project_id:',
+                'columns' => 'department_id, department_name',
+                'bind' => [
+                    'project_id' => $user_project_id,
+                ],
+            ]);
+            $section_list = Sections::findFirst([
+                'project_id = :project_id:',
+                'columns' => 'section_id, section_name',
+                'bind' => [
+                    'project_id' => $user_project_id,
+                ],
+            ]);
+            $status_list = (new Status())->getListByProjectMore($user_project_id);
+
+            $res = [
+                'status' => 200,
+                'msg' => '操作成功！',
+                'department_list' => $department_list,
+                'section_list' => $section_list,
+                'status_list' => $status_list
+            ];
+
+            return json_encode($res, JSON_UNESCAPED_UNICODE);
+        }
+
+        return false;
     }
 
 }

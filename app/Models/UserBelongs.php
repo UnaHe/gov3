@@ -198,6 +198,7 @@ class UserBelongs extends ModelBase
      * 获取一个人的所有下级.
      * @param $user_id
      * @param bool $return_string
+     * @return array|bool
      */
     public function getUsersByUserId($user_id, $return_string = false)
     {

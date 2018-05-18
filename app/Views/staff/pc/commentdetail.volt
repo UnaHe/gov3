@@ -22,7 +22,7 @@
             <input type="button" style="background:{{ comment['comment_status'] == 0 ? '#EA5353' : '#ccc' }}" value="{{comment['comment_status'] == 0  ? '未处理' : '已处理'}}" class="gg_btn">
             <span class="my_tel">
                 <a class="tel2" href="tel:{{comment['comment_phone']}}">{{comment['comment_phone']}}</a>
-                <span class="tel_img"><img src="{{asset('staff/style/img/tel5_03.png')}}"></span>
+                <span class="tel_img"><img src="{{ url('staff/style/img/tel5_03.png') }}"></span>
             </span>
         </div>
     </div>
@@ -38,14 +38,15 @@
                         $.ajax({
                             type: 'POST',
                             dataType: 'JSON',
-                            url: '{{url('staff/changecommentstatus?comment_id=')}}'+comment_id,
+                            url: '{{ url('staff/changecommentstatus?comment_id=') }}',
                             beforeSubmit: function () {
                                 layer('提交中...');
                             },
                             data: {
                                 "{{ _csrfKey }}": "{{ _csrf }}",
+                                "comment_id": comment_id,
                             }, success: function (data) {
-                                if (data.status == 200) {
+                                if (data.status == 201) {
                                     layer.msg(data.msg, {
                                         icon: 6,
                                         time: 2000, //2s后自动关闭
@@ -61,12 +62,7 @@
                         })
                     });
                 }else{
-                    layer.msg('你已处理此留言!');
-                    {#layer.confirm('你已处理此留言，点击确定返回', {#}
-                        {#btn: ['确定', '取消'] //按钮#}
-                    {#}, function () {#}
-                        {#location.href = '{{url('staff/refresh')}}';#}
-                    {#});#}
+                    layer.msg('你已处理此留言!', {icon: 5});
                 }
             })
         })

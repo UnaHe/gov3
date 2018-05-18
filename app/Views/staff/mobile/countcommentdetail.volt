@@ -145,7 +145,7 @@
             $.each(data, function (k, v) {
                 var created_time = '{{date("Y/m/d")}}';
                 var content = v.comments.comment_content;
-                var link = "{{url('staff/commentone?comment_id=')}}"+v.comment_id;
+                var link = "{{url('staff/commentone?comment_id=')}}"+v.comments.comment_id;
                 result += ' <li data-id="">'+
                     ' <span class="bulletin_font">'+v.user_name+'</span>'+
                     '<span class="bulletin_font text_overflow">'+v.department_name+'</span>'+

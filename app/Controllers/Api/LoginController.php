@@ -44,7 +44,7 @@ class LoginController  extends ControllerBase
 
             // 从哪来的请求.
             $routes = explode('/', $this->request->getURI());
-            if (!in_array('api', $routes)) {
+            if (!in_array('apis', $routes)) {
                 // 记住我.
                 $remember = boolval($input['remember']);
                 if ($remember) {
@@ -57,7 +57,7 @@ class LoginController  extends ControllerBase
                 }
                 $tpl = isset($input['tpl']) ? $input['tpl'] : 'pc';
 
-                $this->session->set('staff', json_decode(json_encode($userInfo), true));
+                $this->session->set('staff', $userInfo);
                 $this->session->set('tpl', $tpl);
             }
 
@@ -84,7 +84,7 @@ class LoginController  extends ControllerBase
             // 设置session.
             if($userInfo !== false){
                 unset($userInfo['user_pass']);
-                $this->session->set('staff', json_decode(json_encode($userInfo), true));
+                $this->session->set('staff', $userInfo);
                 $this->session->set('tpl', $tpl);
                 return $this->response->redirect('staff/refresh');
             }
@@ -107,7 +107,7 @@ class LoginController  extends ControllerBase
     {
         $routes = explode('/', $this->request->getURI());
 
-        if (!in_array('api', $routes)) {
+        if (!in_array('apis', $routes)) {
             $data['user_phone'] = $this->session->get('staff')['user_phone'];
         } else {
             $user_phone = $this->request->get('user_phone');
@@ -187,11 +187,41 @@ class LoginController  extends ControllerBase
     }
 
     /**
-     * 设置页面.
+     * 获取我的留言.
      */
-    public function settingAction()
+    public function getCommentsAction()
     {
-        $this->view->pick($this->session->get('tpl') . '/setting');
+        if ($this->request->isPost()) {
+            // 获取参数.
+            $user_phone = $this->request->get('user_phone');
+
+            if (!preg_match('/^1[3456789]{1}\d{9}$/', $user_phone)) {
+                return $this->ajaxError('参数错误', 406);
+            }
+
+            $user = Users::findFirst([
+                'user_phone = :user_phone:',
+                'bind' => [
+                    'user_phone' => $user_phone,
+                ],
+            ]);
+
+            if ($user === false) {
+                return $this->ajaxError('用户不存在');
+            }
+
+            $data['user_comments'] = $user->user_comments;
+
+            $res = [
+                'status' => 200,
+                'msg' => '',
+                'data' => $data,
+            ];
+
+            return json_encode($res, JSON_UNESCAPED_UNICODE);
+        }
+
+        return false;
     }
 
     /**
@@ -246,6 +276,14 @@ class LoginController  extends ControllerBase
         $this->view->pick($this->session->get('tpl') . '/mycomment');
 
         return true;
+    }
+
+    /**
+     * 设置页面.
+     */
+    public function settingAction()
+    {
+        $this->view->pick($this->session->get('tpl') . '/setting');
     }
     
     /**

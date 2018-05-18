@@ -17,10 +17,6 @@ $staff->add('/login', [
 ]);
 
 // 刷新页面.
-$staff->add('/', [
-    'controller' => 'login',
-    'action'     => 'refresh',
-]);
 $staff->add('/index', [
     'controller' => 'login',
     'action'     => 'refresh',
@@ -94,6 +90,12 @@ $staff->add('/countcommentdetail', [
     'action'     => 'countCommentDetail',
 ]);
 
+// 获取下拉列表.
+$staff->add('/getselectoptions', [
+    'controller' => 'count',
+    'action'     => 'getSelectOptions',
+]);
+
 /**
  * 留言.
  */
@@ -108,4 +110,32 @@ $staff->addGet('/commentone', [
 $staff->addPost('/changecommentstatus', [
     'controller' => 'comment',
     'action'     => 'changeCommentStatus',
+]);
+
+/**
+ * 事件.
+ */
+
+// 新增(修改)状态.
+$staff->add('/addstatus', [
+    'controller' => 'status',
+    'action'     => 'addStatus',
+]);
+
+// 删除状态.
+$staff->add('/delstatus', [
+    'controller' => 'status',
+    'action'     => 'delStatus',
+]);
+
+// 状态列表.
+$staff->add('/statuslist', [
+    'controller' => 'status',
+    'action'     => 'statusList',
+]);
+
+// 状态详情.
+$staff->add('/statusinfo', [
+    'controller' => 'status',
+    'action'     => 'statusInfo',
 ]);
