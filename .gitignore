@@ -2,6 +2,6 @@
 /cache/metadata/*.php
 /cache/volt/*.php
 /logs/*.log
-!/cache/metadata
-!/cache/volt
-!/logs
+!/cache/metadata/
+!/cache/volt/
+!/logs/
