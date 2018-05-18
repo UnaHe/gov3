@@ -1,4 +1,1 @@
 /.idea
-cache/metadata/*.php
-cache/volt/*.php
-logs/*.log
