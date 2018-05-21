@@ -97,7 +97,7 @@ class RolesController  extends ControllerBase
     /**
      * 编辑角色.
      * @param $roleId
-     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function editAction($roleId)
     {
@@ -178,7 +178,7 @@ class RolesController  extends ControllerBase
     /**
      * 角色权限列表.
      * @param $roleId
-     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function permissionAction($roleId)
     {

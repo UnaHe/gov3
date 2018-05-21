@@ -11,7 +11,7 @@ namespace app\Library;
 trait AjaxResponse
 {
     /**
-     * AjaxSuccess
+     * AjaxSuccess.
      * @param int $status
      * @param string $msg
      * @param bool $flag

@@ -149,7 +149,7 @@ class ProjectController extends ControllerBase
     /**
      * 编辑单位信息.
      * @param $id
-     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\Model
+     * @return bool|\Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function editAction($id)
     {

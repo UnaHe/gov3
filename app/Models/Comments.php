@@ -61,7 +61,7 @@ class Comments extends ModelBase
     {
         $comment_list = [];
         if (!empty($user_id)) {
-            $sql = "SELECT to_char(to_timestamp(created_time), 'YYYY-MM-DD HH24:MI:SS') as created_time, comment_id, comment_content, comment_phone, comment_name, comment_status, user_id 
+            $sql = "SELECT to_char(to_timestamp(created_time), 'YYYY-MM-DD HH24:MI:SS') AS created_time, comment_id, comment_content, comment_phone, comment_name, comment_status, user_id 
                     FROM n_z_comments 
                     WHERE user_id = ? 
                     ORDER BY created_time DESC";

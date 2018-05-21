@@ -42,37 +42,38 @@ class Notices extends ModelBase
      */
     public function getList($input, $page = 1, $limit = 10)
     {
+        $where = '';
         $params = [];
 
         if (isset($input['department_id']) && !empty($input['department_id'])) {
-            $sql = 'select n_z_notices.*, n_z_project.project_name as project_name, n_z_departments.department_name 
-                    from n_z_notices 
-                    left join n_z_department_notices on n_z_department_notices.notice_id = n_z_notices.notice_id 
-                    inner join n_z_departments on n_z_department_notices.department_id = n_z_departments.department_id ';
+            $sql = 'SELECT notices.*, project.project_name, d.department_name 
+                    FROM n_z_notices AS notices 
+                    LEFT JOIN n_z_department_notices AS dn ON dn.notice_id = notices.notice_id 
+                    INNER JOIN n_z_departments AS d ON dn.department_id = d.department_id ';
         } else {
-            $sql = 'select n_z_notices.*, n_z_project.project_name as project_name, b.department_name 
-                    from n_z_notices 
-                    left join (
-                      SELECT dn.notice_id n_id, GROUP_CONCAT(d.department_name) department_name 
-                      FROM n_z_department_notices as dn 
-                      left join n_z_departments as d on d.department_id = dn.department_id 
+            $sql = 'SELECT notices.*, project.project_name, b.department_name 
+                    FROM n_z_notices AS notices 
+                    LEFT JOIN (
+                      SELECT dn.notice_id AS n_id, GROUP_CONCAT(d.department_name) AS department_name 
+                      FROM n_z_department_notices AS dn 
+                      LEFT JOIN n_z_departments AS d ON d.department_id = dn.department_id 
                       GROUP BY dn.notice_id
-                    ) b on b.n_id = n_z_notices.notice_id ';
+                    ) AS b ON b.n_id = notices.notice_id ';
         }
 
-        $sql .= 'left join n_z_project on n_z_notices.project_id = n_z_project.project_id ';
+        $sql .= 'LEFT JOIN n_z_project AS project on notices.project_id = project.project_id ';
 
         if (isset($input['project_id']) && !empty($input['project_id'])) {
-            $sql .= 'where n_z_notices.project_id = ? ';
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' notices.project_id = ?';
             $params[] = $input['project_id'];
         }
 
         if (isset($input['department_id']) && !empty($input['department_id'])) {
-            $sql .= 'and n_z_department_notices.department_id = ? ';
+            $where .= (empty($where) ? ' WHERE' : ' AND') . ' dn.department_id = ?';
             $params[] = $input['department_id'];
         }
 
-        $sql .= 'order by n_z_notices.created_at desc, n_z_notices.project_id asc ';
+        $sql .= $where . ' ORDER BY notices.created_at DESC, notices.project_id ASC ';
 
         $data = new Simple(null, $this, $this->getReadConnection()->query($sql, $params));
 
@@ -132,25 +133,10 @@ class Notices extends ModelBase
             }
 
             if (!empty($departments)) {
-//                $DepartmentNotices = new DepartmentNotices();
-//
-//                $DepartmentNotices->setTransaction($transaction);
-
                 // 插入SQL.
                 $sql = '';
                 foreach ($departments as $v) {
                     $sql .= "($notice_id, $v), ";
-
-//                    $sql = "INSERT INTO app\Models\DepartmentNotices (notice_id, department_id) VALUES ($notice_id, $v)";
-//                    $res = $DepartmentNotices->getModelsManager()->executeQuery($sql);
-//
-//                    if ($res->success() === false) {
-//                        foreach ($res->getMessages() as $message) {
-//                            $transaction->rollback(
-//                                $message->getMessage()
-//                            );
-//                        }
-//                    }
                 }
 
                 // PDO.
@@ -201,10 +187,8 @@ class Notices extends ModelBase
         try{
 
             $Notices = new Notices();
-            $DepartmentNotices = new DepartmentNotices();
 
             $Notices->setTransaction($transaction);
-            $DepartmentNotices->setTransaction($transaction);
 
             // 创建告示.
             if ($Notices->create($param) === false) {
@@ -222,17 +206,6 @@ class Notices extends ModelBase
                 $sql = '';
                 foreach ($departments as $v) {
                     $sql .= "($noticeId, $v), ";
-                    // 循环执行.
-//                    $sql = "INSERT INTO app\Models\DepartmentNotices (notice_id, department_id) VALUES ($noticeId, $v)";
-//                    $res = $DepartmentNotices->getModelsManager()->executeQuery($sql);
-//
-//                    if ($res->success() === false) {
-//                        foreach ($res->getMessages() as $message) {
-//                            $transaction->rollback(
-//                                $message->getMessage()
-//                            );
-//                        }
-//                    }
                 }
 
                 // PDO.
@@ -273,10 +246,8 @@ class Notices extends ModelBase
         try{
 
             $Notices = new Notices();
-            $DepartmentNotices = new DepartmentNotices();
 
             $Notices->setTransaction($transaction);
-            $DepartmentNotices->setTransaction($transaction);
 
             $notice = $Notices::findFirst($noticeId);
 
@@ -315,16 +286,6 @@ class Notices extends ModelBase
                 $sql = '';
                 foreach ($departments as $v) {
                     $sql .= "($noticeId, $v), ";
-//                    $sql = "INSERT INTO app\Models\DepartmentNotices (notice_id, department_id) VALUES ($noticeId, $v)";
-//                    $res = $DepartmentNotices->getModelsManager()->executeQuery($sql);
-//
-//                    if ($res->success() === false) {
-//                        foreach ($res->getMessages() as $message) {
-//                            $transaction->rollback(
-//                                $message->getMessage()
-//                            );
-//                        }
-//                    }
                 }
 
                 // PDO.

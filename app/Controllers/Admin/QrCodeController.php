@@ -139,7 +139,6 @@ class QrCodeController extends ControllerBase
 
     /**
      * 更新or添加.
-     * @throws \Exception
      */
     public function updateAction()
     {

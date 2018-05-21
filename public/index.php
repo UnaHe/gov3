@@ -11,7 +11,7 @@ use Phalcon\Mvc\Application;
 
 //ini_set("display_errors", "On");
 //error_reporting(E_ALL);
-echo $aaa;
+
 /**
  * 定义系统常量.
  */

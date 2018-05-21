@@ -172,7 +172,6 @@ class Users extends ModelBase
      * 删除管理员以及相关信息.
      * @param $userId
      * @return bool
-     * @throws \Exception
      */
     public static function deleteAdmin($userId)
     {

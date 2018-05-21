@@ -21,7 +21,7 @@ use app\Models\Project;
 class NoticeController extends ControllerBase
 {
     /**
-     * 留言列表.
+     * 告示列表.
      */
     public function indexAction()
     {
@@ -142,7 +142,6 @@ class NoticeController extends ControllerBase
 
     /**
      * 删除公告.
-     * @throws \Exception
      */
     public function deleteAction()
     {
@@ -192,7 +191,6 @@ class NoticeController extends ControllerBase
 
     /**
      * 显示详情.
-     * @throws \Exception
      */
     public function showAction()
     {

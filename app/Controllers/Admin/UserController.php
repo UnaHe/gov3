@@ -26,7 +26,6 @@ class UserController extends ControllerBase
 {
     /**
      * 人员列表.
-     * @throws \Exception
      */
     public function indexAction()
     {
@@ -181,7 +180,7 @@ class UserController extends ControllerBase
     /**
      * 修改用户信息.
      * @param $userId
-     * @return bool|Response|\Phalcon\Http\ResponseInterface|\Phalcon\Mvc\View
+     * @return bool|Response|\Phalcon\Http\ResponseInterface
      */
     public function editAction($userId)
     {
@@ -280,7 +279,6 @@ class UserController extends ControllerBase
 
     /**
      * 删除用户.
-     * @throws \Exception
      */
     public function deleteAction()
     {
@@ -483,7 +481,6 @@ class UserController extends ControllerBase
 
     /**
      * 删除归属.
-     * @throws \Exception
      */
     public function belongsDeleteAction()
     {
