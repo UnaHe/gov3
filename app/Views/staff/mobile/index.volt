@@ -240,7 +240,7 @@
 //            var myScroll = new iScroll("wrapper");
             pullDownEl = document.getElementById('pullDown');
             pullDownOffset = pullDownEl.offsetHeight;
-            console.log(pullDownEl.querySelector('.pullDownLabel'));
+            // console.log(pullDownEl.querySelector('.pullDownLabel'));
             myScroll = new iScroll('wrapper', {
                 scrollbarClass: 'myScrollbar',
                 useTransition: false,

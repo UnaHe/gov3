@@ -131,7 +131,6 @@
             return result;
         }
         function show_detail(project_id, department_id){
-            console.log(department_id);
             location.href = '/status/workerStatusList?&pid='+project_id+'&did='+department_id ;
         }
     </script>

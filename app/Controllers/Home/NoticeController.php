@@ -71,4 +71,5 @@ class NoticeController extends ControllerBase
 
         return false;
     }
+
 }

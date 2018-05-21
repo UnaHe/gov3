@@ -213,7 +213,7 @@ class UserBelongs extends ModelBase
         $list = $data->valid() ? $data->toArray() : false;
 
         $users = [];
-        if($return_string){
+        if($return_string && $list !== false){
             foreach ($list as $k=>$v){
                 $users[] = $v['user_id'];
             }

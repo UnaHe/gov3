@@ -17,8 +17,8 @@ $route->convert(
     function ($forward_id) {
         $forward_info = app\Models\Forwards::findFirst($forward_id);
         if($forward_info && !empty($forward_info->forward_string)){
-//            header('Location:' . $forward_info->forward_string);
-            header('Location:' . 'http://g.local.com/status/workerStatusList?p=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=&d=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=');
+            header('Location:' . $forward_info->forward_string);
+//            header('Location:' . 'http://g.local.com/status/workerStatusList?p=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=&d=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=');
         }else{
             echo "二维码不匹配，请联系管理员！";
             exit;

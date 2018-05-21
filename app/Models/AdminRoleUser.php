@@ -19,4 +19,5 @@ class AdminRoleUser extends ModelBase
     {
         $this->useDynamicUpdate(true);
     }
+
 }

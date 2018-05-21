@@ -11,7 +11,7 @@ use Phalcon\Loader;
 $loader = new Loader();
 
 /**
- * 注册目录.
+ * 注册命名空间.
  */
 $loader->registerNamespaces([
     'app\Models'      => $config->application->modelsDir,

@@ -160,7 +160,7 @@ class LoginController  extends ControllerBase
 
             $time = time();
             $key = (date("H:i", $time) > $userInfo['work_start_time'] && date("H:i",  $time) < $userInfo['work_end_time']) ? 1 : 2;
-            $project = isset($project_defalut_status_arr[$userInfo['project_id']]) && array_key_exists($key, $project_default_status_arr[$userInfo['project_id']]) !== false ? $userInfo['project_id'] : 0;
+            $project = isset($project_default_status_arr[$userInfo['project_id']]) && array_key_exists($key, $project_default_status_arr[$userInfo['project_id']]) !== false ? $userInfo['project_id'] : 0;
             $userInfo['nowstatus'] = $project_default_status_arr[$project][$key];
             $userInfo['nowstatus']['start_time'] = $time;
             $userInfo['nowstatus']['end_time'] = strtotime($userInfo['work_end_time']);

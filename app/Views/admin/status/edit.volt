@@ -123,7 +123,6 @@
         $(function(){
             $("#add-form").validate({
                 submitHandler: function(form){
-                    console.log(1212);
                     if(valid_name()){
                         form.submit();
                     }

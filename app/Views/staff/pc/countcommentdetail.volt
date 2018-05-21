@@ -149,7 +149,6 @@
         });
 
         function set_list(data) {
-            console.log(data);
             var result = '';
             $.each(data, function (k, v) {
                 var created_time = '{{date("Y/m/d")}}';

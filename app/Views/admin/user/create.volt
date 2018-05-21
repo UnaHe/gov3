@@ -124,7 +124,6 @@
         $(function () {
             $("#add-form").validate({
                 submitHandler: function(form){
-                    console.log(23232);
                     $("input[name='user_pass']").val($.md5($("#user_pass").val()));
                     form.submit();
                 },

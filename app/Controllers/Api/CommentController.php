@@ -75,4 +75,5 @@ class CommentController  extends ControllerBase
             return $this->ajaxError('留言处理失败, 请稍后重试');
         }
     }
+
 }
