@@ -339,7 +339,7 @@ class LoginController  extends ControllerBase
         $this->cookies->set($this->config->constants['staff_remember_token'], '', time() - 3600);
 
         if ($this->request->isPost()) {
-            return $this->ajaxSuccess('已退出');
+            return $this->ajaxSuccess(['msg' => '已退出', 'tpl' => $tpl]);
         } else {
             return $this->response->redirect('staff/login' . $tpl);
         }

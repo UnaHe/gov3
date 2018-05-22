@@ -40,11 +40,11 @@
                             "{{ _csrfKey }}": "{{ _csrf }}",
                         }, success: function (data) {
                             if (data.status == 200) {
-                                layer.msg(data.msg, {
+                                layer.msg(data.msg['msg'], {
                                     icon: 6,
                                     time: 2000, //2s后自动关闭
                                 },function (){
-                                    location.href = '{{url('staff/login')}}';
+                                    location.href = '{{url('staff/login')}}' + data.msg['tpl'];
                                 });
                             } else {
                                 layer.msg(data.msg, {icon: 5});
