@@ -1730,7 +1730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    || (!dom.clientHeight && (!opts || opts.height == null))
 	                )
 	            ) {
-	                console.warn('Can\'t get dom width or height');
+	                console.warn('Cant get dom width or height');
 	            }
 	        }
 
