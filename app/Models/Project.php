@@ -47,7 +47,7 @@ class Project extends ModelBase
             $builder = Project::getModelsManager()->createBuilder()->addFrom('app\Models\Project', 'project');
             if(array_key_exists('department_id',$projects)!==false){
                 $builder->columns('project.*, departments.department_id, departments.department_name');
-                $builder->leftJoin('app\Models\departments','departments.project_id = project.project_id', 'departments');
+                $builder->leftJoin('app\Models\Departments','departments.project_id = project.project_id', 'departments');
                 $builder->where('project.project_id = :project_id:', [
                     'project_id' => $projects['project_id'],
                 ]);
