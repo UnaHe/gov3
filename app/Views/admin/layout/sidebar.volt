@@ -66,7 +66,7 @@
                     <span class="pull-right-container"></span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/admin/status/settingworktimelist"><i class="fa fa-circle-o"></i> 设置工作时间</a>
+                    <li><a href="/admin/status/settingWorkTimeList"><i class="fa fa-circle-o"></i> 设置工作时间</a>
                     </li>
                     <li><a href="/admin/status/create"><i class="fa fa-circle-o"></i> 添加事件</a></li>
                     <li><a href="/admin/status"><i class="fa fa-circle-o"></i> 事件列表</a></li>

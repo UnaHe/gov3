@@ -55,22 +55,22 @@
                             {% if project_list.current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
                             {% else %}
-                                <li><a href="/admin/status/settingworktimelist">第一页</a></li>
+                                <li><a href="/admin/status/settingWorkTimeList">第一页</a></li>
                             {% endif %}
                             {% if project_list.current == 1 %}
                                 <li class="disabled"><span>上一页</span></li>
                             {% else %}
-                                <li><a href="/admin/status/settingworktimelist?page={{ project_list.before }}">上一页</a></li>
+                                <li><a href="/admin/status/settingWorkTimeList?page={{ project_list.before }}">上一页</a></li>
                             {% endif %}
                             {% if project_list.current == project_list.last or project_list.last == 0 %}
                                 <li class="disabled"><span>下一页</span></li>
                             {% else %}
-                                <li><a href="/admin/status/settingworktimelist?page={{ project_list.next }}">下一页</a></li>
+                                <li><a href="/admin/status/settingWorkTimeList?page={{ project_list.next }}">下一页</a></li>
                             {% endif %}
                             {% if project_list.current == project_list.last or project_list.last == 0 %}
                                 <li class="disabled"><span>最后一页</span></li>
                             {% else %}
-                                <li><a href="/admin/status/settingworktimelist?page={{ project_list.last }}">最后一页</a></li>
+                                <li><a href="/admin/status/settingWorkTimeList?page={{ project_list.last }}">最后一页</a></li>
                             {% endif %}
                         </ul>
                     </div>

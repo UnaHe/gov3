@@ -388,7 +388,7 @@ $admin->addPost('/status/validName', [
 ]);
 
 // 设置工作时间表.
-$admin->addGet('/status/settingworktimelist', [
+$admin->addGet('/status/settingWorkTimeList', [
     'controller' => 'status',
     'action'     => 'settingWorkTimeList',
 ]);
