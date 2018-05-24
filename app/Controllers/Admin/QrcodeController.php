@@ -56,13 +56,12 @@ class QrcodeController extends ControllerBase
             $input['project_id'] = $user['project_id'];
         }
         $data['list'] = (new Forwards())->getList($input, $page, $limit);
-        $APP_URL = $this->config->APP_URL;
 
         // 页面参数.
         $this->view->setVars([
             'data' => $data,
             'input' => $input,
-            'APP_URL' => $APP_URL,
+            'APP_URL' => APP_URL,
         ]);
     }
 
@@ -169,14 +168,13 @@ class QrcodeController extends ControllerBase
                 ]
             );
         }
-        $APP_URL = $this->config->APP_URL;
         $route = '/status/workerStatusList';
 
         // 匹配加号.
         $p = str_replace('+','%2B', CryptModel::encrypt($projectId,CryptModel::POINT_KEY));
         $d = str_replace('+','%2B', CryptModel::encrypt($departmentId, CryptModel::POINT_KEY));
 
-        $forwardString = $APP_URL . $route . '?p=' . $p . '&d=' . $d;
+        $forwardString = APP_URL . $route . '?p=' . $p . '&d=' . $d;
 
         $params = [
             'forward_id' => $forwardId,
@@ -275,12 +273,11 @@ class QrcodeController extends ControllerBase
             return $this->ajaxError('二维码不存在');
         }
 
-        $APP_URL = $this->config->APP_URL;
         ob_start();
         ob_implicit_flush(1);
         require APP_PATH . '/library/phpqrcode.php';
 
-        \QRcode::png($APP_URL . '/forward/' . $Forward->forward_id);
+        \QRcode::png(APP_URL . '/forward/' . $Forward->forward_id);
         $image = ob_get_contents();
         ob_end_clean();
         $image = base64_encode($image);
