@@ -18,7 +18,7 @@ use app\Models\Project;
  * Class LoginController
  * @package app\Controller\Admin
  */
-class QrCodeController extends ControllerBase
+class QrcodeController extends ControllerBase
 {
     /**
      * 二维码列表.

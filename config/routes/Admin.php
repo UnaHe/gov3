@@ -203,35 +203,35 @@ $admin->addPost('/department/updateUsersDepartment', [
 
 // 二维码列表.
 $admin->addGet('/qrcode', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'index',
 ]);
 
 // 编辑二维码信息.
 $admin->addGet('/qrcode/{id:[0-9]+}/edit', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'edit',
 ]);
 $admin->addPost('/qrcode/update', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'update',
 ]);
 
 // 验证二维码ID.
 $admin->addPost('/qrcode/valid', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'valid',
 ]);
 
 // 删除绑定.
 $admin->addPost('/qrcode/delete', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'delete',
 ]);
 
 // 获取二维码.
 $admin->addPost('/qrcode/ajaxGetForwardQrCode', [
-    'controller' => 'qrCode',
+    'controller' => 'qrcode',
     'action'     => 'ajaxGetForwardQrCode',
 ]);
 
