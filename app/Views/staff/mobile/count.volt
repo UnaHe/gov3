@@ -248,8 +248,10 @@
                                 add_data_to_pie(CommentChart, comment);
                                 add_pie_list($("#comments"),data.data.my_belong_comments,3);
                             } else {
-                                StatusChart.clear();
-                                CommentChart.clear();
+                                if(StatusChart && CommentChart){
+                                    StatusChart.clear();
+                                    CommentChart.clear();
+                                }
                             }
                         } else {
                             layer.msg('数据加载失败，请刷新后重试！', {icon: 5});
