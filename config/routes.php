@@ -94,7 +94,7 @@ $admin->addGet("/errors/show404", [
 ]);
 
 // 引入路由文件.
-include 'routes/admin.php';
+include 'routes/Admin.php';
 
 // 注册路由组.
 $router->mount($admin);unset($admin);
