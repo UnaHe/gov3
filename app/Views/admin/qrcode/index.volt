@@ -151,7 +151,7 @@
                 },
                 success: function(data){
                     if(data.status == 200){
-                        var content = '<div style="padding: 10px">' + '<img src="data:image/png;base64,'+data.msg+'" width="150px" height="150px">'+ '</div>';
+                        var content = '<div style="padding: 10px">' + '<img src="http://qr.liantu.com/api.php?w=150&h=150&m=0&el=l&text='+data.msg+'" width="150px" height="150px">'+ '</div>';
                         layer.open({
                             title:'二维码',
                             type: 1,

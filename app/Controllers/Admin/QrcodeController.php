@@ -273,14 +273,7 @@ class QrcodeController extends ControllerBase
             return $this->ajaxError('二维码不存在');
         }
 
-        ob_start();
-        ob_implicit_flush(1);
-        require APP_PATH . '/library/phpqrcode.php';
-
-        \QRcode::png(APP_URL . '/forward/' . $Forward->forward_id);
-        $image = ob_get_contents();
-        ob_end_clean();
-        $image = base64_encode($image);
+        $image = APP_URL . '/forward/' . $Forward->forward_id;
 
         if ($image) {
             return $this->ajaxSuccess($image);
