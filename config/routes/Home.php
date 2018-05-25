@@ -15,7 +15,12 @@ $route = $home->add('/forward/{forward_id:[0-9]+}');
 $route->convert(
     'forward_id',
     function ($forward_id) {
-        $forward_info = app\Models\Forwards::findFirst($forward_id);
+        $forward_info = app\Models\Forwards::findFirst([
+            'forward_id = :forward_id:',
+            'bind' => [
+                'forward_id' => $forward_id
+            ],
+        ]);
         if($forward_info && !empty($forward_info->forward_string)){
             header('Location:' . $forward_info->forward_string);
 //            header('Location:' . 'http://g.local.com/status/workerStatusList?p=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=&d=/8eSQb/zSHBjEJhubST3rqcWJF4MLRvsfIqrkMQQDb4=');
