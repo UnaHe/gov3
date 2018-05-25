@@ -13,7 +13,7 @@
             </h1>
             <hr />
             <h3 class="lighter smaller">您没有访问此选项的权限, 请联系管理员。
-                <a href="javascript:;" onclick="history.go(-1)">返回</a>
+                <a href="/">返回</a>
             </h3>
         </div>
 	</body>
