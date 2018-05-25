@@ -51,7 +51,7 @@
                     <div style="float: right">
                         <ul class="paginate">
                             <li class="disabled"><span>总计: {{ project_list.total_pages }} 页</span></li>
-                            <li class="active"><span>当前第: {{ project_list.current }} 页</span></li>
+                            <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ project_list.current }}' /> 页</span></li>
                             {% if project_list.current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
                             {% else %}
@@ -79,34 +79,20 @@
             
     </div>
 
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        table.list_tab tr td input[type='text'] {
-            width: 150px;
-            text-align: center;
-            display: inline;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
-
     {{ stylesheet_link('org/TimePicker/css/timePicker.css') }}
     {{ javascript_include('org/TimePicker/js/timepicker.js') }}
 
     <script>
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ project_list.total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/status/settingWorkTimeList?page=" + page;
+        }
+
         $(function(){
             $(".hunterTimePicker").hunterTimePicker();
         });

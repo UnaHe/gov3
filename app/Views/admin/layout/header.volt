@@ -3,6 +3,26 @@
         position: absolute!important;
         right: -50px!important;
     }
+    .result_content ul li span {
+        font-size: 15px;
+        padding: 6px 12px;
+    }
+    .active {
+        color: #fff;
+        cursor: default;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+    .disabled {
+        color: #777;
+        cursor: not-allowed;
+        background-color: #fff;
+        border-color: #ddd;
+    }
+    .page_input {
+        color: #000;
+        width: 30px;
+    }
 </style>
 <header class="main-header">
     <!-- Logo -->

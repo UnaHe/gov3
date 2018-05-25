@@ -94,7 +94,7 @@
                     <div style="float: right">
                         <ul class="paginate">
                             <li class="disabled"><span>总计: {{ status_list.total_pages }} 页</span></li>
-                            <li class="active"><span>当前第: {{ status_list.current }} 页</span></li>
+                            <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ status_list.current }}' /> 页</span></li>
                             {% if input['project_id'] is defined %}
                                 {% if status_list.current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
@@ -146,26 +146,17 @@
         </div>
     </div>
 
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
-
     <script>
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ status_list.total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page=" + page;
+        }
+
         function changeOrder(obj,status_id){
             var status_order = $(obj).val();
             $.ajax({

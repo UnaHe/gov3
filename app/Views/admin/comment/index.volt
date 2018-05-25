@@ -108,7 +108,7 @@
                 <div style="float: right">
                     <ul class="paginate">
                         <li class="disabled"><span>总计: {{ data['list'].total_pages }} 页</span></li>
-                        <li class="active"><span>当前第: {{ data['list'].current }} 页</span></li>
+                        <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ data['list'].current }}' /> 页</span></li>
                         {% if input['project_id'] is defined or input['section_id'] is defined or input['department_id'] is defined or input['status'] is defined or input['key_words'] is defined %}
                             {% if data['list'].current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
@@ -161,26 +161,18 @@
     </div>
 
     <!--搜索结果页面 列表 结束-->
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
 
     <script>
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ data['list'].total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/comment?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status={{ input['status'] is defined ? input['status'] : '' }}&key_words={{ input['key_words'] is defined ? input['key_words'] : '' }}&page=" + page;
+        }
+
         //显示详情
         $('.comment_content').click(function () {
             var comment_content = $(this).attr('content');

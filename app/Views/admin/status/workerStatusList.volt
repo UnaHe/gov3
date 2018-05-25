@@ -31,148 +31,138 @@
     <!--结果页快捷搜索框 结束-->
 
     <!--搜索结果页面 列表 开始-->
-    <form action="#" method="post">
-        <div class="result_wrap">
-            <div class="result_content">
-                <table class="list_tab">
-                    <tr>
-                        <th class="tc" width="5%">ID</th>
-                        <th>用户名</th>
-                        <th>电话</th>
-                        <th>单位</th>
-                        <th>部门</th>
-                        <th>科室</th>
-                        <th>状态</th>
-                        <th>说明</th>
-                        <th>操作</th>
-                    </tr>
-                    {% if data is not empty %}
-                        {% for v in data['list'].items %}
-                            <tr>
-                                <td class="tc">{{ v.a.user_id }}
-                                </td>
-                                <td class="">{{ v.a.user_name }}
-                                </td>
-                                <td class="">{{ v.a.user_phone }}
-                                </td>
-                                <td>
-                                    <a href="#">{{ v.a.project_name }}</a>
-                                </td>
-                                <td>
-                                    <a href="#">{{ v.a.section_name }}</a>
-                                </td>
-                                <td>
-                                    <a href="#">{{ v.a.department_name }}</a>
-                                </td>
-                                <td>
-                                    <span class="status_color" id="status_color" style="display: inline-block;width: 10px;height: 10px;border-radius: 100%;margin-top: 14px;background: {{ params[v.a.user_id]['status_color'] }}"></span>
-                                    {{ params[v.a.user_id]['status_name'] }}
-                                </td>
-                                <td>
-                                    {{ params[v.a.user_id]['user_status_desc'] }}
-                                </td>
-                                <td>
-                                    {#@if(!empty($data['input']['type']) && $data['input']['type'] == 'cate')#}
-                                        {#<a href="javascript:;"#}
-                                           {#onclick="remove_user({{$v->user_id}},'{{$v->user_name}}','{{$v->department_name}}')">移出部门</a>#}
-                                    {#@endif#}
-                                    {% if _session['user_is_super'] or _session['user_is_admin'] %}
-                                        <a href="javascript:;"
-                                           onclick="add_user_status({{ v.a.project_id }},{{ v.a.user_id }},{{ params[v.a.user_id]['status_id'] }},'{{ v.a.project_name }}','{{ v.a.department_name }}','{{ v.a.user_name }}')">新增计划</a>
-                                    {% endif %}
-
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
+    <div class="result_wrap">
+        <div class="result_content">
+            <table class="list_tab">
+                <tr>
+                    <th class="tc" width="5%">ID</th>
+                    <th>用户名</th>
+                    <th>电话</th>
+                    <th>单位</th>
+                    <th>部门</th>
+                    <th>科室</th>
+                    <th>状态</th>
+                    <th>说明</th>
+                    <th>操作</th>
+                </tr>
+                {% if data is not empty %}
+                    {% for v in data['list'].items %}
                         <tr>
-                            <td col="6">暂无数据</td>
-                        </tr>
-                    {% endif %}
-                </table>
-
-                <div class="page_list clear" >
-                    <label>共 {{ data['list'].total_items }} 条记录</label>
-                    {% if data['list'].total_pages > 1 %}
-                        <div style="float: right">
-                            <ul class="paginate">
-                                <li class="disabled"><span>总计: {{ data['list'].total_pages }} 页</span></li>
-                                <li class="active"><span>当前第: {{ data['list'].current }} 页</span></li>
-                                {% if input['project_id'] is defined or input['department_id'] is defined or input['section_id'] is defined or input['user_name'] is defined %}
-                                    {% if data['list'].current == 1 %}
-                                        <li class="disabled"><span>第一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=1">第一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == 1 %}
-                                        <li class="disabled"><span>上一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
-                                        <li class="disabled"><span>下一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
-                                        <li class="disabled"><span>最后一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
-                                    {% endif %}
-                                {% else %}
-                                    {% if data['list'].current == 1 %}
-                                        <li class="disabled"><span>第一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList">第一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == 1 %}
-                                        <li class="disabled"><span>上一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?page={{ data['list'].before }}">上一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
-                                        <li class="disabled"><span>下一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?page={{ data['list'].next }}">下一页</a></li>
-                                    {% endif %}
-                                    {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
-                                        <li class="disabled"><span>最后一页</span></li>
-                                    {% else %}
-                                        <li><a href="/admin/status/workerStatusList?page={{ data['list'].last }}">最后一页</a></li>
-                                    {% endif %}
+                            <td class="tc">{{ v.a.user_id }}
+                            </td>
+                            <td class="">{{ v.a.user_name }}
+                            </td>
+                            <td class="">{{ v.a.user_phone }}
+                            </td>
+                            <td>
+                                <a href="#">{{ v.a.project_name }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ v.a.section_name }}</a>
+                            </td>
+                            <td>
+                                <a href="#">{{ v.a.department_name }}</a>
+                            </td>
+                            <td>
+                                <span class="status_color" id="status_color" style="display: inline-block;width: 10px;height: 10px;border-radius: 100%;margin-top: 14px;background: {{ params[v.a.user_id]['status_color'] }}"></span>
+                                {{ params[v.a.user_id]['status_name'] }}
+                            </td>
+                            <td>
+                                {{ params[v.a.user_id]['user_status_desc'] }}
+                            </td>
+                            <td>
+                                {#@if(!empty($data['input']['type']) && $data['input']['type'] == 'cate')#}
+                                    {#<a href="javascript:;"#}
+                                       {#onclick="remove_user({{$v->user_id}},'{{$v->user_name}}','{{$v->department_name}}')">移出部门</a>#}
+                                {#@endif#}
+                                {% if _session['user_is_super'] or _session['user_is_admin'] %}
+                                    <a href="javascript:;"
+                                       onclick="add_user_status({{ v.a.project_id }},{{ v.a.user_id }},{{ params[v.a.user_id]['status_id'] }},'{{ v.a.project_name }}','{{ v.a.department_name }}','{{ v.a.user_name }}')">新增计划</a>
                                 {% endif %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                </div>
 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td col="6">暂无数据</td>
+                    </tr>
+                {% endif %}
+            </table>
+
+            <div class="page_list clear" >
+                <label>共 {{ data['list'].total_items }} 条记录</label>
+                {% if data['list'].total_pages > 1 %}
+                    <div style="float: right">
+                        <ul class="paginate">
+                            <li class="disabled"><span>总计: {{ data['list'].total_pages }} 页</span></li>
+                            <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ data['list'].current }}' /> 页</span></li>
+                            {% if input['project_id'] is defined or input['department_id'] is defined or input['section_id'] is defined or input['user_name'] is defined %}
+                                {% if data['list'].current == 1 %}
+                                    <li class="disabled"><span>第一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=1">第一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == 1 %}
+                                    <li class="disabled"><span>上一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
+                                    <li class="disabled"><span>下一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
+                                    <li class="disabled"><span>最后一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                {% endif %}
+                            {% else %}
+                                {% if data['list'].current == 1 %}
+                                    <li class="disabled"><span>第一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList">第一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == 1 %}
+                                    <li class="disabled"><span>上一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?page={{ data['list'].before }}">上一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
+                                    <li class="disabled"><span>下一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?page={{ data['list'].next }}">下一页</a></li>
+                                {% endif %}
+                                {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
+                                    <li class="disabled"><span>最后一页</span></li>
+                                {% else %}
+                                    <li><a href="/admin/status/workerStatusList?page={{ data['list'].last }}">最后一页</a></li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
+
         </div>
-    </form>
+    </div>
     <!--搜索结果页面 列表 结束-->
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
 
     {{ stylesheet_link('org/datetimepicker/css/bootstrap-datetimepicker.min.css') }}
     {{ javascript_include('org/datetimepicker/js/bootstrap-datetimepicker.js') }}
     {{ javascript_include('org/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js') }}
     <script>
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ data['list'].total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=" + page;
+        }
+
         function add_user_status(project_id, user_id, status_id, project_name, departmanet_name, user_name) {
             $.ajax({
                 url: '{{ url('admin/status/ajaxGetStatusOptionByUser') }}',

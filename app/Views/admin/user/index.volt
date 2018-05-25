@@ -104,7 +104,7 @@
                     <div style="float: right">
                         <ul class="paginate">
                             <li class="disabled"><span>总计: {{ data['list'].total_pages }} 页</span></li>
-                            <li class="active"><span>当前第: {{ data['list'].current }} 页</span></li>
+                            <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ data['list'].current }}' /> 页</span></li>
                             {% if input['project_id'] is defined or input['section_id'] is defined or input['department_id'] is defined or input['keywords'] is defined %}
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
@@ -156,29 +156,20 @@
         </div>
     </div>
 
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
-
     {{ javascript_include('admin/style/js/jquery.md5.js') }}
 
     <script>
-        //删除员工
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ data['list'].total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page=" + page;
+        }
+
+        // 删除员工.
         function delArt(user_id) {
             layer.confirm('删除此用户时，系统会删除他的一切相关信息，您确定要删除此用户吗？', {
                 btn: ['确定','取消']

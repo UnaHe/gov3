@@ -86,7 +86,7 @@
                 <div style="float: right">
                     <ul class="paginate">
                         <li class="disabled"><span>总计: {{ data.total_pages }} 页</span></li>
-                        <li class="active"><span>当前第: {{ data.current }} 页</span></li>
+                        <li class="active"><span>当前第: <input class="page_input" onchange="changePage(this.value)" onfocus="this.select()" value='{{ data.current }}' /> 页</span></li>
                         {% if status is defined or keywords is defined %}
                             {% if data.current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
@@ -138,26 +138,18 @@
         </div>
     </div>
 
-    <style>
-        .result_content ul li span {
-            font-size: 15px;
-            padding: 6px 12px;
-        }
-        .active {
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-        .disabled {
-            color: #777;
-            cursor: not-allowed;
-            background-color: #fff;
-            border-color: #ddd;
-        }
-    </style>
-
     <script>
+        // 修改页码.
+        function changePage(page) {
+            var total_pages = {{ data.total_pages }};
+            if (page > total_pages) {
+                layer.msg('不能大于总'+total_pages+'页', {icon: 5});
+                return;
+            }
+            location.href = "/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page=" + page;
+        }
+
+
         // 状态索引
         $('#statusselect').change(function () {
             var status = $(this).find("option:selected").val();
