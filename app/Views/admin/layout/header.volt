@@ -7,7 +7,7 @@
         font-size: 15px;
         padding: 6px 12px;
     }
-    .active {
+    .paginate .active {
         color: #fff;
         cursor: default;
         background-color: #337ab7;

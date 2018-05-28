@@ -18,6 +18,7 @@ use Phalcon\Mvc\Application;
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 define('APP_URL', ($_SERVER ['SERVER_PORT'] == '443' ? 'https://' : 'http://') . $_SERVER ['HTTP_HOST']);
+//define('CACHING', 1);
 
 try {
     /**

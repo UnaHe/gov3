@@ -65,7 +65,7 @@ class Sections extends ModelBase
      * 分类列表页面的数组
      * @param int $parent_id 父级id 默认为0顶级分类
      * @param int $spac 空格字符个数
-     * @param $project_id 项目id
+     * @param int $project_id 项目id
      * @param array $result 输出数组
      * @return array
      */
