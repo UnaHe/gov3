@@ -1,6 +1,7 @@
 {% extends "layout/main.volt" %}
 
 {% block content %}
+
     <!--结果页快捷搜索框 开始-->
     <div class="search_wrap">
         <form name="search_form" action="{{url('admin/project/adminuserlist')}}" method="get">

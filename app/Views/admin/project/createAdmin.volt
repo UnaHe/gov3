@@ -1,6 +1,7 @@
 {% extends "layout/main.volt" %}
 
 {% block content %}
+
     <div class="crumb_warp">
         <i class="fa fa-home"></i> <a href="{{url('admin/home')}}">首页</a> &raquo; 管理员管理
     </div>

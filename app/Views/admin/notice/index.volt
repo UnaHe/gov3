@@ -1,6 +1,7 @@
 {% extends "layout/main.volt" %}
 
 {% block content %}
+
     <style>
         .wrap {
             width: 700px;

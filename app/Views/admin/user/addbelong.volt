@@ -1,6 +1,7 @@
 {% extends "layout/main.volt" %}
 
 {% block content %}
+
     <style>
         table.add_tab tr td span{margin-left:8px;}
         input[type='checkbox']{margin-top:0px;margin-right: 0px;}

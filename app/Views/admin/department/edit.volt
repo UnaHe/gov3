@@ -1,4 +1,7 @@
-{% extends "layout/main.volt" %} {% block content %}
+{% extends "layout/main.volt" %}
+
+{% block content %}
+
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <i class="fa fa-home"></i> <a href="{{url('admin/home')}}">首页</a> &raquo; 科室管理
@@ -96,22 +99,23 @@
             </table>
         </form>
     </div>
-<script>
-$(function() {
-    $('.multiselect').multiselect(multiselect_option);
-    $("#add-form").validate({
-        submitHandler: function(form) {
-            var project_id = $("input[name='user_id']").val();
-            if ($("input[name='user_id']").val() == 0) {
-                $("input[name='user_pass']").val($.md5($("#user_pass").val()));
-            }
-            form.submit();
-        },
-        errorElement: "span",
-        ignore: ".hide",
-        rules: {},
-        messages: {}
-    });
-})
-</script>
+    <script>
+    $(function() {
+        $('.multiselect').multiselect(multiselect_option);
+        $("#add-form").validate({
+            submitHandler: function(form) {
+                var project_id = $("input[name='user_id']").val();
+                if ($("input[name='user_id']").val() == 0) {
+                    $("input[name='user_pass']").val($.md5($("#user_pass").val()));
+                }
+                form.submit();
+            },
+            errorElement: "span",
+            ignore: ".hide",
+            rules: {},
+            messages: {}
+        });
+    })
+    </script>
+
 {% endblock %}
