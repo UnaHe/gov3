@@ -193,27 +193,27 @@ $di->set('cache', function () {
 /**
  * ModelsCache.
  */
-//$di->set('modelsCache', function() {
-//    $frontCache = new FrontData(
-//        [
-//            "lifetime" => 120
-//        ]
-//    );
-//
-//    $cache = new CacheRedis(
-//        $frontCache,
-//        [
-//            'host'       => '127.0.0.1',
-//            'port'       => 6379,
-//            'auth'       => '',
-//            'persistent' => false,
-//            'prefix'     => '_mc_',
-//            'index'      => 1,
-//        ]
-//    );
-//
-//    return $cache;
-//});
+$di->set('modelsCache', function() {
+    $frontCache = new FrontData(
+        [
+            "lifetime" => 120
+        ]
+    );
+
+    $cache = new CacheRedis(
+        $frontCache,
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 6379,
+            'auth'       => '',
+            'persistent' => false,
+            'prefix'     => '_mc_',
+            'index'      => 1,
+        ]
+    );
+
+    return $cache;
+});
 
 /**
  * Session.

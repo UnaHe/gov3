@@ -22,7 +22,7 @@
             <a class="Reserved"></a>
         </div>
         <div class="Noticedetails_con" style="margin-top: 1.28rem;padding: 10px">
-            {{ department_info is defined and department_info['department_desc'] is not empty ? department_info['department_desc'] : '' }}
+            {{ department_info is defined and department_info['department_desc'] is not empty ? department_info['department_desc'] : null }}
         </div>
     </div>
 

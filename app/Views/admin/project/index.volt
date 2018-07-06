@@ -19,13 +19,13 @@
                             <td>
                                 <select id="statusselect" name="status">
                                     <option value="">请选择</option>
-                                    <option value="1" {{ status is defined and status == 1 ? 'selected' : '' }}>正常状态单位</option>
-                                    <option value="0" {{ status is defined and status == 0 ? 'selected' : '' }}>暂停单位</option>
+                                    <option value="1" {{ status is defined and status == 1 ? 'selected' : null }}>正常状态单位</option>
+                                    <option value="0" {{ status is defined and status == 0 ? 'selected' : null }}>暂停单位</option>
                                 </select>
                             </td>
                             <th width="70">关键字:</th>
                             <td>
-                                <input type="text" id="keywords" name="keywords" placeholder="可搜索单位名或简介" value="{{ keywords is defined ? keywords : '' }}"><br>
+                                <input type="text" id="keywords" name="keywords" placeholder="可搜索单位名或简介" value="{{ keywords is defined ? keywords : null }}"><br>
                             </td>
                             <td><input type="submit" id="sub" class="btn btn-info" value="查询"></td>
                         </tr>
@@ -92,22 +92,22 @@
                             {% if data.current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page=1">第一页</a></li>
+                                <li><a href="/admin/project?status={{ status is defined ? status : null }}&keywords={{ keywords is defined ? keywords : null }}&page=1">第一页</a></li>
                             {% endif %}
                             {% if data.current == 1 %}
                                 <li class="disabled"><span>上一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page={{ data.before }}">上一页</a></li>
+                                <li><a href="/admin/project?status={{ status is defined ? status : null }}&keywords={{ keywords is defined ? keywords : null }}&page={{ data.before }}">上一页</a></li>
                             {% endif %}
                             {% if data.current == data.last or data.last == 0 %}
                                 <li class="disabled"><span>下一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page={{ data.next }}">下一页</a></li>
+                                <li><a href="/admin/project?status={{ status is defined ? status : null }}&keywords={{ keywords is defined ? keywords : null }}&page={{ data.next }}">下一页</a></li>
                             {% endif %}
                             {% if data.current == data.last or data.last == 0 %}
                                 <li class="disabled"><span>最后一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page={{ data.last }}">最后一页</a></li>
+                                <li><a href="/admin/project?status={{ status is defined ? status : null }}&keywords={{ keywords is defined ? keywords : null }}&page={{ data.last }}">最后一页</a></li>
                             {% endif %}
                         {% else %}
                             {% if data.current == 1 %}
@@ -147,7 +147,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/project?status={{ status is defined ? status : '' }}&keywords={{ keywords is defined ? keywords : '' }}&page=" + page;
+            location.href = "/admin/project?status={{ status is defined ? status : null }}&keywords={{ keywords is defined ? keywords : null }}&page=" + page;
         }
 
 
@@ -166,8 +166,8 @@
         // $('#sub').click(function () {
         //     var words = $('#keywords').val();
         //     var status = $('#statusselect').find("option:selected").val();
-        //     words = words ? words : '';
-        //     status = status ? status : '';
+        //     words = words ? words : null;
+        //     status = status ? status : null;
         //     getListByKeys(words, status);
         // });
         // function getListByKeys(words, status){

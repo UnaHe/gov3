@@ -56,16 +56,16 @@
                     <td>
                         <input type="hidden" name="user_image" class="user_image" value="{{field['user_image']}}">
                         <input id="thumbnail" name="thumbnail" type="file" multiple onchange="UpLoadFile()">
-                        <img alt="" id="previewImage"  src="{{field['user_image'] is empty ? '' : _config['upload_url'] ~ field['user_image']}}" style="max-width: 75px; max-height:100px;display:{{ field['user_image'] is empty ? 'none' : ''}}">
-                        <input type="button" value="移除图片" class="btn_remove back btn btn-info" style="display: {{ field['user_image'] is empty ? 'none' : ''}}">
+                        <img alt="" id="previewImage"  src="{{field['user_image'] is empty ? '' : _config['upload_url'] ~ field['user_image']}}" style="max-width: 75px; max-height:100px;display:{{ field['user_image'] is empty ? 'none' : null}}">
+                        <input type="button" value="移除图片" class="btn_remove back btn btn-info" style="display: {{ field['user_image'] is empty ? 'none' : null}}">
                     </td>
                 </tr>
 
                 <tr>
                     <th><i class='require'>*</i> 性别：</th>
                     <td>
-                        <input type="radio" name="user_sex" id="user_sex_1" value="1" {{ field['user_sex'] == 1 ? 'checked' : '' }} required/><label for="user_sex_1">男</label>
-                        <input type="radio" name="user_sex" id="user_sex_0" value="0" {{ field['user_sex']== 0 ? 'checked' : '' }} required/><label for="user_sex_0">女</label>
+                        <input type="radio" name="user_sex" id="user_sex_1" value="1" {{ field['user_sex'] == 1 ? 'checked' : null }} required/><label for="user_sex_1">男</label>
+                        <input type="radio" name="user_sex" id="user_sex_0" value="0" {{ field['user_sex']== 0 ? 'checked' : null }} required/><label for="user_sex_0">女</label>
                     </td>
                 </tr>
                 <tr>
@@ -83,8 +83,8 @@
                 <tr>
                     <th><i class='require'>*</i> 状态：</th>
                     <td>
-                        <input type="radio" name="user_status" id="user_status_1" value="1" {{ field['user_status'] == 1 ? 'checked' : '' }} required/><label for="user_status_1">正常在职</label>
-                        <input type="radio" name="user_status" id="user_status_0" value="0" {{ field['user_status'] == 0 ? 'checked' : '' }} required/><label for="user_status_0">不在职</label>
+                        <input type="radio" name="user_status" id="user_status_1" value="1" {{ field['user_status'] == 1 ? 'checked' : null }} required/><label for="user_status_1">正常在职</label>
+                        <input type="radio" name="user_status" id="user_status_0" value="0" {{ field['user_status'] == 0 ? 'checked' : null }} required/><label for="user_status_0">不在职</label>
                 </tr>
                 <tr class="project_type">
                     <th>职务：</th>

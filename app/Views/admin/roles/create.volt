@@ -23,19 +23,19 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">角色名</label>
-                        <input type="text" class="form-control" name="name" value="{{ role is defined ? role.name : '' }}">
+                        <input type="text" class="form-control" name="name" value="{{ role is defined ? role.name : null }}">
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">角色编码</label>
-                        <input type="text" class="form-control" name="code" value="{{ role is defined ? role.code : '' }}">
+                        <input type="text" class="form-control" name="code" value="{{ role is defined ? role.code : null }}">
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">描述</label>
-                        <input type="text" class="form-control" name="description" value="{{ role is defined ? role.description : '' }}">
+                        <input type="text" class="form-control" name="description" value="{{ role is defined ? role.description : null }}">
                     </div>
                 </div>
                 <!-- /.box-body -->

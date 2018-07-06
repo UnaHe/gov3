@@ -11,14 +11,14 @@
                     <td>
                         <select name="admin_type" class="multiselect_no_search">
                             <option value=""> 请选择</option>
-                            <option value="1" {{ input['admin_type'] is defined and input['admin_type'] == 1 ? 'selected' : '' }}> 单位管理员</option>
-                            <option value="2" {{ input['admin_type'] is defined and input['admin_type'] == 2 ? 'selected' : '' }}> 系统管理员</option>
+                            <option value="1" {{ input['admin_type'] is defined and input['admin_type'] == 1 ? 'selected' : null }}> 单位管理员</option>
+                            <option value="2" {{ input['admin_type'] is defined and input['admin_type'] == 2 ? 'selected' : null }}> 系统管理员</option>
                         </select>
                     </td>
                     {% Include 'layout/search_list1' with ['type': -1] %}
                     <th width="70">关键字:</th>
                     <td>
-                        <input type="text" name="keywords" placeholder="可搜索姓名,电话,项目名" value="{{ input['keywords'] is defined ? input['keywords'] : '' }}"><br>
+                        <input type="text" name="keywords" placeholder="可搜索姓名,电话,项目名" value="{{ input['keywords'] is defined ? input['keywords'] : null }}"><br>
                     </td>
                     <td><input type="submit"  class="btn btn-info" value="查询"></td>
                 </tr>
@@ -85,22 +85,22 @@
                             {% if data['list'].current == 1 %}
                                 <li class="disabled"><span>第一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : '' }}&project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page=1">第一页</a></li>
+                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : null }}&project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page=1">第一页</a></li>
                             {% endif %}
                             {% if data['list'].current == 1 %}
                                 <li class="disabled"><span>上一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : '' }}&project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : null }}&project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].before }}">上一页</a></li>
                             {% endif %}
                             {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                 <li class="disabled"><span>下一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : '' }}&project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : null }}&project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].next }}">下一页</a></li>
                             {% endif %}
                             {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                 <li class="disabled"><span>最后一页</span></li>
                             {% else %}
-                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : '' }}&project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                <li><a href="/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : null }}&project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].last }}">最后一页</a></li>
                             {% endif %}
                         {% else %}
                             {% if data['list'].current == 1 %}
@@ -142,7 +142,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : '' }}&project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page=" + page;
+            location.href = "/admin/project/adminuserlist?admin_type={{ input['admin_type'] is defined ? input['admin_type'] : null }}&project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page=" + page;
         }
 
         $(function(){

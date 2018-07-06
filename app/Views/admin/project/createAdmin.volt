@@ -42,12 +42,12 @@
                             {#<input type="hidden" name="admin_type" value="0">#}
                             {#@endif#}
                             {#@else#}
-                            <input type="radio" id="type1" name="admin_type" value="1" {{ admin_type is defined and admin_type == '1' ? 'checked' : '' }} required><label for="type1">单位管理员</label>
-                            <input type="radio" id="type2" name="admin_type" value="0" {{ admin_type is defined and admin_type == '0' ? 'checked' : '' }} required><label for="type2">系统管理员</label>
+                            <input type="radio" id="type1" name="admin_type" value="1" {{ admin_type is defined and admin_type == '1' ? 'checked' : null }} required><label for="type1">单位管理员</label>
+                            <input type="radio" id="type2" name="admin_type" value="0" {{ admin_type is defined and admin_type == '0' ? 'checked' : null }} required><label for="type2">系统管理员</label>
                             {#@endif#}
                         </td>
                     </tr>
-                    {% Include "layout/common_tr" with ['type' : 0, 'project_id' : user_info is defined and user_info['project_id'] is not empty ? user_info['project_id'] : '', 'department_id' : user_info is defined and user_info['department_id'] is not empty ? user_info['department_id'] : ''] %}
+                    {% Include "layout/common_tr" with ['type' : 0, 'project_id' : user_info is defined and user_info['project_id'] is not empty ? user_info['project_id'] : null, 'department_id' : user_info is defined and user_info['department_id'] is not empty ? user_info['department_id'] : null] %}
                     <input type="hidden" name="roles1[]" value="{{ project_administrator['id'] }}">
                     <tr class="hide assign_role">
                         <th>分配角色：</th>
@@ -56,7 +56,7 @@
                             <div class="checkbox_list" style="">
                                 <select  name="roles2[]" id="">
                                     {% for v in roles %}
-                                        <option value="{{ v['id'] }}" {{ old_role is not empty and old_role == v['id'] ? 'selected' : '' }}>{{ v['name'] }}</option>
+                                        <option value="{{ v['id'] }}" {{ old_role is not empty and old_role == v['id'] ? 'selected' : null }}>{{ v['name'] }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -66,7 +66,7 @@
                     <tr>
                         <th><i class="require">*</i> 姓名：</th>
                         <td>
-                            <input type="text" class="lg" name="user_name" value="{{ user_info['user_name'] is not empty ? user_info['user_name'] : '' }}" required minlength="2"/>
+                            <input type="text" class="lg" name="user_name" value="{{ user_info['user_name'] is not empty ? user_info['user_name'] : null }}" required minlength="2"/>
                         </td>
                     </tr>
                     {% if user_info is empty %}
@@ -82,49 +82,49 @@
                     <tr>
                         <th>用户头像：</th>
                         <td>
-                            <input type="hidden" name="user_image" class="user_image" value="{{ user_info['user_image'] is not empty ? user_info['user_image'] : '' }}">
+                            <input type="hidden" name="user_image" class="user_image" value="{{ user_info['user_image'] is not empty ? user_info['user_image'] : null }}">
                             <input id="thumbnail" name="thumbnail" type="file" multiple onchange="UpLoadFile()">
-                            <img alt="" id="previewImage"  src="{{ user_info['user_image'] is not empty ? _config['upload_url'] ~ user_info['user_image'] : '' }}" style="max-width: 75px; max-height:100px;display: {{ user_info['user_image'] is empty ? 'none' : '' }}">
-                            <input type="button" value="移除图片" class="btn_remove back btn btn-info" style="display: {{ user_info['user_image'] is empty ? 'none' : '' }}">
+                            <img alt="" id="previewImage"  src="{{ user_info['user_image'] is not empty ? _config['upload_url'] ~ user_info['user_image'] : null }}" style="max-width: 75px; max-height:100px;display: {{ user_info['user_image'] is empty ? 'none' : null }}">
+                            <input type="button" value="移除图片" class="btn_remove back btn btn-info" style="display: {{ user_info['user_image'] is empty ? 'none' : null }}">
                         </td>
                     </tr>
                     <tr>
                         <th><i class="require">*</i> 性别：</th>
                         <td>
-                            <input type="radio" name="user_sex" id="user_sex_1" value="1" {{ user_info is not empty ? (user_info['user_sex'] == '1' ? 'checked' : '') : 'checked' }} required><label for="user_sex_1">男</label>
-                            <input type="radio" name="user_sex" id="user_sex_0" value="0" {{ user_info is not empty ? (user_info['user_sex'] == '0' ? 'checked' : '') : '' }} required><label for="user_sex_0">女</label>
+                            <input type="radio" name="user_sex" id="user_sex_1" value="1" {{ user_info is not empty ? (user_info['user_sex'] == '1' ? 'checked' : null) : 'checked' }} required><label for="user_sex_1">男</label>
+                            <input type="radio" name="user_sex" id="user_sex_0" value="0" {{ user_info is not empty ? (user_info['user_sex'] == '0' ? 'checked' : null) : null }} required><label for="user_sex_0">女</label>
                         </td>
                     </tr>
                     <tr>
                         <th><i class="require">*</i> 年龄：</th>
                         <td>
-                            <input type="number" class="" name="user_age" value="{{ user_info['user_age'] is not empty ? user_info['user_age'] : '' }}" required min="1" max="100"/>
+                            <input type="number" class="" name="user_age" value="{{ user_info['user_age'] is not empty ? user_info['user_age'] : null }}" required min="1" max="100"/>
                         </td>
                     </tr>
                     <tr>
                         <th><i class="require">*</i> 电话：</th>
                         <td>
-                            <input type="text" class="lg" name="user_phone" value="{{ user_info['user_phone'] is not empty ? user_info['user_phone'] : '' }}" required isMobile="true"/>
+                            <input type="text" class="lg" name="user_phone" value="{{ user_info['user_phone'] is not empty ? user_info['user_phone'] : null }}" required isMobile="true"/>
                         </td>
                     </tr>
                     <tr>
                         <th>状态：</th>
                         <td>
-                            <input type="radio" name="user_status" id="user_status_1" value="1" {{ user_info is not empty ? (user_info['user_status'] == '1' ? 'checked' : '') : 'checked' }} required/><label
+                            <input type="radio" name="user_status" id="user_status_1" value="1" {{ user_info is not empty ? (user_info['user_status'] == '1' ? 'checked' : null) : 'checked' }} required/><label
                                     for="user_status_1">正常</label>
-                            <input type="radio" name="user_status" id="user_status_0" value="0" {{ user_info is not empty ? (user_info['user_status'] == '0' ? 'checked' : '') : '' }} required/><label for="user_status_0">不正常</label>
+                            <input type="radio" name="user_status" id="user_status_0" value="0" {{ user_info is not empty ? (user_info['user_status'] == '0' ? 'checked' : null) : null }} required/><label for="user_status_0">不正常</label>
                         </td>
                     </tr>
                     <tr class="project_type">
                         <th>职务：</th>
                         <td>
-                            <input type="text" class="lg" name="user_job" value="{{ user_info['user_job'] is not empty ? user_info['user_job'] : '' }}">
+                            <input type="text" class="lg" name="user_job" value="{{ user_info['user_job'] is not empty ? user_info['user_job'] : null }}">
                         </td>
                     </tr>
                     <tr class="project_type">
                         <th>职务内容：</th>
                         <td>
-                            <textarea name="user_intro">{{ user_info['user_intro'] is not empty ? user_info['user_intro'] : '' }}</textarea>
+                            <textarea name="user_intro">{{ user_info['user_intro'] is not empty ? user_info['user_intro'] : null }}</textarea>
                         </td>
                     </tr>
 

@@ -14,7 +14,7 @@
                     {% Include 'layout/search_list1' with ['type': 1] %}
                     <th width="70">关键字:</th>
                     <td>
-                        <input type="text" name="keywords" placeholder="可搜索姓名，电话，科室" value="{{ input['keywords'] is defined ? input['keywords'] : '' }}"><br>
+                        <input type="text" name="keywords" placeholder="可搜索姓名，电话，科室" value="{{ input['keywords'] is defined ? input['keywords'] : null }}"><br>
                     </td>
                     <td><input type="submit" class="btn btn-info" value="查询"></td>
                 </tr>
@@ -109,22 +109,22 @@
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page=1">第一页</a></li>
+                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page=1">第一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>上一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].before }}">上一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>下一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].next }}">下一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>最后一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                    <li><a href="/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page={{ data['list'].last }}">最后一页</a></li>
                                 {% endif %}
                             {% else %}
                                 {% if data['list'].current == 1 %}
@@ -166,7 +166,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&keywords={{ input['keywords'] is defined ? input['keywords'] : '' }}&page=" + page;
+            location.href = "/admin/users?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&keywords={{ input['keywords'] is defined ? input['keywords'] : null }}&page=" + page;
         }
 
         // 删除员工.

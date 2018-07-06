@@ -2,7 +2,7 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
             {% if _session['user_is_super'] or (_session['user_is_admin'] and _session['project_id'] == '') %}
-            <li class="treeview {{ _Controller == 'ProjectController' or _Controller == 'HomeController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'ProjectController' or _Controller == 'HomeController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-university"></i> <span>单位管理</span>
                     <span class="pull-right-container"></span>
@@ -15,7 +15,7 @@
                 </ul>
             </li>
             {% else %}
-            <li class="treeview {{ _Controller == 'ProjectController' or _Controller == 'HomeController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'ProjectController' or _Controller == 'HomeController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-university"></i> <span>单位详情</span>
                     <span class="pull-right-container"></span>
@@ -28,7 +28,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or _session['user_is_admin'] %}
-            <li class="treeview {{ (_Controller == 'DepartmentController' or _Controller == 'QrcodeController' or _Controller == 'NoticeController') ? 'active' : '' }}">
+            <li class="treeview {{ (_Controller == 'DepartmentController' or _Controller == 'QrcodeController' or _Controller == 'NoticeController') ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-th-list"></i> <span>科室管理</span>
                     <span class="pull-right-container"></span>
@@ -47,7 +47,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or _session['user_is_admin'] %}
-            <li class="treeview {{ _Controller == 'SectionController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'SectionController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-list-alt"></i> <span>部门管理</span>
                     <span class="pull-right-container"></span>
@@ -60,7 +60,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or _session['user_is_admin'] %}
-            <li class="treeview {{ _Controller == 'StatusController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'StatusController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-calendar"></i> <span>事件管理</span>
                     <span class="pull-right-container"></span>
@@ -78,7 +78,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or _session['user_is_admin'] %}
-            <li class="treeview {{ _Controller == 'UserController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'UserController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-male"></i> <span>人员管理</span>
                     <span class="pull-right-container"></span>
@@ -92,7 +92,7 @@
             {% endif %}
 
             {% if _session['user_is_super'] or _session['user_is_admin'] %}
-            <li class="treeview {{ _Controller == 'CommentController' ? 'active' : '' }}">
+            <li class="treeview {{ _Controller == 'CommentController' ? 'active' : null }}">
                 <a href="#">
                     <i class="fa fa-envelope"></i> <span>留言管理</span>
                     <span class="pull-right-container"></span>
@@ -104,7 +104,7 @@
             {% endif %}
 
             {#{% if _session['user_is_super'] or (_session['user_is_admin'] and _session['project_id'] == '') %}#}
-            {#<li class="treeview {{ _Controller == 'PermissionsController' or _Controller == 'RolesController' ? 'active' : '' }}">#}
+            {#<li class="treeview {{ _Controller == 'PermissionsController' or _Controller == 'RolesController' ? 'active' : null }}">#}
                 {#<a href="#">#}
                     {#<i class="fa fa-cog"></i> <span>系统管理</span>#}
                     {#<span class="pull-right-container"></span>#}

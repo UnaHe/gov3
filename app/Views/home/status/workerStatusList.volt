@@ -173,7 +173,7 @@
                     '<div class="portrait" onclick="detail(' + vv.a.user_id + ')"><img src="' + img_src + '"></div>' +
                     '<span class="name text_no">' + vv.a.user_name + '</span>' +
                     '<p class="Duties text_no">' + (vv.a.user_job ? vv.a.user_job : '科员') + '</p>' +
-                    '<span class="effect text_overflow">' + (vv.a.user_intro ? vv.a.user_intro : '') + '</span>' +
+                    '<span class="effect text_overflow">' + (vv.a.user_intro ? vv.a.user_intro : null) + '</span>' +
                     '</li>';
             });
             if(!have_flag){

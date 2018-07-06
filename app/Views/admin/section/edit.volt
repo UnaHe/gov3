@@ -38,7 +38,7 @@
                         <select name="parent_id" class="multiselect">
                             <option value="0">顶级部门</option>
                             {% for v in data %}
-                                <option value="{{v.section_id}}" {{ v.section_id == section.parent_id ? 'selected' : '' }}>{{ v.section_name }}</option>
+                                <option value="{{v.section_id}}" {{ v.section_id == section.parent_id ? 'selected' : null }}>{{ v.section_name }}</option>
                             {% endfor %}
                         </select>
                     </td>

@@ -25,13 +25,13 @@
             <div class="box-body">
                 <div class="form-group">
                     <label>权限名</label>
-                    <input type="text" class="form-control" name="name" value="{{ permission is defined ? permission.name : '' }}">
+                    <input type="text" class="form-control" name="name" value="{{ permission is defined ? permission.name : null }}">
                 </div>
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label>描述</label>
-                    <input type="text" class="form-control" name="description" value="{{ permission is defined ? permission.description : '' }}">
+                    <input type="text" class="form-control" name="description" value="{{ permission is defined ? permission.description : null }}">
                 </div>
             </div>
             <!-- /.box-body -->

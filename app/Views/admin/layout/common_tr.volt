@@ -6,7 +6,7 @@
             <select onchange="get_options_by_project(this,'{{ type }}')" name="project_id" id="project_id" class="multiselect project_list project_id" required>
                 <option value="0">请选择单位</option>
                 {% for v in project %}
-                    <option value="{{ v.project_id }}" {{ project_id is defined and project_id == v.project_id ? 'selected' : '' }}>{{ v.project_name }}</option>
+                    <option value="{{ v.project_id }}" {{ project_id is defined and project_id == v.project_id ? 'selected' : null }}>{{ v.project_name }}</option>
                 {% endfor %}
             </select>
             <span class="error" for="project_id"></span>
@@ -25,7 +25,7 @@
             <option value="0">请选择科室</option>
             {% if department_list is defined %}
                 {% for v in department_list %}
-                    <option value="{{ v.department_id }}" {{ department_id is defined and department_id == v.department_id ? 'selected' : '' }}>{{ v.department_name }}</option>
+                    <option value="{{ v.department_id }}" {{ department_id is defined and department_id == v.department_id ? 'selected' : null }}>{{ v.department_name }}</option>
                 {% endfor %}
             {% endif %}
         </select>
@@ -42,7 +42,7 @@
             <option value="0">请选择部门</option>
             {% if section_list is defined %}
                 {% for v in section_list %}
-                    <option value="{{ v.section_id }}" {{ section_id is defined and section_id == v.section_id ? 'selected' : '' }}>{{ v.section_name }}</option>
+                    <option value="{{ v.section_id }}" {{ section_id is defined and section_id == v.section_id ? 'selected' : null }}>{{ v.section_name }}</option>
                 {% endfor %}
             {% endif %}
         </select>

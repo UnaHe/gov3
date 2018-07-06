@@ -18,10 +18,10 @@
                     {% Include 'layout/search_list1' with ['type': 1] %}
                     <th width="70">姓名:</th>
                     <td>
-                        <input type="text" name="user_name" value="{{ input['user_name'] is not empty ? input['user_name'] : '' }}">
+                        <input type="text" name="user_name" value="{{ input['user_name'] is not empty ? input['user_name'] : null }}">
                     </td>
                     {% if input['type'] is defined %}
-                        <input type="hidden" name="type" value="{{ input['type'] is not empty ? input['type'] : '' }}">
+                        <input type="hidden" name="type" value="{{ input['type'] is not empty ? input['type'] : null }}">
                     {% endif %}
                     <td><input type="submit" class="btn btn-info" value="查询"></td>
                 </tr>
@@ -101,22 +101,22 @@
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=1">第一页</a></li>
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page=1">第一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>上一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].before }}">上一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>下一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].next }}">下一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>最后一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                    <li><a href="/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].last }}">最后一页</a></li>
                                 {% endif %}
                             {% else %}
                                 {% if data['list'].current == 1 %}
@@ -160,7 +160,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=" + page;
+            location.href = "/admin/status/workerStatusList?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page=" + page;
         }
 
         function add_user_status(project_id, user_id, status_id, project_name, departmanet_name, user_name) {

@@ -12,37 +12,37 @@
             <a class="Reserved"></a>
         </div>
         <form action="" id="edit_form">
-            <input name="user_status_id" type="hidden" value="{{ old_info.user_status_id is defined ? old_info.user_status_id : '' }}">
+            <input name="user_status_id" type="hidden" value="{{ old_info.user_status_id is defined ? old_info.user_status_id : null }}">
             <div class="xiala">
                 <select name="status_id" id="lf_select">
                     <option value="">请选择</option>
                     {% for v in statuslist %}
                         <option value="{{ v.status_id }}"
-                                {{ old_info.status_id is defined and old_info.status_id == v.status_id ? 'selected' : '' }}
+                                {{ old_info.status_id is defined and old_info.status_id == v.status_id ? 'selected' : null }}
                         >{{ v.status_name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="Selection_Time">
                 <div class="Start_Time clear">
-                    <input type="text"  name="start_date" class="start_date"  value="{{ old_info.start_time is defined and old_info.start_time ? date('Y-m-d', old_info.start_time) : '' }}" placeholder="开始日期" >
+                    <input type="text"  name="start_date" class="start_date"  value="{{ old_info.start_time is defined and old_info.start_time ? date('Y-m-d', old_info.start_time) : null }}" placeholder="开始日期" >
                     <span class="Start_Time_img start_date form_date"><img src="{{url('staff/style/img/time1_03.png')}}"></span>
 
-                    <input type="text" name="start_time" class="hunterTimePicker" value="{{ old_info.start_time is defined and old_info.start_time ? date('H:i', old_info.start_time) : '' }}" placeholder="时间" >
+                    <input type="text" name="start_time" class="hunterTimePicker" value="{{ old_info.start_time is defined and old_info.start_time ? date('H:i', old_info.start_time) : null }}" placeholder="时间" >
                     <span class="Start_Time_img start_time"><img src="{{url('staff/style/img/time2_03.png')}}"></span>
                 </div>
             </div>
             <div class="Selection_Time">
                 <div class="Start_Time clear">
-                    <input type="text" name="end_date" class="end_date"  value="{{ old_info.end_time is defined and old_info.end_time ? date('Y-m-d', old_info.end_time) : '' }}" placeholder="结束日期" >
+                    <input type="text" name="end_date" class="end_date"  value="{{ old_info.end_time is defined and old_info.end_time ? date('Y-m-d', old_info.end_time) : null }}" placeholder="结束日期" >
                     <span class="Start_Time_img end_date form_date"><img src="{{url('staff/style/img/time1_03.png')}}"></span>
 
-                    <input type="text" name="end_time" class="hunterTimePicker" value="{{ old_info.end_time is defined and old_info.end_time ? date('H:i', old_info.end_time) : '' }}" placeholder="时间" >
+                    <input type="text" name="end_time" class="hunterTimePicker" value="{{ old_info.end_time is defined and old_info.end_time ? date('H:i', old_info.end_time) : null }}" placeholder="时间" >
                     <span class="Start_Time_img end_time"><img src="{{url('staff/style/img/time2_03.png')}}" readonly></span>
                 </div>
             </div>
             <div class="my_textarea">
-                <textarea name="desc" id="lf_textarea" cols="" rows="" placeholder="备注">{{ old_info.user_status_desc is defined ? old_info.user_status_desc : '' }}</textarea>
+                <textarea name="desc" id="lf_textarea" cols="" rows="" placeholder="备注">{{ old_info.user_status_desc is defined ? old_info.user_status_desc : null }}</textarea>
             </div>
             <input type="submit" value="保存" id="Save_btn">
         </form>

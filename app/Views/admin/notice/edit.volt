@@ -46,7 +46,7 @@
                             <select name="project_id" class="project_id multiselect" required>
                                 <option value="">请选择</option>
                                 {% for d in project %}
-                                    <option value="{{d.project_id}}"  {{ d.project_id == notice.project_id ? 'selected' : '' }}>
+                                    <option value="{{d.project_id}}"  {{ d.project_id == notice.project_id ? 'selected' : null }}>
                                         {{d.project_name}}
                                     </option>
                                 {% endfor %}
@@ -131,8 +131,8 @@
                 <tr>
                     <th><i class="require">*</i>状态：</th>
                     <td>
-                        <input type="radio" name="notice_status" id="notice_status_1" value="1" {{ notice.notice_status == 1 ? 'checked' : '' }}><label for="notice_status_1">发布</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" name="notice_status" id="notice_status_0" value="0" {{ notice.notice_status == 0 ? 'checked' : '' }}><label for="notice_status_0">不发布</label>
+                        <input type="radio" name="notice_status" id="notice_status_1" value="1" {{ notice.notice_status == 1 ? 'checked' : null }}><label for="notice_status_1">发布</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="notice_status" id="notice_status_0" value="0" {{ notice.notice_status == 0 ? 'checked' : null }}><label for="notice_status_0">不发布</label>
                     </td>
                 </tr>
                 <tr>

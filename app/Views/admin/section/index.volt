@@ -163,7 +163,7 @@
                             '<div style="padding-left: 20px">全选<input type="checkbox" class="checkAll"></div>' +
                             '<div class="checkbox_list" style="">';
                         $.each(data.msg,function(k,v){
-                            content +=  '<label for="u_'+v.user_id+'" style="width: 100px;margin:5px"><input type="checkbox" class="userli" name="users[]" id="u_'+v.user_id+'" value="'+v.user_id+'" '+((v.section_id==section_id) ? 'checked="checked"' : '')+'>'+v.user_name +'</label>'+
+                            content +=  '<label for="u_'+v.user_id+'" style="width: 100px;margin:5px"><input type="checkbox" class="userli" name="users[]" id="u_'+v.user_id+'" value="'+v.user_id+'" '+((v.section_id==section_id) ? 'checked="checked"' : null)+'>'+v.user_name +'</label>'+
                                 '';
                         });
                         content += '</div></from></div>';

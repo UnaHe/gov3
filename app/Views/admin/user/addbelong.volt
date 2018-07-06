@@ -88,7 +88,7 @@
                                     <div style="display:inline-block ;">
                                         {% for i,vv in v['list'] %}
                                         <div style="display: inline;margin:10px 20px;">
-                                             <label for="li_{{vv['user_id']}}"><input id="li_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : '' }}><span>{{vv['user_name']}}</span></label>
+                                             <label for="li_{{vv['user_id']}}"><input id="li_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : null }}><span>{{vv['user_name']}}</span></label>
                                         </div>
                                         {% endfor %}
                                     </div>
@@ -123,7 +123,7 @@
                                     <div style="display:inline-block ;" class="td_user_list">
                                         {% for vv in  v['list'] %}
                                             <div style="display: inline;margin:10px 20px;">
-                                                <label for="cli_{{vv['user_id']}}"><input id="cli_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : '' }}><span>{{vv['user_name']}}</span></label>
+                                                <label for="cli_{{vv['user_id']}}"><input id="cli_{{vv['user_id']}}" type="checkbox" class="userli userli_{{vv['user_id']}}" name="users[]" value="{{vv['user_id']}}" {{ old_list[vv['user_id']] is defined ? 'checked' : null }}><span>{{vv['user_name']}}</span></label>
                                             </div>
                                         {% endfor %}
                                     </div>

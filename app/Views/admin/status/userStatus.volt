@@ -26,23 +26,23 @@
                             <option value="">请选择</option>
                             {% if data['status_list'] is defined %}
                                 {% for v in data['status_list'] %}
-                                    <option value="{{v.status_id}}" {{ input['status_id'] is defined  and (input['status_id'] == v.status_id) ? 'selected' : '' }}>{{v.status_name}}</option>
+                                    <option value="{{v.status_id}}" {{ input['status_id'] is defined  and (input['status_id'] == v.status_id) ? 'selected' : null }}>{{v.status_name}}</option>
                                 {% endfor %}
                             {% endif %}
                         </select>
                     </td>
                     <th width="80">开始时间:</th>
-                    <td><input type="text" class="form_datetime" name="start_time" value="{{ input['start_time'] is not empty ? input['start_time'] : '' }}">
+                    <td><input type="text" class="form_datetime" name="start_time" value="{{ input['start_time'] is not empty ? input['start_time'] : null }}">
                     </td>
                     <th width="80">结束时间:</th>
-                    <td><input type="text"class="form_datetime"  name="end_time"value="{{ input['end_time'] is not empty ? input['end_time'] : '' }}">
+                    <td><input type="text"class="form_datetime"  name="end_time"value="{{ input['end_time'] is not empty ? input['end_time'] : null }}">
                     </td>
                     <th width="">姓名:</th>
-                    <td><input type="text" name="user_name" value="{{ input['user_name'] is not empty ? input['user_name'] : '' }}">
+                    <td><input type="text" name="user_name" value="{{ input['user_name'] is not empty ? input['user_name'] : null }}">
                     </td>
                     {% if input['type'] is defined %}
                         <input type="hidden" name="type"
-                               value="{{ input['type'] is not empty ? input['type'] : '' }}">
+                               value="{{ input['type'] is not empty ? input['type'] : null }}">
                     {% endif %}
                     <td><input type="submit"  class="btn btn-info" value="查询"></td>
                 </tr>
@@ -109,22 +109,22 @@
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status_id={{ input['status_id'] is defined ? input['status_id'] : '' }}&start_time={{ input['start_time'] is defined ? input['start_time'] : '' }}&end_time={{ input['end_time'] is defined ? input['end_time'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=1">第一页</a></li>
+                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&status_id={{ input['status_id'] is defined ? input['status_id'] : null }}&start_time={{ input['start_time'] is defined ? input['start_time'] : null }}&end_time={{ input['end_time'] is defined ? input['end_time'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page=1">第一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>上一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status_id={{ input['status_id'] is defined ? input['status_id'] : '' }}&start_time={{ input['start_time'] is defined ? input['start_time'] : '' }}&end_time={{ input['end_time'] is defined ? input['end_time'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&status_id={{ input['status_id'] is defined ? input['status_id'] : null }}&start_time={{ input['start_time'] is defined ? input['start_time'] : null }}&end_time={{ input['end_time'] is defined ? input['end_time'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].before }}">上一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>下一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status_id={{ input['status_id'] is defined ? input['status_id'] : '' }}&start_time={{ input['start_time'] is defined ? input['start_time'] : '' }}&end_time={{ input['end_time'] is defined ? input['end_time'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&status_id={{ input['status_id'] is defined ? input['status_id'] : null }}&start_time={{ input['start_time'] is defined ? input['start_time'] : null }}&end_time={{ input['end_time'] is defined ? input['end_time'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].next }}">下一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>最后一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status_id={{ input['status_id'] is defined ? input['status_id'] : '' }}&start_time={{ input['start_time'] is defined ? input['start_time'] : '' }}&end_time={{ input['end_time'] is defined ? input['end_time'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                    <li><a href="/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&status_id={{ input['status_id'] is defined ? input['status_id'] : null }}&start_time={{ input['start_time'] is defined ? input['start_time'] : null }}&end_time={{ input['end_time'] is defined ? input['end_time'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page={{ data['list'].last }}">最后一页</a></li>
                                 {% endif %}
                             {% else %}
                                 {% if data['list'].current == 1 %}
@@ -168,7 +168,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&section_id={{ input['section_id'] is defined ? input['section_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&status_id={{ input['status_id'] is defined ? input['status_id'] : '' }}&start_time={{ input['start_time'] is defined ? input['start_time'] : '' }}&end_time={{ input['end_time'] is defined ? input['end_time'] : '' }}&user_name={{ input['user_name'] is defined ? input['user_name'] : '' }}&page=" + page;
+            location.href = "/admin/status/userStatus?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&section_id={{ input['section_id'] is defined ? input['section_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&status_id={{ input['status_id'] is defined ? input['status_id'] : null }}&start_time={{ input['start_time'] is defined ? input['start_time'] : null }}&end_time={{ input['end_time'] is defined ? input['end_time'] : null }}&user_name={{ input['user_name'] is defined ? input['user_name'] : null }}&page=" + page;
         }
 
         $(function () {
@@ -265,7 +265,7 @@
                         var status_option = '';
                         {#var _token = "{{csrf_token()}}";#}
                         $.each(data.msg,function(k,v){
-                            status_option += '<option value="'+v.status_id+'" '+((status_id==v.status_id) ? 'selected' : '')+'><span style="display: inline-block;width: 10px;height: 10px;border-radius: 100%;background: '+v.status_color+'"></span>'+ v.status_name+'</option>';
+                            status_option += '<option value="'+v.status_id+'" '+((status_id==v.status_id) ? 'selected' : null)+'><span style="display: inline-block;width: 10px;height: 10px;border-radius: 100%;background: '+v.status_color+'"></span>'+ v.status_name+'</option>';
                         });
                         var content = '<div><form action="" method="" id="status_form">'+
                             '<input type="hidden" name="user_status_id"  value="'+user_status_id+'">'+

@@ -53,9 +53,9 @@
                             <i class="fa fa-exclamation-circle yellow"></i>单位主图用于群众端主页背景(点击提交才生效)，请上传宽大于1080px,高大于1920px，且宽高比为9:16的图片
                         </span>
                         <div style="position: relative;width: 90px;">
-                            <a href="/upload/{{ unit.project_image }}" target="_blank"><img src="{{ unit.project_image is not empty ? url('/upload/' ~ unit.project_image) : '' }}"  id="previewImage" style="position: relative;max-width: 90px; max-height:160px;@if(empty($field->project_image)) display: none @endif"/>
+                            <a href="/upload/{{ unit.project_image }}" target="_blank"><img src="{{ unit.project_image is not empty ? url('/upload/' ~ unit.project_image) : null }}"  id="previewImage" style="position: relative;max-width: 90px; max-height:160px;@if(empty($field->project_image)) display: none @endif"/>
                             </a>
-                            <span class="close_img btn_remove {{ unit.project_image is empty ? 'hide' : '' }}">X</span>
+                            <span class="close_img btn_remove {{ unit.project_image is empty ? 'hide' : null }}">X</span>
                         </div>
                         <input id="thumbnail" type="file" multiple onchange="UpLoadFile()">
 
@@ -87,8 +87,8 @@
                 <tr>
                     <th>状态</th>
                     <td>
-                        <input type="radio" class="lg" id="open_p" name="project_status" value="1" {{ unit.project_status == 1 ? 'checked' : '' }}><label for="open_p">开启</label>
-                        <input type="radio" class="lg" id="close_p" name="project_status" value="0" {{ unit.project_status == 0 ? 'checked' : '' }}><label for="close_p">关闭</label>
+                        <input type="radio" class="lg" id="open_p" name="project_status" value="1" {{ unit.project_status == 1 ? 'checked' : null }}><label for="open_p">开启</label>
+                        <input type="radio" class="lg" id="close_p" name="project_status" value="0" {{ unit.project_status == 0 ? 'checked' : null }}><label for="close_p">关闭</label>
                     </td>
                 </tr>
                 {% endif %}

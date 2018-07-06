@@ -27,7 +27,7 @@
                                 {% for role in roles %}
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="role" {{ userRole.role_id == role.id ? 'checked' : '' }} value="{{ role.id }}" >
+                                            <input type="radio" name="role" {{ userRole.role_id == role.id ? 'checked' : null }} value="{{ role.id }}" >
                                             {{role.name}}
                                         </label>
                                     </div>

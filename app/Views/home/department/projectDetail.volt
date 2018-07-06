@@ -18,7 +18,7 @@
             <a class="Reserved"></a>
         </div>
         <div class="Noticedetails_con" style="margin-top: 1.28rem;padding: 10px">
-            {{  project_info is defined and project_info.project_profile is not empty ? project_info.project_profile : '' }}
+            {{  project_info is defined and project_info.project_profile is not empty ? project_info.project_profile : null }}
         </div>
     </div>
 

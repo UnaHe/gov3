@@ -49,14 +49,14 @@
                 <tr>
                     <th><i class="require">*</i>二维码编号：</th>
                     <td>
-                        <input type="number" name="forward_id" onchange="valid_id()" value="{{forward.forward_id is not empty ? forward.forward_id : ''}}" style="height: 30px" required   min="1"/>
+                        <input type="number" name="forward_id" onchange="valid_id()" value="{{forward.forward_id is not empty ? forward.forward_id : null}}" style="height: 30px" required   min="1"/>
                         <span for="forward_id" class="error"></span>
                     </td>
                 </tr>
                 <tr>
                     <th>二维码说明：</th>
                     <td>
-                        <input type="text" name="forward_introduction" onchange="" value="{{forward.forward_introduction is not empty ? forward.forward_introduction : ''}}" style="width: 70% !important;">
+                        <input type="text" name="forward_introduction" onchange="" value="{{forward.forward_introduction is not empty ? forward.forward_introduction : null}}" style="width: 70% !important;">
                     </td>
                 </tr>
                 {#<tr>#}

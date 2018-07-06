@@ -24,7 +24,7 @@
                 <h5 class="Noticedetails_title">{{ data.notice_title }}</h5>
                 <p class="Noticedetails_time">{{ date("Y/m/d", data.created_at) }}</p>
                 <div class="Noticedetails_con">
-                    <p>{{ data.notice_content is not empty ? data.notice_content : '' }}</p>
+                    <p>{{ data.notice_content is not empty ? data.notice_content : null }}</p>
                 </div>
             </div>
         </div>

@@ -80,22 +80,22 @@
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&page=1">第一页</a></li>
+                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&page=1">第一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == 1 %}
                                     <li class="disabled"><span>上一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&page={{ data['list'].before }}">上一页</a></li>
+                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&page={{ data['list'].before }}">上一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>下一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&page={{ data['list'].next }}">下一页</a></li>
+                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&page={{ data['list'].next }}">下一页</a></li>
                                 {% endif %}
                                 {% if data['list'].current == data['list'].last or data['list'].last == 0 %}
                                     <li class="disabled"><span>最后一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&page={{ data['list'].last }}">最后一页</a></li>
+                                    <li><a href="/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&page={{ data['list'].last }}">最后一页</a></li>
                                 {% endif %}
                             {% else %}
                                 {% if data['list'].current == 1 %}
@@ -136,7 +136,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&department_id={{ input['department_id'] is defined ? input['department_id'] : '' }}&page=" + page;
+            location.href = "/admin/qrcode?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&department_id={{ input['department_id'] is defined ? input['department_id'] : null }}&page=" + page;
         }
 
         //生成二维码

@@ -96,9 +96,9 @@
                 <tr>
                     <th><i class="require">*</i>设为默认：</th>
                     <td>
-                        <input type="radio"  name="status_is_default" value="1" {{ status.status_is_default == 1 ? 'checked' : '' }}>上班默认事件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio"  name="status_is_default" value="2" {{ status.status_is_default == 2 ? 'checked' : '' }}>下班默认事件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio"  name="status_is_default" value="0" {{ status.status_is_default == 0 ? 'checked' : '' }}>否&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="status_is_default" value="1" {{ status.status_is_default == 1 ? 'checked' : null }}>上班默认事件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="status_is_default" value="2" {{ status.status_is_default == 2 ? 'checked' : null }}>下班默认事件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="status_is_default" value="0" {{ status.status_is_default == 0 ? 'checked' : null }}>否&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <span><i class="fa fa-exclamation-circle yellow"></i>上班默认事件是指在上班时间内默认的事件</span>
                     </td>
                 </tr>
@@ -157,7 +157,7 @@
             var flag = false;
             var project_id = $('.project_id') .val();
             var status_name = $("input[name='status_name']").val();
-            var old_status_name = '{{ status.status_name is not empty ? status.status_name : '' }}';
+            var old_status_name = '{{ status.status_name is not empty ? status.status_name : null }}';
             if(status_name == old_status_name){
                 return true;
             }

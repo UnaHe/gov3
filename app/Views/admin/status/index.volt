@@ -99,22 +99,22 @@
                                 {% if status_list.current == 1 %}
                                     <li class="disabled"><span>第一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page=1">第一页</a></li>
+                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&page=1">第一页</a></li>
                                 {% endif %}
                                 {% if status_list.current == 1 %}
                                     <li class="disabled"><span>上一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page={{ status_list.before }}">上一页</a></li>
+                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&page={{ status_list.before }}">上一页</a></li>
                                 {% endif %}
                                 {% if status_list.current == status_list.last or status_list.last == 0 %}
                                     <li class="disabled"><span>下一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page={{ status_list.next }}">下一页</a></li>
+                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&page={{ status_list.next }}">下一页</a></li>
                                 {% endif %}
                                 {% if status_list.current == status_list.last or status_list.last == 0 %}
                                     <li class="disabled"><span>最后一页</span></li>
                                 {% else %}
-                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page={{ status_list.last }}">最后一页</a></li>
+                                    <li><a href="/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&page={{ status_list.last }}">最后一页</a></li>
                                 {% endif %}
                             {% else %}
                                 {% if status_list.current == 1 %}
@@ -154,7 +154,7 @@
                 layer.msg('不能大于总'+total_pages+'页', {icon: 5});
                 return;
             }
-            location.href = "/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : '' }}&page=" + page;
+            location.href = "/admin/status?project_id={{ input['project_id'] is defined ? input['project_id'] : null }}&page=" + page;
         }
 
         function changeOrder(obj,status_id){
