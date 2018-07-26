@@ -132,7 +132,7 @@ class Sections extends ModelBase
     /**
      * 根据部门id得到部门所属的员工和没有分配部门的员工列表
      * @param int $sectionId 部门ID
-     * @param int $users 人员
+     * @param int|array $users 人员
      * @return bool|string
      */
     public static function updateUsersSection($sectionId, $users){
